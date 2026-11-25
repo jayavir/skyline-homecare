@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skyline HomeCare - Surat Home Services & Technicians</title>
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { margin: 0; background: #0f172a; color: #1e293b; }
+    .container { max-width: 920px; margin: 0 auto; padding: 12px; padding-bottom: 80px; }
+
+    /* Header */
+    .topbar {
+      background: linear-gradient(135deg, #1e293b, #0f172a); color: #fff;
+      padding: 14px 16px; border-radius: 14px; display: flex;
+      justify-content: space-between; align-items: center; margin-bottom: 14px;
+      border-bottom: 3px solid #f59e0b; flex-wrap: wrap; gap: 8px;
+    }
+    .topbar h1 { margin: 0; font-size: 19px; color: #fbbf24; letter-spacing: 0.5px; }
+    .topbar p { margin: 2px 0 0; font-size: 11.5px; color: #cbd5e1; }
+    .lang-group button {
+      background: #334155; color: #fff; border: 1px solid #475569; padding: 5px 10px;
+      border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;
+    }
+    .lang-group button.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
+
+    /* Cards & Forms */
+    .card {
+      background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    }
+    .card h3 {
+      margin: 0 0 12px; font-size: 15.5px; color: #0f172a;
+      border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+    input, select, textarea {
+      width: 100%; padding: 10px 12px; margin-bottom: 10px; border: 1px solid #cbd5e1;
+      border-radius: 8px; font-size: 14px; background: #f8fafc;
+    }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
+
+    /* Service Category Grid */
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .srv-box {
+      border: 2px solid #e2e8f0; border-radius: 10px; padding: 12px 8px; text-align: center;
+      cursor: pointer; transition: 0.2s; background: #f8fafc;
+    }
+    .srv-box.selected { border-color: #f59e0b; background: #fffbeb; }
+    .srv-box .icon { font-size: 26px; display: block; margin-bottom: 4px; }
+    .srv-box strong { font-size: 13px; color: #0f172a; display: block; }
+    .srv-box small { font-size: 11px; color: #64748b; }
+
+    /* Buttons */
+    .btn {
+      width: 100%; padding: 11px 14px; border: none; border-radius: 8px; font-size: 14px;
+      font-weight: 700; cursor: pointer; transition: 0.2s;
+    }
+    .btn-primary { background: #1e3a8a; color: #fff; }
+    .btn-success { background: #15803d; color: #fff; }
+    .btn-warning { background: #d97706; color: #fff; }
+    .btn-wa { background: #16a34a; color: #fff; }
+
+    /* Job & Tech Lists */
+    .job-item {
+      border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px; margin-bottom: 10px; background: #f8fafc;
+    }
+    .badge { padding: 3px 9px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .badge-new { background: #fef3c7; color: #92400e; }
+    .badge-accepted { background: #dbeafe; color: #1e40af; }
+    .badge-done { background: #dcfce7; color: #166534; }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b;
+      display: flex; justify-content: space-around; padding: 8px 4px; border-top: 2px solid #f59e0b; z-index: 99;
+    }
+    .bottom-nav button {
+      background: none; border: none; color: #cbd5e1; font-size: 11.5px; font-weight: 700;
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+    .bottom-nav button.active { color: #fbbf24; }
+
+    @media (max-width: 600px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- TOP HEADER -->
+    <div class="topbar">
+      <div>
+        <h1>🏠 SKYLINE HOMECARE</h1>
+        <p id="subTag">સુરતની વિશ્વસનીય હોમ રિપેર &amp; ફેબ્રિકેશન સર્વિસ</p>
+      </div>
+      <div class="lang-group">
+        <button id="btnGu" class="active" onclick="setLang('gu')">ગુજ</button>
+        <button id="btnHi" onclick="setLang('hi')">हिन्दी</button>
+        <button id="btnEn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <!-- TAB 1: CUSTOMER SERVICE BOOKING -->
+    <div id="tabBook" class="tab-section">
+      <div class="card">
+        <h3 id="lblSelectSrv">૧. કઈ સર્વિસ જોઈએ છે? (Select Service)</h3>
+        <div class="service-grid" id="serviceGrid">
+          <div class="srv-box selected" onclick="selectService(this, 'Fabrication & Welding', 199)">
+            <span class="icon">🛠️</span>
+            <strong>Fabrication</strong>
+            <small>શેડ, ગ્રીલ, ગેટ રિપેર (₹199)</small>
+          </div>
+          <div class="srv-box" onclick="selectService(this, 'Electrician', 149)">
+            <span class="icon">⚡</span>
+            <strong>Electrician</strong>
+            <small>વાયરિંગ, સ્વીચ, પંખા (₹149)</small>
+          </div>
+          <div class="srv-box" onclick="selectService(this, 'Plumber', 149)">
+            <span class="icon">🚰</span>
+            <strong>Plumber</strong>
+            <small>નળ, પાઈપ લીકેજ, ટાંકી (₹149)</small>
+          </div>
+          <div class="srv-box" onclick="selectService(this, 'Furniture / Carpenter', 199)">
+            <span class="icon">🪚</span>
+            <strong>Furniture</strong>
+            <small>દરવાજા, કબાટ રિપેર (₹199)</small>
+          </div>
+          <div class="srv-box" onclick="selectService(this, 'AC & Appliance Repair', 249)">
+            <span class="icon">❄️</span>
+            <strong>AC / Appliance</strong>
+            <small>AC, ફ્રીજ, RO, ગીઝર (₹249)</small>
+          </div>
+        </div>
+
+        <h3 id="lblCustForm">૨. ગ્રાહક અને સોસાયટીની વિગત</h3>
+        <div class="grid-2">
+          <div>
+            <label>ગ્રાહકનું નામ *</label>
+            <input type="text" id="custName" placeholder="દા.ત. રાજેશભાઈ પટેલ" />
+          </div>
+          <div>
+            <label>મોબાઈલ નંબર *</label>
+            <input type="tel" id="custMobile" placeholder="દા.ત. 9876543210" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label>સુરતનો વિસ્તાર (Area)</label>
+            <select id="custArea">
+              <option value="કામરેજ (Kamrej)">કામરેજ (Kamrej)</option>
+              <option value="વરાછા / સરથાણા (Varachha / Sarthana)">વરાછા / સરથાણા (Varachha)</option>
+              <option value="કતારગામ (Katargam)">કતારગામ (Katargam)</option>
+              <option value="અડાજણ / પાલ (Adajan / Pal)">અડાજણ / પાલ (Adajan)</option>
+              <option value="વેસુ / અલથાણ (Vesu / Althan)">વેસુ / અલથાણ (Vesu)</option>
+              <option value="ઉધના / ડિંડોલી (Udhna / Dindoli)">ઉધના / ડિંડોલી (Udhna)</option>
+            </select>
+          </div>
+          <div>
+            <label>પસંદગીની તારીખ અને સમય</label>
+            <input type="text" id="custSlot" value="આજે - 2 કલાકમાં (Urgent)" />
+          </div>
+        </div>
+
+        <div>
+          <label>સોસાયટી / ઘર નંબર અને કામની વિગત</label>
+          <textarea id="custProblem" rows="2" placeholder="દા.ત. B-104, ગ્રીન સિટી સોસાયટી - મેઈન ગેટ વેલ્ડિંગ અને કડી રિપેર કરવાની છે"></textarea>
+        </div>
+
+        <div style="background:#fffbeb;border:1px solid #f59e0b;padding:10px;border-radius:8px;margin-bottom:12px;font-size:13px;">
+          <strong>પસંદ કરેલ સર્વિસ:</strong> <span id="selectedSrvName">Fabrication &amp; Welding</span> |
+          <strong>વિઝિટ / ઇન્સ્પેક્શન ચાર્જ:</strong> <span id="selectedSrvFee" style="color:#b45309;font-weight:700;">₹199</span>
+        </div>
+
+        <div class="grid-2">
+          <button class="btn btn-primary" onclick="bookService()">✅ સર્વિસ બુક કરો (Book Now)</button>
+          <button class="btn btn-wa" onclick="bookViaWhatsApp()">📲 WhatsApp પર ડાયરેક્ટ બુક</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: MY BOOKINGS / ORDER TRACKING -->
+    <div id="tabOrders" class="tab-section" style="display:none;">
+      <div class="card">
+        <h3>
+          <span>📋 બુક થયેલા ઓર્ડર (Live Orders)</span>
+          <span id="orderCountBadge" style="font-size:12px;color:#d97706;">0 Orders</span>
+        </h3>
+        <div id="ordersList"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: TECHNICIAN PARTNER PORTAL -->
+    <div id="tabTech" class="tab-section" style="display:none;">
+      <div class="card">
+        <h3>👷 કારીગર / ટેકનિશિયન જોડાઓ (Partner Registration)</h3>
+        <p style="font-size:12.5px;color:#475569;margin-top:0;">સુરતના લોકલ કારીગરો (વેલ્ડર, ઈલેક્ટ્રિશિયન, પ્લમ્બર, સુથાર) અહીં રજિસ્ટર થઈને રોજના ઓર્ડર મેળવી શકે છે.</p>
+        <div class="grid-2">
+          <div>
+            <label>કારીગરનું નામ *</label>
+            <input type="text" id="techName" placeholder="દા.ત. સુરેશભાઈ મિસ્ત્રી" />
+          </div>
+          <div>
+            <label>મોબાઈલ નંબર *</label>
+            <input type="tel" id="techMobile" placeholder="દા.ત. 9825012345" />
+          </div>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label>કામની કેટેગરી (Skill)</label>
+            <select id="techSkill">
+              <option value="Fabrication & Welding">Fabrication &amp; Welding</option>
+              <option value="Electrician">Electrician</option>
+              <option value="Plumber">Plumber</option>
+              <option value="Furniture / Carpenter">Furniture / Carpenter</option>
+              <option value="AC & Appliance Repair">AC &amp; Appliance Repair</option>
+            </select>
+          </div>
+          <div>
+            <label>વિસ્તાર (Area)</label>
+            <input type="text" id="techArea" placeholder="દા.ત. કામરેજ / વરાછા" />
+          </div>
+        </div>
+        <button class="btn btn-success" onclick="registerTech()">+ ટેકનિશિયન રજિસ્ટર કરો</button>
+      </div>
+
+      <div class="card">
+        <h3>🔧 રજિસ્ટર્ડ કારીગરોની યાદી (Verified Partners)</h3>
+        <div id="techList"></div>
+      </div>
+    </div>
+
+    <!-- TAB 4: ADMIN REVENUE & COMMISSION -->
+    <div id="tabAdmin" class="tab-section" style="display:none;">
+      <div class="card">
+        <h3>📊 Skyline HomeCare ડેશબોર્ડ &amp; કમાણી</h3>
+        <div class="grid-3" style="text-align:center;">
+          <div style="background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #cbd5e1;">
+            <small>કુલ બુકિંગ</small>
+            <h2 id="statTotalJobs" style="margin:4px 0;color:#1e3a8a;">0</h2>
+          </div>
+          <div style="background:#f0fdf4;padding:12px;border-radius:8px;border:1px solid #86efac;">
+            <small>કુલ સર્વિસ બિલિંગ</small>
+            <h2 id="statGrossAmt" style="margin:4px 0;color:#15803d;">₹0</h2>
+          </div>
+          <div style="background:#fffbeb;padding:12px;border-radius:8px;border:1px solid #fcd34d;">
+            <small>તમારું કમિશન (15%)</small>
+            <h2 id="statCommission" style="margin:4px 0;color:#b45309;">₹0</h2>
+          </div>
+        </div>
+        <div style="margin-top:14px;font-size:13px;background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #cbd5e1;">
+          <strong>બિઝનેસ મોડેલ (Skyline HomeCare):</strong><br />
+          • ગ્રાહક વિઝિટ ચાર્જ: ₹149 – ₹249<br />
+          • દરેક પૂર્ણ થયેલા કામ પર પ્લેટફોર્મ કમિશન: <strong>15%</strong><br />
+          • ટેકનિશિયન મેમ્બરશિપ પ્લાન: <strong>₹499 / મહિનો</strong> અથવા <strong>₹1,499 / વર્ષ</strong><br />
+          • હેલ્પલાઈન &amp; એડમિન: <strong>જયવીરભાઈ મકવાણા (+91 91067 43538)</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="bottom-nav">
+    <button id="navBook" class="active" onclick="switchTab('tabBook', 'navBook')">🏠 બુકિંગ કરો</button>
+    <button id="navOrders" onclick="switchTab('tabOrders', 'navOrders')">📋 ઓર્ડર / જોબ</button>
+    <button id="navTech" onclick="switchTab('tabTech', 'navTech')">👷 કારીગર જોડાઓ</button>
+    <button id="navAdmin" onclick="switchTab('tabAdmin', 'navAdmin')">📊 કમાણી/એડમિન</button>
+  </div>
+
+  <script>
+    let currentService = 'Fabrication & Welding';
+    let currentFee = 199;
+
+    function selectService(el, name, fee) {
+      document.querySelectorAll('.srv-box').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+      currentService = name;
+      currentFee = fee;
+      document.getElementById('selectedSrvName').innerText = name;
+      document.getElementById('selectedSrvFee').innerText = '₹' + fee;
+    }
+
+    function switchTab(tabId, navId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.bottom-nav button').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).style.display = 'block';
+      document.getElementById(navId).classList.add('active');
+      renderOrders();
+      renderTechs();
+      updateStats();
+    }
+
+    function setLang(lang) {
+      document.querySelectorAll('.lang-group button').forEach(b => b.classList.remove('active'));
+      if (lang === 'gu') {
+        document.getElementById('btnGu').classList.add('active');
+        document.getElementById('subTag').innerText = 'સુરતની વિશ્વસનીય હોમ રિપેર & ફેબ્રિકેશન સર્વિસ';
+        document.getElementById('lblSelectSrv').innerText = '૧. કઈ સર્વિસ જોઈએ છે? (Select Service)';
+        document.getElementById('lblCustForm').innerText = '૨. ગ્રાહક અને સોસાયટીની વિગત';
+      } else if (lang === 'hi') {
+        document.getElementById('btnHi').classList.add('active');
+        document.getElementById('subTag').innerText = 'सूरत की भरोसेमंद होम रिपेयर और फैब्रिकेशन सर्विस';
+        document.getElementById('lblSelectSrv').innerText = '१. कौन सी सर्विस चाहिए? (Select Service)';
+        document.getElementById('lblCustForm').innerText = '२. ग्राहक और सोसाइटी का विवरण';
+      } else {
+        document.getElementById('btnEn').classList.add('active');
+        document.getElementById('subTag').innerText = 'Surat Trusted Home Repair & Fabrication Platform';
+        document.getElementById('lblSelectSrv').innerText = '1. Choose a Home Service';
+        document.getElementById('lblCustForm').innerText = '2. Customer & Society Details';
+      }
+    }
+
+    function bookService() {
+      const name = document.getElementById('custName').value.trim();
+      const mobile = document.getElementById('custMobile').value.trim();
+      const area = document.getElementById('custArea').value;
+      const slot = document.getElementById('custSlot').value;
+      const problem = document.getElementById('custProblem').value.trim();
+
+      if (!name || !mobile) {
+        alert('કૃપા કરીને ગ્રાહકનું નામ અને મોબાઈલ નંબર લખો.');
+        return;
+      }
+
+      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
+      const newOrder = {
+        id: 'HC-' + Math.floor(1001 + Math.random() * 8999),
+        service: currentService,
+        fee: currentFee,
+        finalBill: currentFee,
+        name,
+        mobile,
+        area,
+        slot,
+        problem: problem || 'General Inspection & Repair',
+        status: 'New',
+        techAssigned: 'Pending'
+      };
+      orders.unshift(newOrder);
+      localStorage.setItem('hc_orders', JSON.stringify(orders));
+
+      document.getElementById('custName').value = '';
+      document.getElementById('custMobile').value = '';
+      document.getElementById('custProblem').value = '';
+
+      alert(`✅ બુકિંગ કન્ફર્મ! ઓર્ડર નંબર: ${newOrder.id}\nઅમારા કારીગર ટૂંક સમયમાં સંપર્ક કરશે.`);
+      switchTab('tabOrders', 'navOrders');
+    }
+
+    function bookViaWhatsApp() {
+      const name = document.getElementById('custName').value.trim() || 'ગ્રાહક';
+      const mobile = document.getElementById('custMobile').value.trim() || '-';
+      const area = document.getElementById('custArea').value;
+      const problem = document.getElementById('custProblem').value.trim() || 'સર્વિસ રિક્વેસ્ટ';
+
+      let msg = `*SKYLINE HOMECARE - NEW BOOKING*\n`;
+      msg += `સર્વિસ: *${currentService}* (₹${currentFee})\n`;
+      msg += `નામ: *${name}*\n`;
+      msg += `મોબાઈલ: ${mobile}\n`;
+      msg += `વિસ્તાર: ${area}\n`;
+      msg += `વિગત: ${problem}`;
+
+      window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function renderOrders() {
+      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
+      document.getElementById('orderCountBadge').innerText = orders.length + ' Orders';
+      const box = document.getElementById('ordersList');
+
+      if (orders.length === 0) {
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હજુ સુધી કોઈ સર્વિસ બુક થઈ નથી.</p>';
+        return;
+      }
+
+      box.innerHTML = orders.map((o, idx) => {
+        let badgeClass = o.status === 'New' ? 'badge-new' : (o.status === 'Accepted' ? 'badge-accepted' : 'badge-done');
+        return `
+          <div class="job-item">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong>${o.service} (${o.id})</strong>
+              <span class="badge ${badgeClass}">${o.status}</span>
+            </div>
+            <div style="font-size:12.5px;color:#334155;margin:5px 0;">
+              👤 <strong>${o.name}</strong> (${o.mobile}) | 📍 ${o.area}<br/>
+              📝 ${o.problem}<br/>
+              👷 કારીગર: <strong>${o.techAssigned}</strong> | 💰 બિલ: <strong>₹${o.finalBill}</strong>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px;">
+              ${o.status === 'New' ? `<button class="btn btn-primary" style="padding:6px;font-size:12px;" onclick="acceptJob(${idx})">👷 કારીગર અસાઈન / Accept</button>` : ''}
+              ${o.status !== 'Completed' ? `<button class="btn btn-success" style="padding:6px;font-size:12px;" onclick="completeJob(${idx})">✅ કામ પૂર્ણ &amp; બિલ નાખો</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function acceptJob(idx) {
+      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
+      const tech = prompt('કારીગરનું નામ લખો (દા.ત. જયવીરભાઈ / સુરેશભાઈ):', 'Skyline Team');
+      if (tech) {
+        orders[idx].status = 'Accepted';
+        orders[idx].techAssigned = tech;
+        localStorage.setItem('hc_orders', JSON.stringify(orders));
+        renderOrders();
+      }
+    }
+
+    function completeJob(idx) {
+      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
+      const bill = parseFloat(prompt('કુલ સર્વિસ બિલની રકમ (₹) લખો:', orders[idx].fee));
+      if (!isNaN(bill) && bill > 0) {
+        orders[idx].status = 'Completed';
+        orders[idx].finalBill = bill;
+        localStorage.setItem('hc_orders', JSON.stringify(orders));
+        renderOrders();
+        updateStats();
+      }
+    }
+
+    function registerTech() {
+      const name = document.getElementById('techName').value.trim();
+      const mobile = document.getElementById('techMobile').value.trim();
+      const skill = document.getElementById('techSkill').value;
+      const area = document.getElementById('techArea').value.trim() || 'સુરત';
+
+      if (!name || !mobile) return alert('કારીગરનું નામ અને મોબાઈલ નંબર લખો.');
+
+      const techs = JSON.parse(localStorage.getItem('hc_techs') || '[]');
+      techs.unshift({ name, mobile, skill, area });
+      localStorage.setItem('hc_techs', JSON.stringify(techs));
+
+      document.getElementById('techName').value = '';
+      document.getElementById('techMobile').value = '';
+      document.getElementById('techArea').value = '';
+      renderTechs();
+      alert('✅ કારીગર રજિસ્ટર થઈ ગયા છે!');
+    }
+
+    function renderTechs() {
+      const techs = JSON.parse(localStorage.getItem('hc_techs') || '[]');
+      const box = document.getElementById('techList');
+      if (techs.length === 0) {
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હજુ સુધી કોઈ કારીગર રજિસ્ટર નથી થયા.</p>';
+        return;
+      }
+      box.innerHTML = techs.map(t => `
+        <div class="job-item" style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <strong>👷 ${t.name}</strong> (${t.skill})<br/>
+            <small>📍 ${t.area} | 📞 ${t.mobile}</small>
+          </div>
+          <a href="tel:${t.mobile}" class="btn btn-success" style="width:auto;padding:6px 12px;text-decoration:none;font-size:12px;">📞 Call</a>
+        </div>
+      `).join('');
+    }
+
+    function updateStats() {
+      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
+      const completed = orders.filter(o => o.status === 'Completed');
+      const gross = completed.reduce((sum, o) => sum + (o.finalBill || 0), 0);
+      const comm = Math.round(gross * 0.15);
+
+      document.getElementById('statTotalJobs').innerText = orders.length;
+      document.getElementById('statGrossAmt').innerText = '₹' + gross.toLocaleString('en-IN');
+      document.getElementById('statCommission').innerText = '₹' + comm.toLocaleString('en-IN');
+    }
+
+    // Initial load
+    renderOrders();
+    renderTechs();
+    updateStats();
+  </script>
+</body>
+</html>
