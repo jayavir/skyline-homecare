@@ -3,35 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skyline HomeCare - Surat Home Services &amp; Technicians</title>
+  <title>Skyline HomeCare - Surat Home Services &amp; Society AMC</title>
   <meta name="theme-color" content="#0f172a" />
   <link rel="manifest" href="manifest.json" />
   <style>
     * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { margin: 0; background: #0f172a; color: #1e293b; }
-    .container { max-width: 920px; margin: 0 auto; padding: 12px; padding-bottom: 85px; }
+    .container { max-width: 940px; margin: 0 auto; padding: 12px; padding-bottom: 85px; }
 
     /* Role Selection Login Screen */
     #roleScreen {
       min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 18px;
     }
     .role-card {
-      background: #fff; border-radius: 16px; padding: 24px 20px; width: 100%; max-width: 440px;
+      background: #fff; border-radius: 16px; padding: 24px 20px; width: 100%; max-width: 450px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.4); text-align: center;
     }
     .brand-badge {
-      background: #f59e0b; color: #0f172a; font-weight: 900; padding: 6px 14px;
-      border-radius: 20px; font-size: 12px; display: inline-block; margin-bottom: 8px;
+      background: #f59e0b; color: #0f172a; font-weight: 900; padding: 5px 14px;
+      border-radius: 20px; font-size: 11.5px; display: inline-block; margin-bottom: 8px;
     }
     .role-btn {
       width: 100%; border: 2px solid #e2e8f0; background: #f8fafc; border-radius: 12px;
-      padding: 14px; margin-bottom: 12px; text-align: left; cursor: pointer;
+      padding: 13px; margin-bottom: 11px; text-align: left; cursor: pointer;
       display: flex; align-items: center; gap: 14px; transition: 0.2s;
     }
     .role-btn:hover { border-color: #f59e0b; background: #fffbeb; }
-    .role-btn .r-icon { font-size: 30px; }
-    .role-btn strong { display: block; font-size: 15px; color: #0f172a; }
-    .role-btn small { display: block; font-size: 12px; color: #475569; margin-top: 2px; }
+    .role-btn .r-icon { font-size: 28px; }
+    .role-btn strong { display: block; font-size: 14.5px; color: #0f172a; }
+    .role-btn small { display: block; font-size: 11.5px; color: #475569; margin-top: 2px; }
 
     /* Header */
     .topbar {
@@ -42,10 +42,14 @@
     }
     .topbar h1 { margin: 0; font-size: 18px; color: #fbbf24; }
     .topbar p { margin: 2px 0 0; font-size: 11px; color: #cbd5e1; }
+    .live-dot {
+      display: inline-block; width: 8px; height: 8px; background: #22c55e;
+      border-radius: 50%; margin-right: 4px; box-shadow: 0 0 6px #22c55e;
+    }
     .top-actions { display: flex; gap: 6px; align-items: center; }
     .lang-group button, .switch-role-btn {
       background: #334155; color: #fff; border: 1px solid #475569; padding: 5px 9px;
-      border-radius: 6px; font-size: 11.5px; cursor: pointer; font-weight: 600;
+      border-radius: 6px; font-size: 11px; cursor: pointer; font-weight: 600;
     }
     .lang-group button.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
     .switch-role-btn { background: #dc2626; border-color: #dc2626; }
@@ -69,16 +73,25 @@
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
 
-    /* Service Category Grid */
-    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
+    /* Service & AMC Grids */
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 10px; margin-bottom: 14px; }
     .srv-box {
-      border: 2px solid #e2e8f0; border-radius: 10px; padding: 12px 8px; text-align: center;
+      border: 2px solid #e2e8f0; border-radius: 10px; padding: 11px 8px; text-align: center;
       cursor: pointer; transition: 0.2s; background: #f8fafc;
     }
     .srv-box.selected { border-color: #f59e0b; background: #fffbeb; }
-    .srv-box .icon { font-size: 26px; display: block; margin-bottom: 4px; }
-    .srv-box strong { font-size: 13px; color: #0f172a; display: block; }
-    .srv-box small { font-size: 11px; color: #64748b; }
+    .srv-box .icon { font-size: 25px; display: block; margin-bottom: 4px; }
+    .srv-box strong { font-size: 12.5px; color: #0f172a; display: block; }
+    .srv-box small { font-size: 10.5px; color: #64748b; }
+
+    .amc-card {
+      border: 2px solid #e2e8f0; border-radius: 12px; padding: 14px; background: #f8fafc;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .amc-card.popular { border-color: #f59e0b; background: #fffbeb; }
+    .amc-card h4 { margin: 0 0 6px; color: #0f172a; font-size: 15px; }
+    .amc-price { font-size: 20px; font-weight: 800; color: #1e3a8a; margin-bottom: 8px; }
+    .amc-card ul { padding-left: 18px; margin: 0 0 12px; font-size: 12px; color: #334155; line-height: 1.5; }
 
     /* Buttons */
     .btn {
@@ -105,13 +118,29 @@
       display: flex; justify-content: space-around; padding: 8px 4px; border-top: 2px solid #f59e0b; z-index: 99;
     }
     .bottom-nav button {
-      background: none; border: none; color: #cbd5e1; font-size: 11.5px; font-weight: 700;
+      background: none; border: none; color: #cbd5e1; font-size: 11px; font-weight: 700;
       cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
     }
     .bottom-nav button.active { color: #fbbf24; }
 
+    /* Print Bill Receipt Modal */
+    #receiptModal {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      z-index: 999; align-items: center; justify-content: center; padding: 14px;
+    }
+    .receipt-box {
+      background: #fff; width: 100%; max-width: 440px; border-radius: 12px; padding: 20px;
+      border-top: 6px solid #1e3a8a; box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
     @media (max-width: 600px) {
       .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #receiptPrintArea, #receiptPrintArea * { visibility: visible; }
+      #receiptPrintArea { position: fixed; left: 0; top: 0; width: 100%; }
+      .no-print { display: none !important; }
     }
   </style>
 </head>
@@ -120,15 +149,15 @@
   <!-- STEP 1: ROLE SELECTION SCREEN -->
   <div id="roleScreen">
     <div class="role-card">
-      <div class="brand-badge">SURAT • GUJARAT</div>
+      <div class="brand-badge">SURAT • GUJARAT • LIVE CLOUD</div>
       <h2 style="margin:4px 0;color:#0f172a;">🏠 Skyline HomeCare</h2>
       <p style="font-size:13px;color:#64748b;margin-top:0;margin-bottom:18px;">તમે એપનો ઉપયોગ કઈ રીતે કરવા માંગો છો? પસંદ કરો:</p>
 
       <div class="role-btn" onclick="enterRole('customer')">
         <span class="r-icon">🏠</span>
         <div>
-          <strong>હું ગ્રાહક છું (Customer)</strong>
-          <small>ઘર કે સોસાયટી માટે ફેબ્રિકેશન, ઈલેક્ટ્રિશિયન, પ્લમ્બર, AC રિપેર બુક કરો</small>
+          <strong>હું ગ્રાહક / સોસાયટી છું (Customer)</strong>
+          <small>હોમ સર્વિસ બુક કરો, સોસાયટી AMC પ્લાન જુઓ અને PDF બિલ મેળવો</small>
         </div>
       </div>
 
@@ -136,7 +165,7 @@
         <span class="r-icon">👷</span>
         <div>
           <strong>હું કારીગર / દુકાનદાર છું (Partner)</strong>
-          <small>નવા ઓર્ડર મેળવો, જોબ સ્વીકારો અને તમારો બિઝનેસ વધારો</small>
+          <small>લાઈવ ઓર્ડર મેળવો, જોબ સ્વીકારો અને ગ્રાહકનું PDF બિલ બનાવો</small>
         </div>
       </div>
 
@@ -149,7 +178,7 @@
       </div>
 
       <div id="adminPinBox" style="display:none;margin-top:10px;text-align:left;background:#f1f5f9;padding:12px;border-radius:10px;">
-        <label>એડમિન PIN નાખો (Default: 3538):</label>
+        <label>એડમિન PIN નાખો:</label>
         <div style="display:flex;gap:8px;">
           <input type="password" id="adminPinInput" placeholder="4 અંકનો PIN" maxlength="4" style="margin:0;" />
           <button class="btn btn-primary" style="width:auto;" onclick="verifyAdmin()">Login</button>
@@ -165,7 +194,7 @@
       <div class="topbar">
         <div>
           <h1>🏠 SKYLINE HOMECARE</h1>
-          <p id="roleSubBadge">Customer Portal • Surat</p>
+          <p><span class="live-dot"></span><span id="roleSubBadge">Live Cloud Sync • Surat</span></p>
         </div>
         <div class="top-actions">
           <div class="lang-group">
@@ -250,26 +279,85 @@
           </div>
 
           <div class="grid-2">
-            <button class="btn btn-primary" onclick="bookService()">✅ સર્વિસ બુક કરો (Book Now)</button>
+            <button class="btn btn-primary" onclick="bookService()">✅ લાઈવ સર્વિસ બુક કરો</button>
             <button class="btn btn-wa" onclick="bookViaWhatsApp()">📲 WhatsApp પર ડાયરેક્ટ બુક</button>
           </div>
         </div>
       </div>
 
-      <!-- CUSTOMER VIEW: MY BOOKINGS -->
+      <!-- CUSTOMER VIEW: SOCIETY AMC PACKAGES -->
+      <div id="secSocietyAMC" class="app-section" style="display:none;">
+        <div class="card">
+          <h3>🏢 હાઉસિંગ સોસાયટી &amp; બંગલો AMC (વાર્ષિક મેન્ટેનન્સ પ્લાન)</h3>
+          <p style="font-size:12.5px;color:#475569;margin-top:0;">સોસાયટીના કોમન ગેટ વેલ્ડિંગ, લાઈટિંગ, પાણીની મોટર-પ્લમ્બિંગ અને સિક્યુરિટી કેબિન મેન્ટેનન્સ માટે ખાસ વાર્ષિક કોન્ટ્રાક્ટ:</p>
+
+          <div class="grid-3">
+            <div class="amc-card">
+              <div>
+                <h4>🥉 Silver Society AMC</h4>
+                <div class="amc-price">₹4,999 <small style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
+                <ul>
+                  <li>દર ૩ મહિને ૧ રૂટિન ચેકઅપ (4 Visits)</li>
+                  <li>કોમન ગેટ વેલ્ડિંગ &amp; ગ્રીસ/ઓઈલિંગ</li>
+                  <li>કોમન સ્ટ્રીટ લાઈટ &amp; સ્વીચ રિપેર</li>
+                  <li>10% ડિસ્કાઉન્ટ દરેક ઘરના રિપેરિંગ પર</li>
+                </ul>
+              </div>
+              <button class="btn btn-primary" onclick="inquireAMC('Silver Society AMC - ₹4,999/Yr')">બુક / પૂછપરછ કરો</button>
+            </div>
+
+            <div class="amc-card popular">
+              <div>
+                <span class="badge badge-new" style="margin-bottom:6px;display:inline-block;">⭐ સૌથી લોકપ્રિય</span>
+                <h4>🥇 Gold Society AMC</h4>
+                <div class="amc-price">₹9,999 <small style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
+                <ul>
+                  <li>દર મહિને ૧ રૂટિન વિઝિટ (12 Visits)</li>
+                  <li>ફેબ્રિકેશન + ઈલેક્ટ્રિક + પ્લમ્બિંગ કવર</li>
+                  <li>ઈમરજન્સી 2-કલાકમાં પ્રાથમિકતા સપોર્ટ</li>
+                  <li>15% ડિસ્કાઉન્ટ સોસાયટીના દરેક સભ્યને</li>
+                </ul>
+              </div>
+              <button class="btn btn-warning" onclick="inquireAMC('Gold Society AMC - ₹9,999/Yr')">બુક / પૂછપરછ કરો</button>
+            </div>
+
+            <div class="amc-card">
+              <div>
+                <h4>💎 Platinum Township AMC</h4>
+                <div class="amc-price">₹18,999 <small style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
+                <ul>
+                  <li>અનલિમિટેડ ઈમરજન્સી કોલ વિઝિટ</li>
+                  <li>મેઈન ગેટ, શેડ, મોટર પંપ &amp; AC કવર</li>
+                  <li>ચોમાસા પહેલા ખાસ શેડ-રૂફ ઈન્સ્પેક્શન</li>
+                  <li>20% ડિસ્કાઉન્ટ નવા ફેબ્રિકેશન કામ પર</li>
+                </ul>
+              </div>
+              <button class="btn btn-success" onclick="inquireAMC('Platinum Township AMC - ₹18,999/Yr')">બુક / પૂછપરછ કરો</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CUSTOMER VIEW: MY BOOKINGS & PDF BILL -->
       <div id="secCustOrders" class="app-section" style="display:none;">
         <div class="card">
-          <h3>📋 મારા બુકિંગ્સ (My Service Status)</h3>
+          <h3>
+            <span>📋 લાઈવ બુકિંગ સ્ટેટસ &amp; PDF બિલ</span>
+            <button class="btn btn-primary" style="width:auto;padding:5px 10px;font-size:11px;" onclick="syncFromCloud()">🔄 Refresh</button>
+          </h3>
           <div id="custOrdersList"></div>
         </div>
       </div>
 
-      <!-- PARTNER VIEW: AVAILABLE JOBS -->
+      <!-- PARTNER VIEW: LIVE JOBS -->
       <div id="secPartnerJobs" class="app-section" style="display:none;">
         <div class="card">
           <h3>
-            <span>🔔 નવા ગ્રાહક ઓર્ડર (Live Jobs)</span>
-            <span id="partnerJobBadge" style="font-size:12px;color:#d97706;">0 Jobs</span>
+            <span>🔔 લાઈવ ગ્રાહક ઓર્ડર (Cloud Live Jobs)</span>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <span id="partnerJobBadge" style="font-size:12px;color:#d97706;">0 Jobs</span>
+              <button class="btn btn-primary" style="width:auto;padding:4px 9px;font-size:11px;" onclick="syncFromCloud()">🔄 Sync</button>
+            </div>
           </h3>
           <div id="partnerJobsList"></div>
         </div>
@@ -278,7 +366,7 @@
       <!-- PARTNER VIEW: PROFILE & REGISTRATION -->
       <div id="secPartnerProfile" class="app-section" style="display:none;">
         <div class="card">
-          <h3>👷 દુકાનદાર / કારીગર પ્રોફાઈલ રજિસ્ટ્રેશન</h3>
+          <h3>👷 દુકાનદાર / કારીગર લાઈવ રજિસ્ટ્રેશન</h3>
           <div class="grid-2">
             <div>
               <label>તમારું / દુકાનનું નામ *</label>
@@ -305,299 +393,7 @@
               <input type="text" id="techArea" placeholder="દા.ત. કામરેજ / વરાછા" />
             </div>
           </div>
-          <button class="btn btn-success" onclick="registerTech()">💾 પ્રોફાઈલ સેવ / રજિસ્ટર કરો</button>
+          <button class="btn btn-success" onclick="registerTech()">💾 લાઈવ રજિસ્ટર કરો</button>
 
           <div style="background:#f0fdf4;border:1px solid #16a34a;padding:12px;border-radius:8px;margin-top:14px;font-size:12.5px;">
-            <strong style="color:#15803d;">⭐ Skyline Partner Membership Plan:</strong><br />
-            • માસિક પ્લાન: <strong>₹499 / મહિનો</strong> (અનલિમિટેડ લોકલ લીડ્સ)<br />
-            • વાર્ષિક પ્લાન: <strong>₹1,499 / વર્ષ</strong> (Verified Badge સાથે)
-          </div>
-        </div>
-      </div>
-
-      <!-- ADMIN VIEW: REVENUE & ALL MANAGEMENT -->
-      <div id="secAdminDash" class="app-section" style="display:none;">
-        <div class="card">
-          <h3>📊 Skyline HomeCare એડમિન ડેશબોર્ડ</h3>
-          <div class="grid-3" style="text-align:center;margin-bottom:12px;">
-            <div style="background:#f8fafc;padding:10px;border-radius:8px;border:1px solid #cbd5e1;">
-              <small>કુલ ઓર્ડર</small>
-              <h2 id="statTotalJobs" style="margin:4px 0;color:#1e3a8a;">0</h2>
-            </div>
-            <div style="background:#f0fdf4;padding:10px;border-radius:8px;border:1px solid #86efac;">
-              <small>કુલ બિલિંગ</small>
-              <h2 id="statGrossAmt" style="margin:4px 0;color:#15803d;">₹0</h2>
-            </div>
-            <div style="background:#fffbeb;padding:10px;border-radius:8px;border:1px solid #fcd34d;">
-              <small>તમારું કમિશન (15%)</small>
-              <h2 id="statCommission" style="margin:4px 0;color:#b45309;">₹0</h2>
-            </div>
-          </div>
-          <h3>🔧 રજિસ્ટર્ડ દુકાનદારો / કારીગરોની યાદી</h3>
-          <div id="adminTechList"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DYNAMIC BOTTOM NAVIGATION -->
-    <div class="bottom-nav" id="dynamicBottomNav"></div>
-  </div>
-
-  <script>
-    let activeRole = 'customer';
-    let currentService = 'Fabrication & Welding';
-    let currentFee = 199;
-
-    function openAdminPrompt() {
-      const box = document.getElementById('adminPinBox');
-      box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-    }
-
-    function verifyAdmin() {
-      const pin = document.getElementById('adminPinInput').value.trim();
-      if (pin === '3538') {
-        enterRole('admin');
-      } else {
-        alert('ખોટો PIN! સાચો PIN: 3538 નાખો.');
-      }
-    }
-
-    function switchRoleScreen() {
-      document.getElementById('mainApp').style.display = 'none';
-      document.getElementById('roleScreen').style.display = 'flex';
-      document.getElementById('adminPinInput').value = '';
-    }
-
-    function enterRole(role) {
-      activeRole = role;
-      document.getElementById('roleScreen').style.display = 'none';
-      document.getElementById('mainApp').style.display = 'block';
-
-      const nav = document.getElementById('dynamicBottomNav');
-      const badge = document.getElementById('roleSubBadge');
-
-      if (role === 'customer') {
-        badge.innerText = 'Customer Portal • Surat, Gujarat';
-        nav.innerHTML = `
-          <button id="btnNav1" class="active" onclick="showSection('secCustBook', 'btnNav1')">🏠 સર્વિસ બુક કરો</button>
-          <button id="btnNav2" onclick="showSection('secCustOrders', 'btnNav2')">📋 મારા ઓર્ડર</button>
-        `;
-        showSection('secCustBook', 'btnNav1');
-      } else if (role === 'partner') {
-        badge.innerText = 'Partner / Dukandar Portal • Surat';
-        nav.innerHTML = `
-          <button id="btnNav1" class="active" onclick="showSection('secPartnerJobs', 'btnNav1')">🔔 નવા ઓર્ડર (Jobs)</button>
-          <button id="btnNav2" onclick="showSection('secPartnerProfile', 'btnNav2')">👷 મારી પ્રોફાઈલ / પ્લાન</button>
-        `;
-        showSection('secPartnerJobs', 'btnNav1');
-      } else if (role === 'admin') {
-        badge.innerText = 'Admin Owner Panel • Jayavirbhai Makwana';
-        nav.innerHTML = `
-          <button id="btnNav1" class="active" onclick="showSection('secAdminDash', 'btnNav1')">📊 કમાણી &amp; પાર્ટનર્સ</button>
-          <button id="btnNav2" onclick="showSection('secPartnerJobs', 'btnNav2')">📋 બધા ઓર્ડર મેનેજ</button>
-        `;
-        showSection('secAdminDash', 'btnNav1');
-      }
-    }
-
-    function showSection(secId, navBtnId) {
-      document.querySelectorAll('.app-section').forEach(el => el.style.display = 'none');
-      document.querySelectorAll('.bottom-nav button').forEach(el => el.classList.remove('active'));
-      document.getElementById(secId).style.display = 'block';
-      if (document.getElementById(navBtnId)) document.getElementById(navBtnId).classList.add('active');
-
-      renderCustOrders();
-      renderPartnerJobs();
-      renderAdminData();
-    }
-
-    function selectService(el, name, fee) {
-      document.querySelectorAll('.srv-box').forEach(b => b.classList.remove('selected'));
-      el.classList.add('selected');
-      currentService = name;
-      currentFee = fee;
-      document.getElementById('selectedSrvName').innerText = name;
-      document.getElementById('selectedSrvFee').innerText = '₹' + fee;
-    }
-
-    function setLang(lang) {
-      document.querySelectorAll('.lang-group button').forEach(b => b.classList.remove('active'));
-      if (lang === 'gu') {
-        document.getElementById('btnGu').classList.add('active');
-        document.getElementById('lblSelectSrv').innerText = '૧. કઈ સર્વિસ જોઈએ છે? (Select Service)';
-        document.getElementById('lblCustForm').innerText = '૨. ગ્રાહક અને સોસાયટીની વિગત';
-      } else if (lang === 'hi') {
-        document.getElementById('btnHi').classList.add('active');
-        document.getElementById('lblSelectSrv').innerText = '१. कौन सी सर्विस चाहिए? (Select Service)';
-        document.getElementById('lblCustForm').innerText = '२. ग्राहक और सोसाइटी का विवरण';
-      } else {
-        document.getElementById('btnEn').classList.add('active');
-        document.getElementById('lblSelectSrv').innerText = '1. Choose a Home Service';
-        document.getElementById('lblCustForm').innerText = '2. Customer & Society Details';
-      }
-    }
-
-    function bookService() {
-      const name = document.getElementById('custName').value.trim();
-      const mobile = document.getElementById('custMobile').value.trim();
-      const area = document.getElementById('custArea').value;
-      const slot = document.getElementById('custSlot').value;
-      const problem = document.getElementById('custProblem').value.trim();
-
-      if (!name || !mobile) return alert('કૃપા કરીને તમારું નામ અને મોબાઈલ નંબર લખો.');
-
-      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
-      const newOrder = {
-        id: 'HC-' + Math.floor(1001 + Math.random() * 8999),
-        service: currentService,
-        fee: currentFee,
-        finalBill: currentFee,
-        name,
-        mobile,
-        area,
-        slot,
-        problem: problem || 'General Inspection & Repair',
-        status: 'New',
-        techAssigned: 'Assigning Soon...'
-      };
-      orders.unshift(newOrder);
-      localStorage.setItem('hc_orders', JSON.stringify(orders));
-
-      document.getElementById('custName').value = '';
-      document.getElementById('custMobile').value = '';
-      document.getElementById('custProblem').value = '';
-
-      alert(`✅ બુકિંગ થઈ ગયું છે! ઓર્ડર નંબર: ${newOrder.id}\nનજીકના ટેકનિશિયન ટૂંક સમયમાં તમારો સંપર્ક કરશે.`);
-      showSection('secCustOrders', 'btnNav2');
-    }
-
-    function bookViaWhatsApp() {
-      const name = document.getElementById('custName').value.trim() || 'ગ્રાહક';
-      const mobile = document.getElementById('custMobile').value.trim() || '-';
-      const area = document.getElementById('custArea').value;
-      const problem = document.getElementById('custProblem').value.trim() || 'સર્વિસ રિક્વેસ્ટ';
-
-      let msg = `*SKYLINE HOMECARE - NEW BOOKING*\nસર્વિસ: *${currentService}* (₹${currentFee})\nનામ: *${name}*\nમોબાઈલ: ${mobile}\nવિસ્તાર: ${area}\nવિગત: ${problem}`;
-      window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    function renderCustOrders() {
-      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
-      const box = document.getElementById('custOrdersList');
-      if (orders.length === 0) {
-        box.innerHTML = '<p style="font-size:13px;color:#64748b;">તમે હજુ સુધી કોઈ સર્વિસ બુક કરી નથી.</p>';
-        return;
-      }
-      box.innerHTML = orders.map(o => {
-        let badgeClass = o.status === 'New' ? 'badge-new' : (o.status === 'Accepted' ? 'badge-accepted' : 'badge-done');
-        return `
-          <div class="job-item">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong>${o.service} (${o.id})</strong>
-              <span class="badge ${badgeClass}">${o.status}</span>
-            </div>
-            <div style="font-size:12.5px;color:#334155;margin-top:5px;">
-              📍 ${o.area} | ⏰ ${o.slot}<br/>
-              👷 ટેકનિશિયન: <strong>${o.techAssigned}</strong> | 💰 અંદાજિત/ફાઈનલ બિલ: <strong>₹${o.finalBill}</strong>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderPartnerJobs() {
-      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
-      document.getElementById('partnerJobBadge').innerText = orders.length + ' Jobs';
-      const box = document.getElementById('partnerJobsList');
-      if (orders.length === 0) {
-        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હાલમાં કોઈ નવો ગ્રાહક ઓર્ડર નથી.</p>';
-        return;
-      }
-      box.innerHTML = orders.map((o, idx) => {
-        let badgeClass = o.status === 'New' ? 'badge-new' : (o.status === 'Accepted' ? 'badge-accepted' : 'badge-done');
-        return `
-          <div class="job-item">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong>${o.service} (${o.id})</strong>
-              <span class="badge ${badgeClass}">${o.status}</span>
-            </div>
-            <div style="font-size:12.5px;color:#334155;margin:5px 0;">
-              👤 <strong>${o.name}</strong> (<a href="tel:${o.mobile}">${o.mobile}</a>) | 📍 ${o.area}<br/>
-              📝 ${o.problem}<br/>
-              👷 Assigned: <strong>${o.techAssigned}</strong> | 💰 બિલ: <strong>₹${o.finalBill}</strong>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:8px;">
-              ${o.status === 'New' ? `<button class="btn btn-primary" style="padding:6px;font-size:12px;" onclick="acceptJob(${idx})">✅ Accept Job (ઓર્ડર લો)</button>` : ''}
-              ${o.status !== 'Completed' ? `<button class="btn btn-success" style="padding:6px;font-size:12px;" onclick="completeJob(${idx})">💰 કામ પૂર્ણ &amp; બિલ નાખો</button>` : ''}
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function acceptJob(idx) {
-      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
-      const tech = prompt('તમારું / દુકાનનું નામ લખો:', 'Skyline Partner');
-      if (tech) {
-        orders[idx].status = 'Accepted';
-        orders[idx].techAssigned = tech;
-        localStorage.setItem('hc_orders', JSON.stringify(orders));
-        renderPartnerJobs();
-      }
-    }
-
-    function completeJob(idx) {
-      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
-      const bill = parseFloat(prompt('ગ્રાહક પાસેથી લીધેલ કુલ બિલ રકમ (₹) લખો:', orders[idx].fee));
-      if (!isNaN(bill) && bill > 0) {
-        orders[idx].status = 'Completed';
-        orders[idx].finalBill = bill;
-        localStorage.setItem('hc_orders', JSON.stringify(orders));
-        renderPartnerJobs();
-        renderAdminData();
-      }
-    }
-
-    function registerTech() {
-      const name = document.getElementById('techName').value.trim();
-      const mobile = document.getElementById('techMobile').value.trim();
-      const skill = document.getElementById('techSkill').value;
-      const area = document.getElementById('techArea').value.trim() || 'સુરત';
-      if (!name || !mobile) return alert('નામ અને મોબાઈલ નંબર લખો.');
-
-      const techs = JSON.parse(localStorage.getItem('hc_techs') || '[]');
-      techs.unshift({ name, mobile, skill, area });
-      localStorage.setItem('hc_techs', JSON.stringify(techs));
-      alert('✅ તમારી પાર્ટનર પ્રોફાઈલ સેવ થઈ ગઈ છે! હવે તમે Live Jobs સ્વીકારી શકો છો.');
-      showSection('secPartnerJobs', 'btnNav1');
-    }
-
-    function renderAdminData() {
-      const orders = JSON.parse(localStorage.getItem('hc_orders') || '[]');
-      const completed = orders.filter(o => o.status === 'Completed');
-      const gross = completed.reduce((sum, o) => sum + (o.finalBill || 0), 0);
-      const comm = Math.round(gross * 0.15);
-
-      document.getElementById('statTotalJobs').innerText = orders.length;
-      document.getElementById('statGrossAmt').innerText = '₹' + gross.toLocaleString('en-IN');
-      document.getElementById('statCommission').innerText = '₹' + comm.toLocaleString('en-IN');
-
-      const techs = JSON.parse(localStorage.getItem('hc_techs') || '[]');
-      const box = document.getElementById('adminTechList');
-      if (techs.length === 0) {
-        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હજુ સુધી કોઈ પાર્ટનર રજિસ્ટર નથી થયા.</p>';
-        return;
-      }
-      box.innerHTML = techs.map(t => `
-        <div class="job-item" style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <strong>👷 ${t.name}</strong> (${t.skill})<br/>
-            <small>📍 ${t.area} | 📞 ${t.mobile}</small>
-          </div>
-          <a href="tel:${t.mobile}" class="btn btn-success" style="width:auto;padding:6px 12px;text-decoration:none;font-size:12px;">📞 Call</a>
-        </div>
-      `).join('');
-    }
-  </script>
-</body>
-</html>
+            <strong style="color:#15803d;">⭐ Skyline Partner Membership
