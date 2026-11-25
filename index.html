@@ -396,4 +396,408 @@
           <button class="btn btn-success" onclick="registerTech()">💾 લાઈવ રજિસ્ટર કરો</button>
 
           <div style="background:#f0fdf4;border:1px solid #16a34a;padding:12px;border-radius:8px;margin-top:14px;font-size:12.5px;">
-            <strong style="color:#15803d;">⭐ Skyline Partner Membership
+            <strong style="color:#15803d;">⭐ Skyline Partner Membership Plan:</strong><br />
+            • માસિક પ્લાન: <strong>₹499 / મહિનો</strong> (અનલિમિટેડ લોકલ લીડ્સ)<br />
+            • વાર્ષિક પ્લાન: <strong>₹1,499 / વર્ષ</strong> (Verified Badge સાથે)
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN VIEW: REVENUE & ALL MANAGEMENT -->
+      <div id="secAdminDash" class="app-section" style="display:none;">
+        <div class="card">
+          <h3>
+            <span>📊 Skyline HomeCare એડમિન ડેશબોર્ડ (Live)</span>
+            <button class="btn btn-primary" style="width:auto;padding:4px 9px;font-size:11px;" onclick="syncFromCloud()">🔄 Refresh</button>
+          </h3>
+          <div class="grid-3" style="text-align:center;margin-bottom:12px;">
+            <div style="background:#f8fafc;padding:10px;border-radius:8px;border:1px solid #cbd5e1;">
+              <small>કુલ લાઈવ ઓર્ડર</small>
+              <h2 id="statTotalJobs" style="margin:4px 0;color:#1e3a8a;">0</h2>
+            </div>
+            <div style="background:#f0fdf4;padding:10px;border-radius:8px;border:1px solid #86efac;">
+              <small>કુલ બિલિંગ (Completed)</small>
+              <h2 id="statGrossAmt" style="margin:4px 0;color:#15803d;">₹0</h2>
+            </div>
+            <div style="background:#fffbeb;padding:10px;border-radius:8px;border:1px solid #fcd34d;">
+              <small>તમારું કમિશન (15%)</small>
+              <h2 id="statCommission" style="margin:4px 0;color:#b45309;">₹0</h2>
+            </div>
+          </div>
+          <h3>🔧 રજિસ્ટર્ડ દુકાનદારો / કારીગરોની યાદી</h3>
+          <div id="adminTechList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DYNAMIC BOTTOM NAVIGATION -->
+    <div class="bottom-nav" id="dynamicBottomNav"></div>
+  </div>
+
+  <!-- PDF / PRINT BILL RECEIPT MODAL -->
+  <div id="receiptModal">
+    <div class="receipt-box" id="receiptPrintArea">
+      <div style="text-align:center;border-bottom:2px dashed #cbd5e1;padding-bottom:10px;margin-bottom:12px;">
+        <h2 style="margin:0;color:#1e3a8a;font-size:19px;">🏠 SKYLINE HOMECARE</h2>
+        <p style="margin:2px 0;font-size:11.5px;color:#475569;">Surat's Trusted Home Maintenance &amp; Fabrication Service</p>
+        <p style="margin:2px 0;font-size:11.5px;font-weight:700;color:#0f172a;">Helpline: +91 91067 43538 | Surat, Gujarat</p>
+      </div>
+      <div id="receiptContent" style="font-size:13px;line-height:1.65;color:#1e293b;"></div>
+      <div class="no-print" style="display:flex;gap:8px;margin-top:14px;">
+        <button class="btn btn-primary" onclick="window.print()">🖨️ PDF / Print સેવ કરો</button>
+        <button class="btn btn-wa" id="btnShareBillWA">📲 WhatsApp બિલ</button>
+        <button class="btn" style="background:#e2e8f0;color:#0f172a;" onclick="closeReceipt()">બંધ કરો</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DB_URL = "https://skyline-homecare-default-rtdb.asia-southeast1.firebasedatabase.app";
+    let activeRole = 'customer';
+    let currentService = 'Fabrication & Welding';
+    let currentFee = 199;
+    let liveOrders = [];
+    let liveTechs = [];
+
+    // Fetch Live Data from Firebase Realtime Database
+    async function syncFromCloud() {
+      try {
+        const [ordRes, techRes] = await Promise.all([
+          fetch(`${DB_URL}/orders.json`),
+          fetch(`${DB_URL}/techs.json`)
+        ]);
+        const ordData = await ordRes.json();
+        const techData = await techRes.json();
+
+        liveOrders = ordData
+          ? Object.keys(ordData).map(k => ({ firebaseKey: k, ...ordData[k] })).reverse()
+          : [];
+        liveTechs = techData
+          ? Object.keys(techData).map(k => ({ firebaseKey: k, ...techData[k] })).reverse()
+          : [];
+
+        renderCustOrders();
+        renderPartnerJobs();
+        renderAdminData();
+      } catch (err) {
+        console.error("Cloud sync error:", err);
+      }
+    }
+
+    // Auto-refresh every 6 seconds when app is open
+    setInterval(() => {
+      if (document.getElementById('mainApp').style.display === 'block') {
+        syncFromCloud();
+      }
+    }, 6000);
+
+    function openAdminPrompt() {
+      const box = document.getElementById('adminPinBox');
+      box.style.display = (box.style.display === 'none') ? 'block' : 'none';
+    }
+
+    function verifyAdmin() {
+      const pin = document.getElementById('adminPinInput').value.trim();
+      if (pin === '3538') {
+        enterRole('admin');
+      } else {
+        alert('ખોટો PIN! સાચો PIN નાખો.');
+      }
+    }
+
+    function switchRoleScreen() {
+      document.getElementById('mainApp').style.display = 'none';
+      document.getElementById('roleScreen').style.display = 'flex';
+      document.getElementById('adminPinInput').value = '';
+    }
+
+    function enterRole(role) {
+      activeRole = role;
+      document.getElementById('roleScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+
+      const nav = document.getElementById('dynamicBottomNav');
+      const badge = document.getElementById('roleSubBadge');
+
+      if (role === 'customer') {
+        badge.innerText = 'Customer Portal • Live Cloud • Surat';
+        nav.innerHTML = `
+          <button id="btnNav1" class="active" onclick="showSection('secCustBook', 'btnNav1')">🏠 સર્વિસ બુક</button>
+          <button id="btnNav2" onclick="showSection('secSocietyAMC', 'btnNav2')">🏢 સોસાયટી AMC</button>
+          <button id="btnNav3" onclick="showSection('secCustOrders', 'btnNav3')">📋 મારા ઓર્ડર / બિલ</button>
+        `;
+        showSection('secCustBook', 'btnNav1');
+      } else if (role === 'partner') {
+        badge.innerText = 'Partner / Dukandar Portal • Live Jobs';
+        nav.innerHTML = `
+          <button id="btnNav1" class="active" onclick="showSection('secPartnerJobs', 'btnNav1')">🔔 લાઈવ ઓર્ડર</button>
+          <button id="btnNav2" onclick="showSection('secPartnerProfile', 'btnNav2')">👷 મારી પ્રોફાઈલ / પ્લાન</button>
+        `;
+        showSection('secPartnerJobs', 'btnNav1');
+      } else if (role === 'admin') {
+        badge.innerText = 'Admin Owner Panel • Jayavirbhai Makwana';
+        nav.innerHTML = `
+          <button id="btnNav1" class="active" onclick="showSection('secAdminDash', 'btnNav1')">📊 કમાણી &amp; પાર્ટનર્સ</button>
+          <button id="btnNav2" onclick="showSection('secPartnerJobs', 'btnNav2')">📋 બધા લાઈવ ઓર્ડર</button>
+          <button id="btnNav3" onclick="showSection('secSocietyAMC', 'btnNav3')">🏢 AMC પ્લાન</button>
+        `;
+        showSection('secAdminDash', 'btnNav1');
+      }
+      syncFromCloud();
+    }
+
+    function showSection(secId, navBtnId) {
+      document.querySelectorAll('.app-section').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.bottom-nav button').forEach(el => el.classList.remove('active'));
+      document.getElementById(secId).style.display = 'block';
+      if (document.getElementById(navBtnId)) document.getElementById(navBtnId).classList.add('active');
+    }
+
+    function selectService(el, name, fee) {
+      document.querySelectorAll('.srv-box').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+      currentService = name;
+      currentFee = fee;
+      document.getElementById('selectedSrvName').innerText = name;
+      document.getElementById('selectedSrvFee').innerText = '₹' + fee;
+    }
+
+    function setLang(lang) {
+      document.querySelectorAll('.lang-group button').forEach(b => b.classList.remove('active'));
+      if (lang === 'gu') {
+        document.getElementById('btnGu').classList.add('active');
+        document.getElementById('lblSelectSrv').innerText = '૧. કઈ સર્વિસ જોઈએ છે? (Select Service)';
+        document.getElementById('lblCustForm').innerText = '૨. ગ્રાહક અને સોસાયટીની વિગત';
+      } else if (lang === 'hi') {
+        document.getElementById('btnHi').classList.add('active');
+        document.getElementById('lblSelectSrv').innerText = '१. कौन सी सर्विस चाहिए? (Select Service)';
+        document.getElementById('lblCustForm').innerText = '२. ग्राहक और सोसाइटी का विवरण';
+      } else {
+        document.getElementById('btnEn').classList.add('active');
+        document.getElementById('lblSelectSrv').innerText = '1. Choose a Home Service';
+        document.getElementById('lblCustForm').innerText = '2. Customer & Society Details';
+      }
+    }
+
+    async function bookService() {
+      const name = document.getElementById('custName').value.trim();
+      const mobile = document.getElementById('custMobile').value.trim();
+      const area = document.getElementById('custArea').value;
+      const slot = document.getElementById('custSlot').value;
+      const problem = document.getElementById('custProblem').value.trim();
+
+      if (!name || !mobile) return alert('કૃપા કરીને તમારું નામ અને મોબાઈલ નંબર લખો.');
+
+      const newOrder = {
+        id: 'HC-' + Math.floor(1001 + Math.random() * 8999),
+        date: new Date().toLocaleDateString('en-IN'),
+        service: currentService,
+        fee: currentFee,
+        finalBill: currentFee,
+        name,
+        mobile,
+        area,
+        slot,
+        problem: problem || 'General Inspection & Repair',
+        status: 'New',
+        techAssigned: 'Assigning Soon...'
+      };
+
+      await fetch(`${DB_URL}/orders.json`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      });
+
+      document.getElementById('custName').value = '';
+      document.getElementById('custMobile').value = '';
+      document.getElementById('custProblem').value = '';
+
+      await syncFromCloud();
+      alert(`✅ લાઈવ બુકિંગ થઈ ગયું છે! ઓર્ડર નંબર: ${newOrder.id}\nતમારો ઓર્ડર સીધો જ નજીકના કારીગરના ફોનમાં પહોંચી ગયો છે.`);
+      showSection('secCustOrders', 'btnNav3');
+    }
+
+    function bookViaWhatsApp() {
+      const name = document.getElementById('custName').value.trim() || 'ગ્રાહક';
+      const mobile = document.getElementById('custMobile').value.trim() || '-';
+      const area = document.getElementById('custArea').value;
+      const problem = document.getElementById('custProblem').value.trim() || 'સર્વિસ રિક્વેસ્ટ';
+
+      let msg = `*SKYLINE HOMECARE - NEW BOOKING*\nસર્વિસ: *${currentService}* (₹${currentFee})\nનામ: *${name}*\nમોબાઈલ: ${mobile}\nવિસ્તાર: ${area}\nવિગત: ${problem}`;
+      window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function inquireAMC(planName) {
+      const soc = prompt('તમારી સોસાયટી / બંગલોનું નામ અને વિસ્તાર લખો:', 'ગ્રીન સિટી સોસાયટી, કામરેજ');
+      if (soc) {
+        let msg = `*SKYLINE HOMECARE - SOCIETY AMC INQUIRY*\nપસંદ કરેલ પ્લાન: *${planName}*\nસોસાયટી / સરનામું: *${soc}*\nકૃપા કરીને અમારી સોસાયટીની મુલાકાત માટે સંપર્ક કરો.`;
+        window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
+      }
+    }
+
+    function renderCustOrders() {
+      const box = document.getElementById('custOrdersList');
+      if (!box) return;
+      if (liveOrders.length === 0) {
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હજુ સુધી કોઈ સર્વિસ બુક થઈ નથી.</p>';
+        return;
+      }
+      box.innerHTML = liveOrders.map((o, idx) => {
+        let badgeClass = o.status === 'New' ? 'badge-new' : (o.status === 'Accepted' ? 'badge-accepted' : 'badge-done');
+        return `
+          <div class="job-item">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong>${o.service} (${o.id})</strong>
+              <span class="badge ${badgeClass}">${o.status}</span>
+            </div>
+            <div style="font-size:12.5px;color:#334155;margin-top:5px;">
+              👤 ${o.name} | 📍 ${o.area} | 📅 ${o.date || ''}<br/>
+              👷 ટેકનિશિયન: <strong>${o.techAssigned}</strong> | 💰 ફાઈનલ બિલ: <strong>₹${o.finalBill}</strong>
+            </div>
+            <div style="margin-top:8px;">
+              <button class="btn btn-primary" style="width:auto;padding:6px 12px;font-size:12px;" onclick="openReceipt(${idx})">🧾 PDF બિલ રસીદ જુઓ</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPartnerJobs() {
+      const box = document.getElementById('partnerJobsList');
+      if (!box) return;
+      document.getElementById('partnerJobBadge').innerText = liveOrders.length + ' Live Jobs';
+      if (liveOrders.length === 0) {
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હાલમાં કોઈ નવો ગ્રાહક ઓર્ડર નથી.</p>';
+        return;
+      }
+      box.innerHTML = liveOrders.map((o, idx) => {
+        let badgeClass = o.status === 'New' ? 'badge-new' : (o.status === 'Accepted' ? 'badge-accepted' : 'badge-done');
+        return `
+          <div class="job-item">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong>${o.service} (${o.id})</strong>
+              <span class="badge ${badgeClass}">${o.status}</span>
+            </div>
+            <div style="font-size:12.5px;color:#334155;margin:5px 0;">
+              👤 <strong>${o.name}</strong> (<a href="tel:${o.mobile}">${o.mobile}</a>) | 📍 ${o.area}<br/>
+              📝 ${o.problem}<br/>
+              👷 Assigned: <strong>${o.techAssigned}</strong> | 💰 બિલ: <strong>₹${o.finalBill}</strong>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+              ${o.status === 'New' ? `<button class="btn btn-primary" style="width:auto;padding:6px 12px;font-size:12px;" onclick="acceptJob(${idx})">✅ Accept Job</button>` : ''}
+              ${o.status !== 'Completed' ? `<button class="btn btn-success" style="width:auto;padding:6px 12px;font-size:12px;" onclick="completeJob(${idx})">💰 કામ પૂર્ણ &amp; બિલ નાખો</button>` : ''}
+              <button class="btn btn-warning" style="width:auto;padding:6px 12px;font-size:12px;" onclick="openReceipt(${idx})">🧾 PDF બિલ</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function acceptJob(idx) {
+      const order = liveOrders[idx];
+      const tech = prompt('તમારું / દુકાનનું નામ લખો:', 'Skyline Partner');
+      if (tech && order.firebaseKey) {
+        await fetch(`${DB_URL}/orders/${order.firebaseKey}.json`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'Accepted', techAssigned: tech })
+        });
+        syncFromCloud();
+      }
+    }
+
+    async function completeJob(idx) {
+      const order = liveOrders[idx];
+      const bill = parseFloat(prompt('ગ્રાહક પાસેથી લીધેલ કુલ બિલ રકમ (₹) લખો:', order.fee));
+      if (!isNaN(bill) && bill > 0 && order.firebaseKey) {
+        await fetch(`${DB_URL}/orders/${order.firebaseKey}.json`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'Completed', finalBill: bill })
+        });
+        await syncFromCloud();
+        openReceipt(idx);
+      }
+    }
+
+    function openReceipt(idx) {
+      const o = liveOrders[idx];
+      if (!o) return;
+      document.getElementById('receiptContent').innerHTML = `
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td><strong>બિલ નંબર:</strong></td><td style="text-align:right;">${o.id}</td></tr>
+          <tr><td><strong>તારીખ:</strong></td><td style="text-align:right;">${o.date || new Date().toLocaleDateString('en-IN')}</td></tr>
+          <tr><td><strong>ગ્રાહકનું નામ:</strong></td><td style="text-align:right;">${o.name}</td></tr>
+          <tr><td><strong>મોબાઈલ:</strong></td><td style="text-align:right;">${o.mobile}</td></tr>
+          <tr><td><strong>વિસ્તાર:</strong></td><td style="text-align:right;">${o.area}</td></tr>
+          <tr><td><strong>સર્વિસ:</strong></td><td style="text-align:right;">${o.service}</td></tr>
+          <tr><td><strong>ટેકનિશિયન:</strong></td><td style="text-align:right;">${o.techAssigned}</td></tr>
+          <tr><td><strong>સ્ટેટસ:</strong></td><td style="text-align:right;">${o.status}</td></tr>
+          <tr style="border-top:2px solid #0f172a;font-size:16px;">
+            <td style="padding-top:8px;"><strong>કુલ બિલ રકમ:</strong></td>
+            <td style="text-align:right;padding-top:8px;color:#15803d;"><strong>₹${o.finalBill}/-</strong></td>
+          </tr>
+        </table>
+        <p style="font-size:11px;color:#64748b;margin-top:10px;text-align:center;">Thank you for choosing Skyline HomeCare, Surat!</p>
+      `;
+      document.getElementById('btnShareBillWA').onclick = () => {
+        let msg = `*🧾 SKYLINE HOMECARE - SERVICE RECEIPT*\nબિલ નં: *${o.id}*\nગ્રાહક: *${o.name}*\nસર્વિસ: *${o.service}*\nટેકનિશિયન: ${o.techAssigned}\nકુલ રકમ: *₹${o.finalBill}/-*\nસ્ટેટસ: ${o.status}\n_સુરતની વિશ્વસનીય હોમ સર્વિસ - 9106743538_`;
+        window.open(`https://wa.me/91${o.mobile.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
+      };
+      document.getElementById('receiptModal').style.display = 'flex';
+    }
+
+    function closeReceipt() {
+      document.getElementById('receiptModal').style.display = 'none';
+    }
+
+    async function registerTech() {
+      const name = document.getElementById('techName').value.trim();
+      const mobile = document.getElementById('techMobile').value.trim();
+      const skill = document.getElementById('techSkill').value;
+      const area = document.getElementById('techArea').value.trim() || 'સુરત';
+      if (!name || !mobile) return alert('નામ અને મોબાઈલ નંબર લખો.');
+
+      await fetch(`${DB_URL}/techs.json`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, mobile, skill, area })
+      });
+
+      document.getElementById('techName').value = '';
+      document.getElementById('techMobile').value = '';
+      await syncFromCloud();
+      alert('✅ તમારી પાર્ટનર પ્રોફાઈલ લાઈવ સેવ થઈ ગઈ છે! હવે તમે Live Jobs સ્વીકારી શકો છો.');
+      showSection('secPartnerJobs', 'btnNav1');
+    }
+
+    function renderAdminData() {
+      const totalEl = document.getElementById('statTotalJobs');
+      if (!totalEl) return;
+      const completed = liveOrders.filter(o => o.status === 'Completed');
+      const gross = completed.reduce((sum, o) => sum + (o.finalBill || 0), 0);
+      const comm = Math.round(gross * 0.15);
+
+      totalEl.innerText = liveOrders.length;
+      document.getElementById('statGrossAmt').innerText = '₹' + gross.toLocaleString('en-IN');
+      document.getElementById('statCommission').innerText = '₹' + comm.toLocaleString('en-IN');
+
+      const box = document.getElementById('adminTechList');
+      if (liveTechs.length === 0) {
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હજુ સુધી કોઈ પાર્ટનર રજિસ્ટર નથી થયા.</p>';
+        return;
+      }
+      box.innerHTML = liveTechs.map(t => `
+        <div class="job-item" style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <strong>👷 ${t.name}</strong> (${t.skill})<br/>
+            <small>📍 ${t.area} | 📞 ${t.mobile}</small>
+          </div>
+          <a href="tel:${t.mobile}" class="btn btn-success" style="width:auto;padding:6px 12px;text-decoration:none;font-size:12px;">📞 Call</a>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
