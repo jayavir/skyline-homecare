@@ -193,7 +193,7 @@
         <span class="r-icon">👷</span>
         <div>
           <strong id="tPartRoleTitle">હું કારીગર / દુકાનદાર છું (Partner)</strong>
-          <small id="tPartRoleSub">તમારા પિનકોડના લાઈવ ઓર્ડર મેળવો અને PDF બિલ બનાવો</small>
+          <small id="tPartRoleSub">₹99 માં 30 દિવસ ટ્રાયલ કરો — કામ મળે પછી ₹3,599/વર્ષ ઓનલાઈન દુકાન</small>
         </div>
       </div>
 
@@ -413,7 +413,7 @@
       <!-- PARTNER VIEW: PROFILE & REGISTRATION -->
       <div id="secPartnerProfile" class="app-section" style="display:none;">
         <div class="card">
-          <h3 id="lblPartnerRegTitle">👷 ગુજરાતભરના દુકાનદાર / કારીગર લાઈવ રજિસ્ટ્રેશન</h3>
+          <h3 id="lblPartnerRegTitle">👷 તમારી ઓનલાઈન દુકાન ખોલો — ₹99 Trial Offer</h3>
           <div class="grid-2">
             <div>
               <label id="lblTechName">તમારું / દુકાનનું નામ *</label>
@@ -444,12 +444,16 @@
               <input type="tel" id="techPincode" maxlength="6" placeholder="દા.ત. 394180" />
             </div>
           </div>
-          <button id="btnRegTech" class="btn btn-success" onclick="registerTech()">💾 લાઈવ રજિસ્ટર કરો (Auto-Activate Pincode)</button>
 
-          <div style="background:#f0fdf4;border:1px solid #16a34a;padding:12px;border-radius:8px;margin-top:14px;font-size:12.5px;">
-            <strong style="color:#15803d;">⭐ Skyline Partner Membership Plan (All Over Gujarat):</strong><br />
-            • માસિક પ્લાન / मासिक प्लान: <strong>₹499 / Month</strong> (અનલિમિટેડ લોકલ લીડ્સ)<br />
-            • વાર્ષિક પ્લાન / वार्षिक प्लान: <strong>₹1,499 / Year</strong> (Verified Partner Badge સાથે)
+          <div class="grid-2">
+            <button id="btnRegTech" class="btn btn-success" onclick="registerTech()">💾 રજિસ્ટર કરો (₹99 - 30 Days Trial)</button>
+            <a href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2030Days%20Trial" class="btn btn-warning" style="text-align:center;text-decoration:none;display:block;">💳 Pay ₹99 Trial via UPI</a>
+          </div>
+
+          <div style="background:#fffbeb;border:1.5px solid #f59e0b;padding:14px;border-radius:10px;margin-top:14px;font-size:13px;line-height:1.6;">
+            <strong style="color:#b45309;font-size:14.5px;">🏪 કારીગરની પોતાની "ઓનલાઈન દુકાન" પ્લાન:</strong><br />
+            • <strong>સ્ટેપ ૧ (Trial Offer):</strong> માત્ર <strong>₹99</strong> માં <strong>30 દિવસ</strong> એપ પરથી ગ્રાહકોના ઓર્ડર મેળવી કામ કરી જુઓ.<br />
+            • <strong>સ્ટેપ ૨ (Annual Plan):</strong> 30 દિવસ પછી જો કામ મળે, તો માત્ર <strong>₹3,599 / વર્ષ (માત્ર ₹300/મહિનો ભાડું)</strong> ભરીને તમારી ઓનલાઈન દુકાન કાયમી ચાલુ રાખો — <strong>0% કમિશન (100% કમાણી તમારી)!</strong>
           </div>
         </div>
       </div>
@@ -471,8 +475,8 @@
               <h2 id="statGrossAmt" style="margin:4px 0;color:#15803d;">₹0</h2>
             </div>
             <div style="background:#fffbeb;padding:10px;border-radius:8px;border:1px solid #fcd34d;">
-              <small>તમારું કમિશન (15%)</small>
-              <h2 id="statCommission" style="margin:4px 0;color:#b45309;">₹0</h2>
+              <small>રજિસ્ટર્ડ પાર્ટનર્સ (₹3,599/Yr)</small>
+              <h2 id="statCommission" style="margin:4px 0;color:#b45309;">0</h2>
             </div>
           </div>
 
@@ -521,7 +525,6 @@
     let liveTechs = [];
     let livePincodes = [];
 
-    // Default Initial Active Pincodes (Surat & Major Gujarat Hubs)
     const DEFAULT_ACTIVE_PINS = {
       "394180": "કામરેજ, સુરત (Kamrej, Surat)",
       "395006": "વરાછા / સરથાણા, સુરત (Varachha, Surat)",
@@ -539,9 +542,9 @@
         custTitle: 'હું ગ્રાહક / સોસાયટી છું (Customer)',
         custSub: 'પિનકોડ ચેક કરો, હોમ સર્વિસ બુક કરો, સોસાયટી AMC & PDF બિલ મેળવો',
         partTitle: 'હું કારીગર / દુકાનદાર છું (Partner)',
-        partSub: 'તમારા પિનકોડના લાઈવ ઓર્ડર મેળવો અને PDF બિલ બનાવો',
+        partSub: '₹99 માં 30 દિવસ ટ્રાયલ કરો — કામ મળે પછી ₹3,599/વર્ષ ઓનલાઈન દુકાન',
         admTitle: 'એડમિન પેનલ (Owner Login)',
-        admSub: 'કમિશન, કુલ બુકિંગ, પિનકોડ અને પાર્ટનર મેનેજમેન્ટ (PIN જરૂરી)',
+        admSub: 'કુલ બુકિંગ, પિનકોડ અને પાર્ટનર મેનેજમેન્ટ (PIN જરૂરી)',
         pinLbl: 'એડમિન PIN નાખો:',
         switchBtn: 'રોલ બદલો',
         pinCheckLbl: '📍 તમારા વિસ્તારનો પિનકોડ (Pincode) નાખી સર્વિસ ઉપલબ્ધ છે કે નહીં તે ચેક કરો:',
@@ -566,27 +569,27 @@
         amcSub: 'સમગ્ર ગુજરાતની હાઉસિંગ સોસાયટીઓના કોમન ગેટ વેલ્ડિંગ, લાઈટિંગ, પાણીની મોટર-પ્લમ્બિંગ અને સિક્યુરિટી કેબિન મેન્ટેનન્સ માટે ખાસ વાર્ષિક કોન્ટ્રાક્ટ:',
         myOrders: '📋 લાઈવ બુકિંગ સ્ટેટસ & PDF બિલ',
         liveJobs: '🔔 લાઈવ ગ્રાહક ઓર્ડર (All Over Gujarat)',
-        partReg: '👷 ગુજરાતભરના દુકાનદાર / કારીગર લાઈવ રજિસ્ટ્રેશન',
+        partReg: '👷 તમારી ઓનલાઈન દુકાન ખોલો — ₹99 Trial Offer',
         tName: 'તમારું / દુકાનનું નામ *',
         tMob: 'મોબાઈલ નંબર *',
         tCat: 'કામની કેટેગરી (Category)',
         tCity: 'તમારું શહેર અને વિસ્તાર',
         tPin: 'તમારો સર્વિસ પિનકોડ *',
-        regTech: '💾 લાઈવ રજિસ્ટર કરો',
+        regTech: '💾 રજિસ્ટર કરો (₹99 - 30 Days Trial)',
         navBook: '🏠 સર્વિસ બુક',
         navAmc: '🏢 સોસાયટી AMC',
         navOrders: '📋 મારા ઓર્ડર',
         navJobs: '🔔 લાઈવ ઓર્ડર',
-        navProf: '👷 પ્રોફાઈલ / પ્લાન'
+        navProf: '👷 ઓનલાઈન દુકાન'
       },
       hi: {
         rolePrompt: 'आप ऐप का उपयोग कैसे करना चाहते हैं? चुनें:',
         custTitle: 'मैं ग्राहक / सोसाइटी हूँ (Customer)',
         custSub: 'पिनकोड चेक करें, होम सर्विस बुक करें, सोसाइटी AMC & PDF बिल पाएं',
         partTitle: 'मैं कारीगर / दुकानदार हूँ (Partner)',
-        partSub: 'अपने पिनकोड के लाइव ऑर्डर पाएं और PDF बिल बनाएं',
+        partSub: '₹99 में 30 दिन ट्रायल करें — काम मिले तो ₹3,599/वर्ष ऑनलाइन दुकान',
         admTitle: 'एडमिन पैनल (Owner Login)',
-        admSub: 'कमीशन, कुल बुकिंग, पिनकोड और पार्टनर मैनेजमेंट (PIN आवश्यक)',
+        admSub: 'कुल बुकिंग, पिनकोड और पार्टनर मैनेजमेंट (PIN आवश्यक)',
         pinLbl: 'एडमिन PIN दर्ज करें:',
         switchBtn: 'रोल बदलें',
         pinCheckLbl: '📍 अपने एरिया का पिनकोड (Pincode) डालकर सर्विस उपलब्धता चेक करें:',
@@ -611,27 +614,27 @@
         amcSub: 'पूरे गुजरात की हाउसिंग सोसाइटी के कॉमन गेट वेल्डिंग, लाइटिंग, पानी मोटर-प्लंबिंग और सिक्योरिटी केबिन मेंटेनेंस के लिए वार्षिक कॉन्ट्रैक्ट:',
         myOrders: '📋 लाइव बुकिंग स्टेटस & PDF बिल',
         liveJobs: '🔔 लाइव ग्राहक ऑर्डर (All Over Gujarat)',
-        partReg: '👷 पूरे गुजरात के दुकानदार / कारीगर लाइव रजिस्ट्रेशन',
+        partReg: '👷 अपनी ऑनलाइन दुकान खोलें — ₹99 Trial Offer',
         tName: 'आपका / दुकान का नाम *',
         tMob: 'मोबाइल नंबर *',
         tCat: 'काम की कैटेगरी (Category)',
         tCity: 'आपका शहर और एरिया',
         tPin: 'आपका सर्विस पिनकोड *',
-        regTech: '💾 लाइव रजिस्टर करें',
+        regTech: '💾 रजिस्टर करें (₹99 - 30 Days Trial)',
         navBook: '🏠 सर्विस बुक',
         navAmc: '🏢 सोसाइटी AMC',
         navOrders: '📋 मेरे ऑर्डर',
         navJobs: '🔔 लाइव ऑर्डर',
-        navProf: '👷 प्रोफाइल / प्लान'
+        navProf: '👷 ऑनलाइन दुकान'
       },
       en: {
         rolePrompt: 'How would you like to use Skyline HomeCare? Select:',
         custTitle: 'I am a Customer / Society',
         custSub: 'Check pincode availability, book home services & get PDF bills',
         partTitle: 'I am a Technician / Shop Partner',
-        partSub: 'Get live jobs in your pincode & generate PDF receipts',
+        partSub: '₹99 for 30-Day Trial — Then ₹3,599/Yr (₹300/mo) Online Shop',
         admTitle: 'Admin Panel (Owner Login)',
-        admSub: 'Commission, revenue, pincodes & partner management (PIN Required)',
+        admSub: 'Total bookings, pincodes & partner management (PIN Required)',
         pinLbl: 'Enter Admin PIN:',
         switchBtn: 'Switch Role',
         pinCheckLbl: '📍 Enter your 6-digit Pincode to check service availability in your area:',
@@ -656,18 +659,18 @@
         amcSub: 'Annual maintenance contracts for housing societies across Gujarat covering main gate welding, common lighting, plumbing & water pumps:',
         myOrders: '📋 Live Booking Status & PDF Bill',
         liveJobs: '🔔 Live Customer Jobs (All Over Gujarat)',
-        partReg: '👷 Partner / Technician Live Registration (All Gujarat)',
+        partReg: '👷 Open Your Online Shop — ₹99 Trial Offer',
         tName: 'Your / Shop Name *',
         tMob: 'Mobile Number *',
         tCat: 'Work Category',
         tCity: 'Your City & Area',
         tPin: 'Your Service Pincode *',
-        regTech: '💾 Register Live Now',
+        regTech: '💾 Register Now (₹99 - 30 Days Trial)',
         navBook: '🏠 Book Service',
         navAmc: '🏢 Society AMC',
         navOrders: '📋 My Orders',
         navJobs: '🔔 Live Jobs',
-        navProf: '👷 Profile / Plan'
+        navProf: '👷 Online Shop'
       }
     };
 
@@ -873,7 +876,7 @@
         renderBottomNav();
         showSection('secCustBook', 'btnNav1');
       } else if (role === 'partner') {
-        badge.innerText = 'Partner / Dukandar Portal • All Gujarat';
+        badge.innerText = 'Partner Online Dukan • ₹99 Trial / ₹3,599 Yr';
         renderBottomNav();
         showSection('secPartnerJobs', 'btnNav1');
       } else if (role === 'admin') {
@@ -1098,14 +1101,22 @@
       await fetch(`${DB_URL}/techs.json`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, mobile, skill, area, pincode })
+        body: JSON.stringify({
+          name,
+          mobile,
+          skill,
+          area,
+          pincode,
+          plan: '₹99 Trial (30 Days) -> ₹3,599/Yr',
+          joinedDate: new Date().toLocaleDateString('en-IN')
+        })
       });
 
       document.getElementById('techName').value = '';
       document.getElementById('techMobile').value = '';
       document.getElementById('techPincode').value = '';
       await syncFromCloud();
-      alert(`✅ પાર્ટનર રજિસ્ટ્રેશન સફળ! Pincode ${pincode} હવે Customer માટે Live Available થઈ ગયો છે.`);
+      alert(`✅ તમારી ઓનલાઈન દુકાન રજિસ્ટર થઈ ગઈ છે! (Pincode: ${pincode})\nહવે ₹99 Trial પેમેન્ટ કરીને 30 દિવસ સુધી લાઈવ ઓર્ડર સ્વીકારો.`);
       showSection('secPartnerJobs', 'btnNav1');
     }
 
@@ -1136,11 +1147,10 @@
       if (!totalEl) return;
       const completed = liveOrders.filter(o => o.status === 'Completed');
       const gross = completed.reduce((sum, o) => sum + (o.finalBill || 0), 0);
-      const comm = Math.round(gross * 0.15);
 
       totalEl.innerText = liveOrders.length;
       document.getElementById('statGrossAmt').innerText = '₹' + gross.toLocaleString('en-IN');
-      document.getElementById('statCommission').innerText = '₹' + comm.toLocaleString('en-IN');
+      document.getElementById('statCommission').innerText = liveTechs.length + ' Partners';
 
       const pinBox = document.getElementById('adminPincodeList');
       if (pinBox) {
@@ -1160,7 +1170,8 @@
         <div class="job-item" style="display:flex;justify-content:space-between;align-items:center;">
           <div>
             <strong>👷 ${t.name}</strong> (${t.skill})<br/>
-            <small>📍 ${t.area} | 📮 Pincode: <strong>${t.pincode || '-'}</strong> | 📞 ${t.mobile}</small>
+            <small>📍 ${t.area} | 📮 Pincode: <strong>${t.pincode || '-'}</strong> | 📞 ${t.mobile}</small><br/>
+            <small style="color:#b45309;font-weight:700;">Plan: ${t.plan || '₹99 Trial -> ₹3,599/Yr'}</small>
           </div>
           <a href="tel:${t.mobile}" class="btn btn-success" style="width:auto;padding:6px 12px;text-decoration:none;font-size:12px;">📞 Call</a>
         </div>
