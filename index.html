@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skyline HomeCare - Surat Home Services &amp; Society AMC</title>
+  <title>Skyline HomeCare - All Over Gujarat Home Services &amp; Society AMC</title>
   <meta name="theme-color" content="#0f172a" />
   <link rel="manifest" href="manifest.json" />
   <style>
@@ -23,6 +23,14 @@
       background: #f59e0b; color: #0f172a; font-weight: 900; padding: 5px 14px;
       border-radius: 20px; font-size: 11.5px; display: inline-block; margin-bottom: 8px;
     }
+    .role-lang-bar {
+      display: flex; justify-content: center; gap: 6px; margin-bottom: 14px;
+    }
+    .role-lang-bar button {
+      background: #e2e8f0; color: #0f172a; border: none; padding: 5px 12px;
+      border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .role-lang-bar button.active { background: #1e3a8a; color: #fff; }
     .role-btn {
       width: 100%; border: 2px solid #e2e8f0; background: #f8fafc; border-radius: 12px;
       padding: 13px; margin-bottom: 11px; text-align: left; cursor: pointer;
@@ -72,6 +80,21 @@
       border-radius: 8px; font-size: 14px; background: #f8fafc;
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
+
+    /* Pincode Banner */
+    .pin-box {
+      background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: 10px;
+      padding: 12px; margin-bottom: 14px;
+    }
+    .pin-row { display: flex; gap: 8px; align-items: center; }
+    .pin-row input { margin-bottom: 0; font-weight: 700; letter-spacing: 1px; }
+    .pin-status {
+      margin-top: 8px; padding: 8px 10px; border-radius: 8px; font-size: 12.5px;
+      font-weight: 700; display: none;
+    }
+    .pin-ok { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .pin-warn { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    .pin-no { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
     /* Service & AMC Grids */
     .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 10px; margin-bottom: 14px; }
@@ -149,38 +172,43 @@
   <!-- STEP 1: ROLE SELECTION SCREEN -->
   <div id="roleScreen">
     <div class="role-card">
-      <div class="brand-badge">SURAT • GUJARAT • LIVE CLOUD</div>
+      <div class="brand-badge">ALL OVER GUJARAT • LIVE CLOUD</div>
       <h2 style="margin:4px 0;color:#0f172a;">🏠 Skyline HomeCare</h2>
-      <p style="font-size:13px;color:#64748b;margin-top:0;margin-bottom:18px;">તમે એપનો ઉપયોગ કઈ રીતે કરવા માંગો છો? પસંદ કરો:</p>
+      <div class="role-lang-bar">
+        <button id="rLangGu" class="active" onclick="setLang('gu')">ગુજરાતી</button>
+        <button id="rLangHi" onclick="setLang('hi')">हिन्दी</button>
+        <button id="rLangEn" onclick="setLang('en')">English</button>
+      </div>
+      <p id="tRolePrompt" style="font-size:13px;color:#64748b;margin-top:0;margin-bottom:16px;">તમે એપનો ઉપયોગ કઈ રીતે કરવા માંગો છો? પસંદ કરો:</p>
 
       <div class="role-btn" onclick="enterRole('customer')">
         <span class="r-icon">🏠</span>
         <div>
-          <strong>હું ગ્રાહક / સોસાયટી છું (Customer)</strong>
-          <small>હોમ સર્વિસ બુક કરો, સોસાયટી AMC પ્લાન જુઓ અને PDF બિલ મેળવો</small>
+          <strong id="tCustRoleTitle">હું ગ્રાહક / સોસાયટી છું (Customer)</strong>
+          <small id="tCustRoleSub">પિનકોડ ચેક કરો, હોમ સર્વિસ બુક કરો, સોસાયટી AMC &amp; PDF બિલ મેળવો</small>
         </div>
       </div>
 
       <div class="role-btn" onclick="enterRole('partner')">
         <span class="r-icon">👷</span>
         <div>
-          <strong>હું કારીગર / દુકાનદાર છું (Partner)</strong>
-          <small>લાઈવ ઓર્ડર મેળવો, જોબ સ્વીકારો અને ગ્રાહકનું PDF બિલ બનાવો</small>
+          <strong id="tPartRoleTitle">હું કારીગર / દુકાનદાર છું (Partner)</strong>
+          <small id="tPartRoleSub">તમારા પિનકોડના લાઈવ ઓર્ડર મેળવો અને PDF બિલ બનાવો</small>
         </div>
       </div>
 
       <div class="role-btn" onclick="openAdminPrompt()">
         <span class="r-icon">🔐</span>
         <div>
-          <strong>એડમિન પેનલ (Owner Login)</strong>
-          <small>કમિશન, કુલ બુકિંગ અને પાર્ટનર મેનેજમેન્ટ (PIN જરૂરી)</small>
+          <strong id="tAdmRoleTitle">એડમિન પેનલ (Owner Login)</strong>
+          <small id="tAdmRoleSub">કમિશન, કુલ બુકિંગ, પિનકોડ અને પાર્ટનર મેનેજમેન્ટ (PIN જરૂરી)</small>
         </div>
       </div>
 
       <div id="adminPinBox" style="display:none;margin-top:10px;text-align:left;background:#f1f5f9;padding:12px;border-radius:10px;">
-        <label>એડમિન PIN નાખો:</label>
+        <label id="tPinLbl">એડમિન PIN નાખો:</label>
         <div style="display:flex;gap:8px;">
-          <input type="password" id="adminPinInput" placeholder="4 અંકનો PIN" maxlength="4" style="margin:0;" />
+          <input type="password" id="adminPinInput" placeholder="PIN" maxlength="4" style="margin:0;" />
           <button class="btn btn-primary" style="width:auto;" onclick="verifyAdmin()">Login</button>
         </div>
       </div>
@@ -194,7 +222,7 @@
       <div class="topbar">
         <div>
           <h1>🏠 SKYLINE HOMECARE</h1>
-          <p><span class="live-dot"></span><span id="roleSubBadge">Live Cloud Sync • Surat</span></p>
+          <p><span class="live-dot"></span><span id="roleSubBadge">All Over Gujarat • Live Cloud</span></p>
         </div>
         <div class="top-actions">
           <div class="lang-group">
@@ -202,85 +230,104 @@
             <button id="btnHi" onclick="setLang('hi')">हिन्दी</button>
             <button id="btnEn" onclick="setLang('en')">EN</button>
           </div>
-          <button class="switch-role-btn" onclick="switchRoleScreen()">રોલ બદલો</button>
+          <button id="btnSwitchRole" class="switch-role-btn" onclick="switchRoleScreen()">રોલ બદલો</button>
         </div>
       </div>
 
       <!-- CUSTOMER VIEW: BOOK SERVICE -->
       <div id="secCustBook" class="app-section">
         <div class="card">
+          <!-- PINCODE AVAILABILITY CHECKER -->
+          <div class="pin-box">
+            <label id="lblPinCheck" style="color:#0f172a;font-size:13px;">📍 તમારા વિસ્તારનો પિનકોડ (Pincode) નાખી સર્વિસ ઉપલબ્ધ છે કે નહીં તે ચેક કરો:</label>
+            <div class="pin-row">
+              <input type="tel" id="custPincode" maxlength="6" placeholder="દા.ત. 394180 / 395006 / 380015" oninput="if(this.value.length===6) checkPincodeAvailability();" />
+              <button id="btnCheckPin" class="btn btn-primary" style="width:auto;white-space:nowrap;" onclick="checkPincodeAvailability()">ચેક કરો (Check)</button>
+            </div>
+            <div id="pinStatusResult" class="pin-status"></div>
+          </div>
+
           <h3 id="lblSelectSrv">૧. કઈ સર્વિસ જોઈએ છે? (Select Service)</h3>
           <div class="service-grid">
             <div class="srv-box selected" onclick="selectService(this, 'Fabrication & Welding', 199)">
               <span class="icon">🛠️</span>
               <strong>Fabrication</strong>
-              <small>શેડ, ગ્રીલ, ગેટ રિપેર (₹199)</small>
+              <small id="sFabDesc">શેડ, ગ્રીલ, ગેટ રિપેર (₹199)</small>
             </div>
             <div class="srv-box" onclick="selectService(this, 'Electrician', 149)">
               <span class="icon">⚡</span>
               <strong>Electrician</strong>
-              <small>વાયરિંગ, સ્વીચ, પંખા (₹149)</small>
+              <small id="sElecDesc">વાયરિંગ, સ્વીચ, પંખા (₹149)</small>
             </div>
             <div class="srv-box" onclick="selectService(this, 'Plumber', 149)">
               <span class="icon">🚰</span>
               <strong>Plumber</strong>
-              <small>નળ, પાઈપ લીકેજ, ટાંકી (₹149)</small>
+              <small id="sPlumbDesc">નળ, પાઈપ લીકેજ, ટાંકી (₹149)</small>
             </div>
             <div class="srv-box" onclick="selectService(this, 'Furniture / Carpenter', 199)">
               <span class="icon">🪚</span>
               <strong>Furniture</strong>
-              <small>દરવાજા, કબાટ રિપેર (₹199)</small>
+              <small id="sFurnDesc">દરવાજા, કબાટ રિપેર (₹199)</small>
             </div>
             <div class="srv-box" onclick="selectService(this, 'AC & Appliance Repair', 249)">
               <span class="icon">❄️</span>
               <strong>AC / Appliance</strong>
-              <small>AC, ફ્રીજ, RO, ગીઝર (₹249)</small>
+              <small id="sAcDesc">AC, ફ્રીજ, RO, ગીઝર (₹249)</small>
             </div>
           </div>
 
-          <h3 id="lblCustForm">૨. ગ્રાહક અને સોસાયટીની વિગત</h3>
+          <h3 id="lblCustForm">૨. ગ્રાહક અને શહેર/સોસાયટીની વિગત</h3>
           <div class="grid-2">
             <div>
-              <label>તમારું નામ *</label>
+              <label id="lblCustName">તમારું નામ *</label>
               <input type="text" id="custName" placeholder="દા.ત. રાજેશભાઈ પટેલ" />
             </div>
             <div>
-              <label>મોબાઈલ નંબર *</label>
+              <label id="lblCustMob">મોબાઈલ નંબર *</label>
               <input type="tel" id="custMobile" placeholder="દા.ત. 9876543210" />
             </div>
           </div>
 
           <div class="grid-2">
             <div>
-              <label>સુરતનો વિસ્તાર (Area)</label>
+              <label id="lblCustCity">ગુજરાતનું શહેર / જિલ્લો (City / District)</label>
               <select id="custArea">
-                <option value="કામરેજ (Kamrej)">કામરેજ (Kamrej)</option>
-                <option value="વરાછા / સરથાણા (Varachha / Sarthana)">વરાછા / સરથાણા (Varachha)</option>
-                <option value="કતારગામ (Katargam)">કતારગામ (Katargam)</option>
-                <option value="અડાજણ / પાલ (Adajan / Pal)">અડાજણ / પાલ (Adajan)</option>
-                <option value="વેસુ / અલથાણ (Vesu / Althan)">વેસુ / અલથાણ (Vesu)</option>
-                <option value="ઉધના / ડિંડોલી (Udhna / Dindoli)">ઉધના / ડિંડોલી (Udhna)</option>
+                <option value="સુરત - કામરેજ / વરાછા (Surat - Kamrej/Varachha)">સુરત - કામરેજ / વરાછા (Surat)</option>
+                <option value="સુરત - કતારગામ / અડાજણ / વેસુ (Surat)">સુરત - કતારગામ / અડાજણ / વેસુ (Surat)</option>
+                <option value="અમદાવાદ (Ahmedabad)">અમદાવાદ (Ahmedabad)</option>
+                <option value="વડોદરા (Vadodara)">વડોદરા (Vadodara)</option>
+                <option value="રાજકોટ (Rajkot)">રાજકોટ (Rajkot)</option>
+                <option value="ભાવનગર (Bhavnagar)">ભાવનગર (Bhavnagar)</option>
+                <option value="જામનગર (Jamnagar)">જામનગર (Jamnagar)</option>
+                <option value="જૂનાગઢ / ગીર સોમનાથ (Junagadh / Gir)">જૂનાગઢ / ગીર સોમનાથ (Junagadh)</option>
+                <option value="ગાંધીનગર (Gandhinagar)">ગાંધીનગર (Gandhinagar)</option>
+                <option value="મહેસાણા / પાટણ / બનાસકાંઠા (North Gujarat)">મહેસાણા / પાટણ / બનાસકાંઠા (North Gujarat)</option>
+                <option value="આણંદ / નડિયાદ (Anand / Nadiad)">આણંદ / નડિયાદ (Anand / Kheda)</option>
+                <option value="ભરૂચ / અંકલેશ્વર (Bharuch / Ankleshwar)">ભરૂચ / અંકલેશ્વર (Bharuch)</option>
+                <option value="નવસારી / વલસાડ / વાપી (Navsari / Vapi)">નવસારી / વલસાડ / વાપી (South Gujarat)</option>
+                <option value="મોરબી / સુરેન્દ્રનગર (Morbi / Surendranagar)">મોરબી / સુરેન્દ્રનગર (Saurashtra)</option>
+                <option value="કચ્છ - ભુજ / ગાંધીધામ (Kutch)">કચ્છ - ભુજ / ગાંધીધામ (Kutch)</option>
               </select>
             </div>
             <div>
-              <label>સમય (Time Slot)</label>
+              <label id="lblCustSlot">સમય (Time Slot)</label>
               <input type="text" id="custSlot" value="આજે - 2 કલાકમાં (Urgent)" />
             </div>
           </div>
 
           <div>
-            <label>સોસાયટી / ઘર નંબર અને કામની વિગત</label>
+            <label id="lblCustAddr">વિસ્તાર, સોસાયટી / ઘર નંબર અને કામની વિગત</label>
             <textarea id="custProblem" rows="2" placeholder="દા.ત. B-104, ગ્રીન સિટી સોસાયટી - મેઈન ગેટ વેલ્ડિંગ અને કડી રિપેર કરવાની છે"></textarea>
           </div>
 
           <div style="background:#fffbeb;border:1px solid #f59e0b;padding:10px;border-radius:8px;margin-bottom:12px;font-size:13px;">
-            <strong>પસંદ કરેલ સર્વિસ:</strong> <span id="selectedSrvName">Fabrication &amp; Welding</span> |
-            <strong>વિઝિટ ચાર્જ:</strong> <span id="selectedSrvFee" style="color:#b45309;font-weight:700;">₹199</span>
+            <strong id="lblSelSrvTitle">પસંદ કરેલ સર્વિસ:</strong> <span id="selectedSrvName">Fabrication &amp; Welding</span> |
+            <strong id="lblSelFeeTitle">વિઝિટ ચાર્જ:</strong> <span id="selectedSrvFee" style="color:#b45309;font-weight:700;">₹199</span>
           </div>
 
           <div class="grid-2">
-            <button class="btn btn-primary" onclick="bookService()">✅ લાઈવ સર્વિસ બુક કરો</button>
-            <button class="btn btn-wa" onclick="bookViaWhatsApp()">📲 WhatsApp પર ડાયરેક્ટ બુક</button>
+            <button id="btnBookNow" class="btn btn-primary" onclick="bookService()">✅ લાઈવ સર્વિસ બુક કરો</button>
+            <button id="btnBookWA" class="btn btn-wa" onclick="bookViaWhatsApp()">📲 WhatsApp પર ડાયરેક્ટ બુક</button>
           </div>
         </div>
       </div>
@@ -288,8 +335,8 @@
       <!-- CUSTOMER VIEW: SOCIETY AMC PACKAGES -->
       <div id="secSocietyAMC" class="app-section" style="display:none;">
         <div class="card">
-          <h3>🏢 હાઉસિંગ સોસાયટી &amp; બંગલો AMC (વાર્ષિક મેન્ટેનન્સ પ્લાન)</h3>
-          <p style="font-size:12.5px;color:#475569;margin-top:0;">સોસાયટીના કોમન ગેટ વેલ્ડિંગ, લાઈટિંગ, પાણીની મોટર-પ્લમ્બિંગ અને સિક્યુરિટી કેબિન મેન્ટેનન્સ માટે ખાસ વાર્ષિક કોન્ટ્રાક્ટ:</p>
+          <h3 id="lblAmcTitle">🏢 હાઉસિંગ સોસાયટી &amp; બંગલો AMC (વાર્ષિક મેન્ટેનન્સ પ્લાન)</h3>
+          <p id="lblAmcSub" style="font-size:12.5px;color:#475569;margin-top:0;">સમગ્ર ગુજરાતની હાઉસિંગ સોસાયટીઓના કોમન ગેટ વેલ્ડિંગ, લાઈટિંગ, પાણીની મોટર-પ્લમ્બિંગ અને સિક્યુરિટી કેબિન મેન્ટેનન્સ માટે ખાસ વાર્ષિક કોન્ટ્રાક્ટ:</p>
 
           <div class="grid-3">
             <div class="amc-card">
@@ -342,7 +389,7 @@
       <div id="secCustOrders" class="app-section" style="display:none;">
         <div class="card">
           <h3>
-            <span>📋 લાઈવ બુકિંગ સ્ટેટસ &amp; PDF બિલ</span>
+            <span id="lblMyOrdersTitle">📋 લાઈવ બુકિંગ સ્ટેટસ &amp; PDF બિલ</span>
             <button class="btn btn-primary" style="width:auto;padding:5px 10px;font-size:11px;" onclick="syncFromCloud()">🔄 Refresh</button>
           </h3>
           <div id="custOrdersList"></div>
@@ -353,7 +400,7 @@
       <div id="secPartnerJobs" class="app-section" style="display:none;">
         <div class="card">
           <h3>
-            <span>🔔 લાઈવ ગ્રાહક ઓર્ડર (Cloud Live Jobs)</span>
+            <span id="lblLiveJobsTitle">🔔 લાઈવ ગ્રાહક ઓર્ડર (All Over Gujarat)</span>
             <div style="display:flex;gap:6px;align-items:center;">
               <span id="partnerJobBadge" style="font-size:12px;color:#d97706;">0 Jobs</span>
               <button class="btn btn-primary" style="width:auto;padding:4px 9px;font-size:11px;" onclick="syncFromCloud()">🔄 Sync</button>
@@ -366,20 +413,20 @@
       <!-- PARTNER VIEW: PROFILE & REGISTRATION -->
       <div id="secPartnerProfile" class="app-section" style="display:none;">
         <div class="card">
-          <h3>👷 દુકાનદાર / કારીગર લાઈવ રજિસ્ટ્રેશન</h3>
+          <h3 id="lblPartnerRegTitle">👷 ગુજરાતભરના દુકાનદાર / કારીગર લાઈવ રજિસ્ટ્રેશન</h3>
           <div class="grid-2">
             <div>
-              <label>તમારું / દુકાનનું નામ *</label>
+              <label id="lblTechName">તમારું / દુકાનનું નામ *</label>
               <input type="text" id="techName" placeholder="દા.ત. સુરેશભાઈ ઈલેક્ટ્રિકલ્સ" />
             </div>
             <div>
-              <label>મોબાઈલ નંબર *</label>
+              <label id="lblTechMob">મોબાઈલ નંબર *</label>
               <input type="tel" id="techMobile" placeholder="દા.ત. 9825012345" />
             </div>
           </div>
-          <div class="grid-2">
+          <div class="grid-3">
             <div>
-              <label>કામની કેટેગરી (Category)</label>
+              <label id="lblTechCat">કામની કેટેગરી (Category)</label>
               <select id="techSkill">
                 <option value="Fabrication & Welding">Fabrication &amp; Welding</option>
                 <option value="Electrician">Electrician</option>
@@ -389,28 +436,32 @@
               </select>
             </div>
             <div>
-              <label>સર્વિસ વિસ્તાર (Area)</label>
-              <input type="text" id="techArea" placeholder="દા.ત. કામરેજ / વરાછા" />
+              <label id="lblTechCity">તમારું શહેર અને વિસ્તાર (City &amp; Area)</label>
+              <input type="text" id="techArea" placeholder="દા.ત. કામરેજ, સુરત / અમદાવાદ" />
+            </div>
+            <div>
+              <label id="lblTechPin">તમારો સર્વિસ પિનકોડ (Pincode) *</label>
+              <input type="tel" id="techPincode" maxlength="6" placeholder="દા.ત. 394180" />
             </div>
           </div>
-          <button class="btn btn-success" onclick="registerTech()">💾 લાઈવ રજિસ્ટર કરો</button>
+          <button id="btnRegTech" class="btn btn-success" onclick="registerTech()">💾 લાઈવ રજિસ્ટર કરો (Auto-Activate Pincode)</button>
 
           <div style="background:#f0fdf4;border:1px solid #16a34a;padding:12px;border-radius:8px;margin-top:14px;font-size:12.5px;">
-            <strong style="color:#15803d;">⭐ Skyline Partner Membership Plan:</strong><br />
-            • માસિક પ્લાન: <strong>₹499 / મહિનો</strong> (અનલિમિટેડ લોકલ લીડ્સ)<br />
-            • વાર્ષિક પ્લાન: <strong>₹1,499 / વર્ષ</strong> (Verified Badge સાથે)
+            <strong style="color:#15803d;">⭐ Skyline Partner Membership Plan (All Over Gujarat):</strong><br />
+            • માસિક પ્લાન / मासिक प्लान: <strong>₹499 / Month</strong> (અનલિમિટેડ લોકલ લીડ્સ)<br />
+            • વાર્ષિક પ્લાન / वार्षिक प्लान: <strong>₹1,499 / Year</strong> (Verified Partner Badge સાથે)
           </div>
         </div>
       </div>
 
-      <!-- ADMIN VIEW: REVENUE & ALL MANAGEMENT -->
+      <!-- ADMIN VIEW: REVENUE, PINCODES & ALL MANAGEMENT -->
       <div id="secAdminDash" class="app-section" style="display:none;">
         <div class="card">
           <h3>
-            <span>📊 Skyline HomeCare એડમિન ડેશબોર્ડ (Live)</span>
+            <span>📊 Skyline HomeCare એડમિન ડેશબોર્ડ (All Over Gujarat)</span>
             <button class="btn btn-primary" style="width:auto;padding:4px 9px;font-size:11px;" onclick="syncFromCloud()">🔄 Refresh</button>
           </h3>
-          <div class="grid-3" style="text-align:center;margin-bottom:12px;">
+          <div class="grid-3" style="text-align:center;margin-bottom:14px;">
             <div style="background:#f8fafc;padding:10px;border-radius:8px;border:1px solid #cbd5e1;">
               <small>કુલ લાઈવ ઓર્ડર</small>
               <h2 id="statTotalJobs" style="margin:4px 0;color:#1e3a8a;">0</h2>
@@ -424,7 +475,16 @@
               <h2 id="statCommission" style="margin:4px 0;color:#b45309;">₹0</h2>
             </div>
           </div>
-          <h3>🔧 રજિસ્ટર્ડ દુકાનદારો / કારીગરોની યાદી</h3>
+
+          <h3>📍 એક્ટિવ સર્વિસ પિનકોડ ઉમેરો (Active Pincodes)</h3>
+          <div class="grid-3" style="margin-bottom:10px;">
+            <input type="tel" id="adminNewPin" maxlength="6" placeholder="6-અંક Pincode (દા.ત. 394180)" style="margin:0;" />
+            <input type="text" id="adminNewPinArea" placeholder="વિસ્તાર (દા.ત. કામરેજ, સુરત)" style="margin:0;" />
+            <button class="btn btn-primary" onclick="addAdminPincode()">➕ પિનકોડ એક્ટિવ કરો</button>
+          </div>
+          <div id="adminPincodeList" style="margin-bottom:14px;"></div>
+
+          <h3>🔧 ગુજરાતભરના રજિસ્ટર્ડ દુકાનદારો / કારીગરોની યાદી</h3>
           <div id="adminTechList"></div>
         </div>
       </div>
@@ -439,8 +499,8 @@
     <div class="receipt-box" id="receiptPrintArea">
       <div style="text-align:center;border-bottom:2px dashed #cbd5e1;padding-bottom:10px;margin-bottom:12px;">
         <h2 style="margin:0;color:#1e3a8a;font-size:19px;">🏠 SKYLINE HOMECARE</h2>
-        <p style="margin:2px 0;font-size:11.5px;color:#475569;">Surat's Trusted Home Maintenance &amp; Fabrication Service</p>
-        <p style="margin:2px 0;font-size:11.5px;font-weight:700;color:#0f172a;">Helpline: +91 91067 43538 | Surat, Gujarat</p>
+        <p style="margin:2px 0;font-size:11.5px;color:#475569;">Gujarat's Trusted Home Maintenance &amp; Fabrication Service</p>
+        <p style="margin:2px 0;font-size:11.5px;font-weight:700;color:#0f172a;">Helpline: +91 91067 43538 | All Over Gujarat</p>
       </div>
       <div id="receiptContent" style="font-size:13px;line-height:1.65;color:#1e293b;"></div>
       <div class="no-print" style="display:flex;gap:8px;margin-top:14px;">
@@ -454,26 +514,318 @@
   <script>
     const DB_URL = "https://skyline-homecare-default-rtdb.asia-southeast1.firebasedatabase.app";
     let activeRole = 'customer';
+    let currentLang = 'gu';
     let currentService = 'Fabrication & Welding';
     let currentFee = 199;
     let liveOrders = [];
     let liveTechs = [];
+    let livePincodes = [];
 
-    // Fetch Live Data from Firebase Realtime Database
+    // Default Initial Active Pincodes (Surat & Major Gujarat Hubs)
+    const DEFAULT_ACTIVE_PINS = {
+      "394180": "કામરેજ, સુરત (Kamrej, Surat)",
+      "395006": "વરાછા / સરથાણા, સુરત (Varachha, Surat)",
+      "395004": "કતારગામ, સુરત (Katargam, Surat)",
+      "395009": "અડાજણ / પાલ, સુરત (Adajan, Surat)",
+      "395007": "વેસુ / અલથાણ, સુરત (Vesu, Surat)",
+      "380015": "સેટેલાઈટ / પ્રહલાદનગર, અમદાવાદ (Ahmedabad)",
+      "390007": "અલકાપુરી, વડોદરા (Vadodara)",
+      "360001": "રાજકોટ સિટી (Rajkot)"
+    };
+
+    const I18N = {
+      gu: {
+        rolePrompt: 'તમે એપનો ઉપયોગ કઈ રીતે કરવા માંગો છો? પસંદ કરો:',
+        custTitle: 'હું ગ્રાહક / સોસાયટી છું (Customer)',
+        custSub: 'પિનકોડ ચેક કરો, હોમ સર્વિસ બુક કરો, સોસાયટી AMC & PDF બિલ મેળવો',
+        partTitle: 'હું કારીગર / દુકાનદાર છું (Partner)',
+        partSub: 'તમારા પિનકોડના લાઈવ ઓર્ડર મેળવો અને PDF બિલ બનાવો',
+        admTitle: 'એડમિન પેનલ (Owner Login)',
+        admSub: 'કમિશન, કુલ બુકિંગ, પિનકોડ અને પાર્ટનર મેનેજમેન્ટ (PIN જરૂરી)',
+        pinLbl: 'એડમિન PIN નાખો:',
+        switchBtn: 'રોલ બદલો',
+        pinCheckLbl: '📍 તમારા વિસ્તારનો પિનકોડ (Pincode) નાખી સર્વિસ ઉપલબ્ધ છે કે નહીં તે ચેક કરો:',
+        checkPinBtn: 'ચેક કરો (Check)',
+        selSrv: '૧. કઈ સર્વિસ જોઈએ છે? (Select Service)',
+        fabDesc: 'શેડ, ગ્રીલ, ગેટ રિપેર (₹199)',
+        elecDesc: 'વાયરિંગ, સ્વીચ, પંખા (₹149)',
+        plumbDesc: 'નળ, પાઈપ લીકેજ, ટાંકી (₹149)',
+        furnDesc: 'દરવાજા, કબાટ રિપેર (₹199)',
+        acDesc: 'AC, ફ્રીજ, RO, ગીઝર (₹249)',
+        custForm: '૨. ગ્રાહક અને શહેર/સોસાયટીની વિગત',
+        cName: 'તમારું નામ *',
+        cMob: 'મોબાઈલ નંબર *',
+        cCity: 'ગુજરાતનું શહેર / જિલ્લો (City / District)',
+        cSlot: 'સમય (Time Slot)',
+        cAddr: 'વિસ્તાર, સોસાયટી / ઘર નંબર અને કામની વિગત',
+        selSrvTitle: 'પસંદ કરેલ સર્વિસ:',
+        selFeeTitle: 'વિઝિટ ચાર્જ:',
+        bookNow: '✅ લાઈવ સર્વિસ બુક કરો',
+        bookWA: '📲 WhatsApp પર ડાયરેક્ટ બુક',
+        amcTitle: '🏢 હાઉસિંગ સોસાયટી & બંગલો AMC (વાર્ષિક મેન્ટેનન્સ પ્લાન)',
+        amcSub: 'સમગ્ર ગુજરાતની હાઉસિંગ સોસાયટીઓના કોમન ગેટ વેલ્ડિંગ, લાઈટિંગ, પાણીની મોટર-પ્લમ્બિંગ અને સિક્યુરિટી કેબિન મેન્ટેનન્સ માટે ખાસ વાર્ષિક કોન્ટ્રાક્ટ:',
+        myOrders: '📋 લાઈવ બુકિંગ સ્ટેટસ & PDF બિલ',
+        liveJobs: '🔔 લાઈવ ગ્રાહક ઓર્ડર (All Over Gujarat)',
+        partReg: '👷 ગુજરાતભરના દુકાનદાર / કારીગર લાઈવ રજિસ્ટ્રેશન',
+        tName: 'તમારું / દુકાનનું નામ *',
+        tMob: 'મોબાઈલ નંબર *',
+        tCat: 'કામની કેટેગરી (Category)',
+        tCity: 'તમારું શહેર અને વિસ્તાર',
+        tPin: 'તમારો સર્વિસ પિનકોડ *',
+        regTech: '💾 લાઈવ રજિસ્ટર કરો',
+        navBook: '🏠 સર્વિસ બુક',
+        navAmc: '🏢 સોસાયટી AMC',
+        navOrders: '📋 મારા ઓર્ડર',
+        navJobs: '🔔 લાઈવ ઓર્ડર',
+        navProf: '👷 પ્રોફાઈલ / પ્લાન'
+      },
+      hi: {
+        rolePrompt: 'आप ऐप का उपयोग कैसे करना चाहते हैं? चुनें:',
+        custTitle: 'मैं ग्राहक / सोसाइटी हूँ (Customer)',
+        custSub: 'पिनकोड चेक करें, होम सर्विस बुक करें, सोसाइटी AMC & PDF बिल पाएं',
+        partTitle: 'मैं कारीगर / दुकानदार हूँ (Partner)',
+        partSub: 'अपने पिनकोड के लाइव ऑर्डर पाएं और PDF बिल बनाएं',
+        admTitle: 'एडमिन पैनल (Owner Login)',
+        admSub: 'कमीशन, कुल बुकिंग, पिनकोड और पार्टनर मैनेजमेंट (PIN आवश्यक)',
+        pinLbl: 'एडमिन PIN दर्ज करें:',
+        switchBtn: 'रोल बदलें',
+        pinCheckLbl: '📍 अपने एरिया का पिनकोड (Pincode) डालकर सर्विस उपलब्धता चेक करें:',
+        checkPinBtn: 'चेक करें (Check)',
+        selSrv: '१. कौन सी सर्विस चाहिए? (Select Service)',
+        fabDesc: 'शेड, ग्रिल, गेट रिपेयर (₹199)',
+        elecDesc: 'वायरिंग, स्विच, पंखा (₹149)',
+        plumbDesc: 'नल, पाइप लीकेज, टंकी (₹149)',
+        furnDesc: 'दरवाजा, अलमारी रिपेयर (₹199)',
+        acDesc: 'AC, फ्रिज, RO, गीजर (₹249)',
+        custForm: '२. ग्राहक और शहर/सोसाइटी का विवरण',
+        cName: 'आपका नाम *',
+        cMob: 'मोबाइल नंबर *',
+        cCity: 'गुजरात का शहर / जिला (City / District)',
+        cSlot: 'समय (Time Slot)',
+        cAddr: 'एरिया, सोसाइटी / घर नंबर और काम का विवरण',
+        selSrvTitle: 'चुनी गई सर्विस:',
+        selFeeTitle: 'विजिट चार्ज:',
+        bookNow: '✅ लाइव सर्विस बुक करें',
+        bookWA: '📲 WhatsApp पर डायरेक्ट बुक',
+        amcTitle: '🏢 हाउसिंग सोसाइटी & बंगलो AMC (वार्षिक मेंटेनेंस प्लान)',
+        amcSub: 'पूरे गुजरात की हाउसिंग सोसाइटी के कॉमन गेट वेल्डिंग, लाइटिंग, पानी मोटर-प्लंबिंग और सिक्योरिटी केबिन मेंटेनेंस के लिए वार्षिक कॉन्ट्रैक्ट:',
+        myOrders: '📋 लाइव बुकिंग स्टेटस & PDF बिल',
+        liveJobs: '🔔 लाइव ग्राहक ऑर्डर (All Over Gujarat)',
+        partReg: '👷 पूरे गुजरात के दुकानदार / कारीगर लाइव रजिस्ट्रेशन',
+        tName: 'आपका / दुकान का नाम *',
+        tMob: 'मोबाइल नंबर *',
+        tCat: 'काम की कैटेगरी (Category)',
+        tCity: 'आपका शहर और एरिया',
+        tPin: 'आपका सर्विस पिनकोड *',
+        regTech: '💾 लाइव रजिस्टर करें',
+        navBook: '🏠 सर्विस बुक',
+        navAmc: '🏢 सोसाइटी AMC',
+        navOrders: '📋 मेरे ऑर्डर',
+        navJobs: '🔔 लाइव ऑर्डर',
+        navProf: '👷 प्रोफाइल / प्लान'
+      },
+      en: {
+        rolePrompt: 'How would you like to use Skyline HomeCare? Select:',
+        custTitle: 'I am a Customer / Society',
+        custSub: 'Check pincode availability, book home services & get PDF bills',
+        partTitle: 'I am a Technician / Shop Partner',
+        partSub: 'Get live jobs in your pincode & generate PDF receipts',
+        admTitle: 'Admin Panel (Owner Login)',
+        admSub: 'Commission, revenue, pincodes & partner management (PIN Required)',
+        pinLbl: 'Enter Admin PIN:',
+        switchBtn: 'Switch Role',
+        pinCheckLbl: '📍 Enter your 6-digit Pincode to check service availability in your area:',
+        checkPinBtn: 'Check Availability',
+        selSrv: '1. Choose a Home Service',
+        fabDesc: 'Shed, Grill, Gate Repair (₹199)',
+        elecDesc: 'Wiring, Switch, Fan (₹149)',
+        plumbDesc: 'Tap, Pipe Leakage, Tank (₹149)',
+        furnDesc: 'Door, Wardrobe Repair (₹199)',
+        acDesc: 'AC, Fridge, RO, Geyser (₹249)',
+        custForm: '2. Customer & City / Society Details',
+        cName: 'Your Name *',
+        cMob: 'Mobile Number *',
+        cCity: 'Gujarat City / District',
+        cSlot: 'Preferred Time Slot',
+        cAddr: 'Area, Society / House No. & Work Description',
+        selSrvTitle: 'Selected Service:',
+        selFeeTitle: 'Visit Charge:',
+        bookNow: '✅ Book Live Service Now',
+        bookWA: '📲 Direct Book via WhatsApp',
+        amcTitle: '🏢 Housing Society & Bungalow AMC (Annual Maintenance)',
+        amcSub: 'Annual maintenance contracts for housing societies across Gujarat covering main gate welding, common lighting, plumbing & water pumps:',
+        myOrders: '📋 Live Booking Status & PDF Bill',
+        liveJobs: '🔔 Live Customer Jobs (All Over Gujarat)',
+        partReg: '👷 Partner / Technician Live Registration (All Gujarat)',
+        tName: 'Your / Shop Name *',
+        tMob: 'Mobile Number *',
+        tCat: 'Work Category',
+        tCity: 'Your City & Area',
+        tPin: 'Your Service Pincode *',
+        regTech: '💾 Register Live Now',
+        navBook: '🏠 Book Service',
+        navAmc: '🏢 Society AMC',
+        navOrders: '📋 My Orders',
+        navJobs: '🔔 Live Jobs',
+        navProf: '👷 Profile / Plan'
+      }
+    };
+
+    function checkPincodeAvailability() {
+      const pin = document.getElementById('custPincode').value.trim();
+      const resBox = document.getElementById('pinStatusResult');
+      resBox.style.display = 'block';
+      resBox.className = 'pin-status';
+
+      if (!/^\d{6}$/.test(pin)) {
+        resBox.classList.add('pin-no');
+        resBox.innerText = currentLang === 'en'
+          ? '⚠️ Please enter a valid 6-digit Pincode.'
+          : (currentLang === 'hi' ? '⚠️ कृपया सही 6-अंकों का पिनकोड दर्ज करें।' : '⚠️ કૃપા કરીને ૬ અંકનો સાચો પિનકોડ નાખો.');
+        return false;
+      }
+
+      const matchedTechs = liveTechs.filter(t => String(t.pincode || '').trim() === pin);
+      const matchedAdminPin = livePincodes.find(p => String(p.pin || '').trim() === pin);
+      const defaultArea = DEFAULT_ACTIVE_PINS[pin];
+
+      if (matchedTechs.length > 0 || matchedAdminPin || defaultArea) {
+        const areaName = matchedAdminPin ? matchedAdminPin.area : (defaultArea || matchedTechs[0].area);
+        const techCount = matchedTechs.length > 0 ? ` (${matchedTechs.length} Verified Partner Ready)` : '';
+        resBox.classList.add('pin-ok');
+        resBox.innerText = currentLang === 'en'
+          ? `✅ Available in Your Area! (${pin} - ${areaName})${techCount}`
+          : (currentLang === 'hi'
+              ? `✅ आपके एरिया में सर्विस उपलब्ध है! (${pin} - ${areaName})${techCount}`
+              : `✅ તમારા વિસ્તારમાં સર્વિસ ઉપલબ્ધ છે! (${pin} - ${areaName})${techCount}`);
+        return true;
+      } else if (/^(36|37|38|39)\d{4}$/.test(pin)) {
+        resBox.classList.add('pin-warn');
+        resBox.innerText = currentLang === 'en'
+          ? `⚡ Gujarat Zone (${pin}): On-Demand Booking Available! Our nearest partner will be assigned.`
+          : (currentLang === 'hi'
+              ? `⚡ गुजरात ज़ोन (${pin}): ऑन-डिमांड बुकिंग उपलब्ध है! नजदीकी कारीगर भेजा जाएगा।`
+              : `⚡ ગુજરાત ઝોન (${pin}): ઓન-ડિમાન્ડ બુકિંગ ઉપલબ્ધ છે! નજીકના કારીગરને અસાઈન કરવામાં આવશે.`);
+        return true;
+      } else {
+        resBox.classList.add('pin-no');
+        resBox.innerText = currentLang === 'en'
+          ? `❌ Not Available in This Area (${pin}). Currently serving All Over Gujarat (36xxxx - 39xxxx).`
+          : (currentLang === 'hi'
+              ? `❌ इस एरिया (${pin}) में अभी सर्विस उपलब्ध नहीं है। अभी केवल पूरे गुजरात में चालू है।`
+              : `❌ આ વિસ્તાર (${pin}) માં હાલ સર્વિસ ઉપલબ્ધ નથી. હાલ સમગ્ર ગુજરાત (36xxxx - 39xxxx) માં જ ચાલુ છે.`);
+        return false;
+      }
+    }
+
+    function setLang(lang) {
+      currentLang = lang;
+      const t = I18N[lang];
+      ['btnGu','btnHi','btnEn','rLangGu','rLangHi','rLangEn'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      if (lang === 'gu') {
+        document.getElementById('btnGu').classList.add('active');
+        document.getElementById('rLangGu').classList.add('active');
+      } else if (lang === 'hi') {
+        document.getElementById('btnHi').classList.add('active');
+        document.getElementById('rLangHi').classList.add('active');
+      } else {
+        document.getElementById('btnEn').classList.add('active');
+        document.getElementById('rLangEn').classList.add('active');
+      }
+
+      document.getElementById('tRolePrompt').innerText = t.rolePrompt;
+      document.getElementById('tCustRoleTitle').innerText = t.custTitle;
+      document.getElementById('tCustRoleSub').innerText = t.custSub;
+      document.getElementById('tPartRoleTitle').innerText = t.partTitle;
+      document.getElementById('tPartRoleSub').innerText = t.partSub;
+      document.getElementById('tAdmRoleTitle').innerText = t.admTitle;
+      document.getElementById('tAdmRoleSub').innerText = t.admSub;
+      document.getElementById('tPinLbl').innerText = t.pinLbl;
+      document.getElementById('btnSwitchRole').innerText = t.switchBtn;
+      document.getElementById('lblPinCheck').innerText = t.pinCheckLbl;
+      document.getElementById('btnCheckPin').innerText = t.checkPinBtn;
+
+      document.getElementById('lblSelectSrv').innerText = t.selSrv;
+      document.getElementById('sFabDesc').innerText = t.fabDesc;
+      document.getElementById('sElecDesc').innerText = t.elecDesc;
+      document.getElementById('sPlumbDesc').innerText = t.plumbDesc;
+      document.getElementById('sFurnDesc').innerText = t.furnDesc;
+      document.getElementById('sAcDesc').innerText = t.acDesc;
+
+      document.getElementById('lblCustForm').innerText = t.custForm;
+      document.getElementById('lblCustName').innerText = t.cName;
+      document.getElementById('lblCustMob').innerText = t.cMob;
+      document.getElementById('lblCustCity').innerText = t.cCity;
+      document.getElementById('lblCustSlot').innerText = t.cSlot;
+      document.getElementById('lblCustAddr').innerText = t.cAddr;
+      document.getElementById('lblSelSrvTitle').innerText = t.selSrvTitle;
+      document.getElementById('lblSelFeeTitle').innerText = t.selFeeTitle;
+      document.getElementById('btnBookNow').innerText = t.bookNow;
+      document.getElementById('btnBookWA').innerText = t.bookWA;
+
+      document.getElementById('lblAmcTitle').innerText = t.amcTitle;
+      document.getElementById('lblAmcSub').innerText = t.amcSub;
+      document.getElementById('lblMyOrdersTitle').innerText = t.myOrders;
+      document.getElementById('lblLiveJobsTitle').innerText = t.liveJobs;
+      document.getElementById('lblPartnerRegTitle').innerText = t.partReg;
+      document.getElementById('lblTechName').innerText = t.tName;
+      document.getElementById('lblTechMob').innerText = t.tMob;
+      document.getElementById('lblTechCat').innerText = t.tCat;
+      document.getElementById('lblTechCity').innerText = t.tCity;
+      document.getElementById('lblTechPin').innerText = t.tPin;
+      document.getElementById('btnRegTech').innerText = t.regTech;
+
+      renderBottomNav();
+      if (document.getElementById('custPincode').value.trim().length === 6) {
+        checkPincodeAvailability();
+      }
+    }
+
+    function renderBottomNav() {
+      const t = I18N[currentLang];
+      const nav = document.getElementById('dynamicBottomNav');
+      if (activeRole === 'customer') {
+        nav.innerHTML = `
+          <button id="btnNav1" class="active" onclick="showSection('secCustBook', 'btnNav1')">${t.navBook}</button>
+          <button id="btnNav2" onclick="showSection('secSocietyAMC', 'btnNav2')">${t.navAmc}</button>
+          <button id="btnNav3" onclick="showSection('secCustOrders', 'btnNav3')">${t.navOrders}</button>
+        `;
+      } else if (activeRole === 'partner') {
+        nav.innerHTML = `
+          <button id="btnNav1" class="active" onclick="showSection('secPartnerJobs', 'btnNav1')">${t.navJobs}</button>
+          <button id="btnNav2" onclick="showSection('secPartnerProfile', 'btnNav2')">${t.navProf}</button>
+        `;
+      } else if (activeRole === 'admin') {
+        nav.innerHTML = `
+          <button id="btnNav1" class="active" onclick="showSection('secAdminDash', 'btnNav1')">📊 Admin</button>
+          <button id="btnNav2" onclick="showSection('secPartnerJobs', 'btnNav2')">${t.navJobs}</button>
+          <button id="btnNav3" onclick="showSection('secSocietyAMC', 'btnNav3')">${t.navAmc}</button>
+        `;
+      }
+    }
+
     async function syncFromCloud() {
       try {
-        const [ordRes, techRes] = await Promise.all([
+        const [ordRes, techRes, pinRes] = await Promise.all([
           fetch(`${DB_URL}/orders.json`),
-          fetch(`${DB_URL}/techs.json`)
+          fetch(`${DB_URL}/techs.json`),
+          fetch(`${DB_URL}/pincodes.json`)
         ]);
         const ordData = await ordRes.json();
         const techData = await techRes.json();
+        const pinData = await pinRes.json();
 
         liveOrders = ordData
           ? Object.keys(ordData).map(k => ({ firebaseKey: k, ...ordData[k] })).reverse()
           : [];
         liveTechs = techData
           ? Object.keys(techData).map(k => ({ firebaseKey: k, ...techData[k] })).reverse()
+          : [];
+        livePincodes = pinData
+          ? Object.keys(pinData).map(k => ({ firebaseKey: k, ...pinData[k] })).reverse()
           : [];
 
         renderCustOrders();
@@ -484,7 +836,6 @@
       }
     }
 
-    // Auto-refresh every 6 seconds when app is open
     setInterval(() => {
       if (document.getElementById('mainApp').style.display === 'block') {
         syncFromCloud();
@@ -501,7 +852,7 @@
       if (pin === '3538') {
         enterRole('admin');
       } else {
-        alert('ખોટો PIN! સાચો PIN નાખો.');
+        alert('ખોટો PIN / Wrong PIN!');
       }
     }
 
@@ -516,31 +867,18 @@
       document.getElementById('roleScreen').style.display = 'none';
       document.getElementById('mainApp').style.display = 'block';
 
-      const nav = document.getElementById('dynamicBottomNav');
       const badge = document.getElementById('roleSubBadge');
-
       if (role === 'customer') {
-        badge.innerText = 'Customer Portal • Live Cloud • Surat';
-        nav.innerHTML = `
-          <button id="btnNav1" class="active" onclick="showSection('secCustBook', 'btnNav1')">🏠 સર્વિસ બુક</button>
-          <button id="btnNav2" onclick="showSection('secSocietyAMC', 'btnNav2')">🏢 સોસાયટી AMC</button>
-          <button id="btnNav3" onclick="showSection('secCustOrders', 'btnNav3')">📋 મારા ઓર્ડર / બિલ</button>
-        `;
+        badge.innerText = 'Customer Portal • All Over Gujarat';
+        renderBottomNav();
         showSection('secCustBook', 'btnNav1');
       } else if (role === 'partner') {
-        badge.innerText = 'Partner / Dukandar Portal • Live Jobs';
-        nav.innerHTML = `
-          <button id="btnNav1" class="active" onclick="showSection('secPartnerJobs', 'btnNav1')">🔔 લાઈવ ઓર્ડર</button>
-          <button id="btnNav2" onclick="showSection('secPartnerProfile', 'btnNav2')">👷 મારી પ્રોફાઈલ / પ્લાન</button>
-        `;
+        badge.innerText = 'Partner / Dukandar Portal • All Gujarat';
+        renderBottomNav();
         showSection('secPartnerJobs', 'btnNav1');
       } else if (role === 'admin') {
         badge.innerText = 'Admin Owner Panel • Jayavirbhai Makwana';
-        nav.innerHTML = `
-          <button id="btnNav1" class="active" onclick="showSection('secAdminDash', 'btnNav1')">📊 કમાણી &amp; પાર્ટનર્સ</button>
-          <button id="btnNav2" onclick="showSection('secPartnerJobs', 'btnNav2')">📋 બધા લાઈવ ઓર્ડર</button>
-          <button id="btnNav3" onclick="showSection('secSocietyAMC', 'btnNav3')">🏢 AMC પ્લાન</button>
-        `;
+        renderBottomNav();
         showSection('secAdminDash', 'btnNav1');
       }
       syncFromCloud();
@@ -562,31 +900,23 @@
       document.getElementById('selectedSrvFee').innerText = '₹' + fee;
     }
 
-    function setLang(lang) {
-      document.querySelectorAll('.lang-group button').forEach(b => b.classList.remove('active'));
-      if (lang === 'gu') {
-        document.getElementById('btnGu').classList.add('active');
-        document.getElementById('lblSelectSrv').innerText = '૧. કઈ સર્વિસ જોઈએ છે? (Select Service)';
-        document.getElementById('lblCustForm').innerText = '૨. ગ્રાહક અને સોસાયટીની વિગત';
-      } else if (lang === 'hi') {
-        document.getElementById('btnHi').classList.add('active');
-        document.getElementById('lblSelectSrv').innerText = '१. कौन सी सर्विस चाहिए? (Select Service)';
-        document.getElementById('lblCustForm').innerText = '२. ग्राहक और सोसाइटी का विवरण';
-      } else {
-        document.getElementById('btnEn').classList.add('active');
-        document.getElementById('lblSelectSrv').innerText = '1. Choose a Home Service';
-        document.getElementById('lblCustForm').innerText = '2. Customer & Society Details';
-      }
-    }
-
     async function bookService() {
+      const pincode = document.getElementById('custPincode').value.trim();
       const name = document.getElementById('custName').value.trim();
       const mobile = document.getElementById('custMobile').value.trim();
       const area = document.getElementById('custArea').value;
       const slot = document.getElementById('custSlot').value;
       const problem = document.getElementById('custProblem').value.trim();
 
-      if (!name || !mobile) return alert('કૃપા કરીને તમારું નામ અને મોબાઈલ નંબર લખો.');
+      if (!/^\d{6}$/.test(pincode)) {
+        return alert('કૃપા કરીને ૬ અંકનો Pincode નાખો / Please enter a valid 6-digit Pincode.');
+      }
+      if (!checkPincodeAvailability()) {
+        return alert('માફ કરશો, આ પિનકોડ પર હાલ સર્વિસ ઉપલબ્ધ નથી.');
+      }
+      if (!name || !mobile) {
+        return alert('કૃપા કરીને નામ અને મોબાઈલ નંબર લખો / Please enter name & mobile.');
+      }
 
       const newOrder = {
         id: 'HC-' + Math.floor(1001 + Math.random() * 8999),
@@ -594,6 +924,7 @@
         service: currentService,
         fee: currentFee,
         finalBill: currentFee,
+        pincode,
         name,
         mobile,
         area,
@@ -614,24 +945,25 @@
       document.getElementById('custProblem').value = '';
 
       await syncFromCloud();
-      alert(`✅ લાઈવ બુકિંગ થઈ ગયું છે! ઓર્ડર નંબર: ${newOrder.id}\nતમારો ઓર્ડર સીધો જ નજીકના કારીગરના ફોનમાં પહોંચી ગયો છે.`);
+      alert(`✅ બુકિંગ થઈ ગયું છે! Order ID: ${newOrder.id} (Pincode: ${pincode})\nતમારો ઓર્ડર નજીકના કારીગરના ફોનમાં પહોંચી ગયો છે.`);
       showSection('secCustOrders', 'btnNav3');
     }
 
     function bookViaWhatsApp() {
-      const name = document.getElementById('custName').value.trim() || 'ગ્રાહક';
+      const pincode = document.getElementById('custPincode').value.trim() || '-';
+      const name = document.getElementById('custName').value.trim() || 'Customer';
       const mobile = document.getElementById('custMobile').value.trim() || '-';
       const area = document.getElementById('custArea').value;
-      const problem = document.getElementById('custProblem').value.trim() || 'સર્વિસ રિક્વેસ્ટ';
+      const problem = document.getElementById('custProblem').value.trim() || 'Service Request';
 
-      let msg = `*SKYLINE HOMECARE - NEW BOOKING*\nસર્વિસ: *${currentService}* (₹${currentFee})\nનામ: *${name}*\nમોબાઈલ: ${mobile}\nવિસ્તાર: ${area}\nવિગત: ${problem}`;
+      let msg = `*SKYLINE HOMECARE - NEW BOOKING (GUJARAT)*\nService: *${currentService}* (₹${currentFee})\nPincode: *${pincode}*\nName: *${name}*\nMobile: ${mobile}\nCity/Area: ${area}\nDetails: ${problem}`;
       window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     function inquireAMC(planName) {
-      const soc = prompt('તમારી સોસાયટી / બંગલોનું નામ અને વિસ્તાર લખો:', 'ગ્રીન સિટી સોસાયટી, કામરેજ');
+      const soc = prompt('તમારી સોસાયટી / શહેર અને પિનકોડ લખો (Society, City & Pincode):', 'ગ્રીન સિટી સોસાયટી, સુરત - 394180');
       if (soc) {
-        let msg = `*SKYLINE HOMECARE - SOCIETY AMC INQUIRY*\nપસંદ કરેલ પ્લાન: *${planName}*\nસોસાયટી / સરનામું: *${soc}*\nકૃપા કરીને અમારી સોસાયટીની મુલાકાત માટે સંપર્ક કરો.`;
+        let msg = `*SKYLINE HOMECARE - SOCIETY AMC INQUIRY*\nPlan: *${planName}*\nSociety & Pincode: *${soc}*\nPlease contact us for Society AMC details.`;
         window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
       }
     }
@@ -640,7 +972,7 @@
       const box = document.getElementById('custOrdersList');
       if (!box) return;
       if (liveOrders.length === 0) {
-        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હજુ સુધી કોઈ સર્વિસ બુક થઈ નથી.</p>';
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">No bookings yet / હજુ સુધી કોઈ બુકિંગ નથી.</p>';
         return;
       }
       box.innerHTML = liveOrders.map((o, idx) => {
@@ -652,11 +984,11 @@
               <span class="badge ${badgeClass}">${o.status}</span>
             </div>
             <div style="font-size:12.5px;color:#334155;margin-top:5px;">
-              👤 ${o.name} | 📍 ${o.area} | 📅 ${o.date || ''}<br/>
-              👷 ટેકનિશિયન: <strong>${o.techAssigned}</strong> | 💰 ફાઈનલ બિલ: <strong>₹${o.finalBill}</strong>
+              👤 ${o.name} | 📍 ${o.area} (${o.pincode || 'Gujarat'}) | 📅 ${o.date || ''}<br/>
+              👷 Partner: <strong>${o.techAssigned}</strong> | 💰 Bill: <strong>₹${o.finalBill}</strong>
             </div>
             <div style="margin-top:8px;">
-              <button class="btn btn-primary" style="width:auto;padding:6px 12px;font-size:12px;" onclick="openReceipt(${idx})">🧾 PDF બિલ રસીદ જુઓ</button>
+              <button class="btn btn-primary" style="width:auto;padding:6px 12px;font-size:12px;" onclick="openReceipt(${idx})">🧾 PDF Bill Receipt</button>
             </div>
           </div>
         `;
@@ -668,7 +1000,7 @@
       if (!box) return;
       document.getElementById('partnerJobBadge').innerText = liveOrders.length + ' Live Jobs';
       if (liveOrders.length === 0) {
-        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હાલમાં કોઈ નવો ગ્રાહક ઓર્ડર નથી.</p>';
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">No live jobs right now.</p>';
         return;
       }
       box.innerHTML = liveOrders.map((o, idx) => {
@@ -680,14 +1012,14 @@
               <span class="badge ${badgeClass}">${o.status}</span>
             </div>
             <div style="font-size:12.5px;color:#334155;margin:5px 0;">
-              👤 <strong>${o.name}</strong> (<a href="tel:${o.mobile}">${o.mobile}</a>) | 📍 ${o.area}<br/>
+              👤 <strong>${o.name}</strong> (<a href="tel:${o.mobile}">${o.mobile}</a>) | 📍 ${o.area} | 📮 Pincode: <strong>${o.pincode || '-'}</strong><br/>
               📝 ${o.problem}<br/>
-              👷 Assigned: <strong>${o.techAssigned}</strong> | 💰 બિલ: <strong>₹${o.finalBill}</strong>
+              👷 Assigned: <strong>${o.techAssigned}</strong> | 💰 Bill: <strong>₹${o.finalBill}</strong>
             </div>
             <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
               ${o.status === 'New' ? `<button class="btn btn-primary" style="width:auto;padding:6px 12px;font-size:12px;" onclick="acceptJob(${idx})">✅ Accept Job</button>` : ''}
-              ${o.status !== 'Completed' ? `<button class="btn btn-success" style="width:auto;padding:6px 12px;font-size:12px;" onclick="completeJob(${idx})">💰 કામ પૂર્ણ &amp; બિલ નાખો</button>` : ''}
-              <button class="btn btn-warning" style="width:auto;padding:6px 12px;font-size:12px;" onclick="openReceipt(${idx})">🧾 PDF બિલ</button>
+              ${o.status !== 'Completed' ? `<button class="btn btn-success" style="width:auto;padding:6px 12px;font-size:12px;" onclick="completeJob(${idx})">💰 Complete &amp; Bill</button>` : ''}
+              <button class="btn btn-warning" style="width:auto;padding:6px 12px;font-size:12px;" onclick="openReceipt(${idx})">🧾 PDF Bill</button>
             </div>
           </div>
         `;
@@ -696,7 +1028,7 @@
 
     async function acceptJob(idx) {
       const order = liveOrders[idx];
-      const tech = prompt('તમારું / દુકાનનું નામ લખો:', 'Skyline Partner');
+      const tech = prompt('તમારું / દુકાનનું નામ લખો (Partner / Shop Name):', 'Skyline Partner');
       if (tech && order.firebaseKey) {
         await fetch(`${DB_URL}/orders/${order.firebaseKey}.json`, {
           method: 'PATCH',
@@ -709,7 +1041,7 @@
 
     async function completeJob(idx) {
       const order = liveOrders[idx];
-      const bill = parseFloat(prompt('ગ્રાહક પાસેથી લીધેલ કુલ બિલ રકમ (₹) લખો:', order.fee));
+      const bill = parseFloat(prompt('કુલ બિલ રકમ (₹) લખો (Total Bill Amount):', order.fee));
       if (!isNaN(bill) && bill > 0 && order.firebaseKey) {
         await fetch(`${DB_URL}/orders/${order.firebaseKey}.json`, {
           method: 'PATCH',
@@ -726,23 +1058,23 @@
       if (!o) return;
       document.getElementById('receiptContent').innerHTML = `
         <table style="width:100%;border-collapse:collapse;">
-          <tr><td><strong>બિલ નંબર:</strong></td><td style="text-align:right;">${o.id}</td></tr>
-          <tr><td><strong>તારીખ:</strong></td><td style="text-align:right;">${o.date || new Date().toLocaleDateString('en-IN')}</td></tr>
-          <tr><td><strong>ગ્રાહકનું નામ:</strong></td><td style="text-align:right;">${o.name}</td></tr>
-          <tr><td><strong>મોબાઈલ:</strong></td><td style="text-align:right;">${o.mobile}</td></tr>
-          <tr><td><strong>વિસ્તાર:</strong></td><td style="text-align:right;">${o.area}</td></tr>
-          <tr><td><strong>સર્વિસ:</strong></td><td style="text-align:right;">${o.service}</td></tr>
-          <tr><td><strong>ટેકનિશિયન:</strong></td><td style="text-align:right;">${o.techAssigned}</td></tr>
-          <tr><td><strong>સ્ટેટસ:</strong></td><td style="text-align:right;">${o.status}</td></tr>
+          <tr><td><strong>Bill No:</strong></td><td style="text-align:right;">${o.id}</td></tr>
+          <tr><td><strong>Date:</strong></td><td style="text-align:right;">${o.date || new Date().toLocaleDateString('en-IN')}</td></tr>
+          <tr><td><strong>Customer:</strong></td><td style="text-align:right;">${o.name}</td></tr>
+          <tr><td><strong>Mobile:</strong></td><td style="text-align:right;">${o.mobile}</td></tr>
+          <tr><td><strong>City &amp; Pincode:</strong></td><td style="text-align:right;">${o.area} (${o.pincode || ''})</td></tr>
+          <tr><td><strong>Service:</strong></td><td style="text-align:right;">${o.service}</td></tr>
+          <tr><td><strong>Technician:</strong></td><td style="text-align:right;">${o.techAssigned}</td></tr>
+          <tr><td><strong>Status:</strong></td><td style="text-align:right;">${o.status}</td></tr>
           <tr style="border-top:2px solid #0f172a;font-size:16px;">
-            <td style="padding-top:8px;"><strong>કુલ બિલ રકમ:</strong></td>
+            <td style="padding-top:8px;"><strong>Total Amount:</strong></td>
             <td style="text-align:right;padding-top:8px;color:#15803d;"><strong>₹${o.finalBill}/-</strong></td>
           </tr>
         </table>
-        <p style="font-size:11px;color:#64748b;margin-top:10px;text-align:center;">Thank you for choosing Skyline HomeCare, Surat!</p>
+        <p style="font-size:11px;color:#64748b;margin-top:10px;text-align:center;">Thank you for choosing Skyline HomeCare — All Over Gujarat!</p>
       `;
       document.getElementById('btnShareBillWA').onclick = () => {
-        let msg = `*🧾 SKYLINE HOMECARE - SERVICE RECEIPT*\nબિલ નં: *${o.id}*\nગ્રાહક: *${o.name}*\nસર્વિસ: *${o.service}*\nટેકનિશિયન: ${o.techAssigned}\nકુલ રકમ: *₹${o.finalBill}/-*\nસ્ટેટસ: ${o.status}\n_સુરતની વિશ્વસનીય હોમ સર્વિસ - 9106743538_`;
+        let msg = `*🧾 SKYLINE HOMECARE - SERVICE RECEIPT*\nBill No: *${o.id}*\nCustomer: *${o.name}*\nCity/Pincode: ${o.area} (${o.pincode || ''})\nService: *${o.service}*\nTechnician: ${o.techAssigned}\nTotal Amount: *₹${o.finalBill}/-*\nStatus: ${o.status}\n_Gujarat's Trusted Home Service - 9106743538_`;
         window.open(`https://wa.me/91${o.mobile.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
       };
       document.getElementById('receiptModal').style.display = 'flex';
@@ -756,20 +1088,47 @@
       const name = document.getElementById('techName').value.trim();
       const mobile = document.getElementById('techMobile').value.trim();
       const skill = document.getElementById('techSkill').value;
-      const area = document.getElementById('techArea').value.trim() || 'સુરત';
-      if (!name || !mobile) return alert('નામ અને મોબાઈલ નંબર લખો.');
+      const area = document.getElementById('techArea').value.trim() || 'Gujarat';
+      const pincode = document.getElementById('techPincode').value.trim();
+
+      if (!name || !mobile || !/^\d{6}$/.test(pincode)) {
+        return alert('નામ, મોબાઈલ નંબર અને ૬ અંકનો Pincode લખો / Enter name, mobile & 6-digit Pincode.');
+      }
 
       await fetch(`${DB_URL}/techs.json`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, mobile, skill, area })
+        body: JSON.stringify({ name, mobile, skill, area, pincode })
       });
 
       document.getElementById('techName').value = '';
       document.getElementById('techMobile').value = '';
+      document.getElementById('techPincode').value = '';
       await syncFromCloud();
-      alert('✅ તમારી પાર્ટનર પ્રોફાઈલ લાઈવ સેવ થઈ ગઈ છે! હવે તમે Live Jobs સ્વીકારી શકો છો.');
+      alert(`✅ પાર્ટનર રજિસ્ટ્રેશન સફળ! Pincode ${pincode} હવે Customer માટે Live Available થઈ ગયો છે.`);
       showSection('secPartnerJobs', 'btnNav1');
+    }
+
+    async function addAdminPincode() {
+      const pin = document.getElementById('adminNewPin').value.trim();
+      const area = document.getElementById('adminNewPinArea').value.trim() || 'Gujarat Active Zone';
+      if (!/^\d{6}$/.test(pin)) return alert('6 અંકનો સાચો Pincode લખો.');
+
+      await fetch(`${DB_URL}/pincodes.json`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin, area })
+      });
+      document.getElementById('adminNewPin').value = '';
+      document.getElementById('adminNewPinArea').value = '';
+      syncFromCloud();
+    }
+
+    async function deleteAdminPincode(key) {
+      if (confirm('આ પિનકોડ દૂર કરવો છે?')) {
+        await fetch(`${DB_URL}/pincodes/${key}.json`, { method: 'DELETE' });
+        syncFromCloud();
+      }
     }
 
     function renderAdminData() {
@@ -783,16 +1142,25 @@
       document.getElementById('statGrossAmt').innerText = '₹' + gross.toLocaleString('en-IN');
       document.getElementById('statCommission').innerText = '₹' + comm.toLocaleString('en-IN');
 
+      const pinBox = document.getElementById('adminPincodeList');
+      if (pinBox) {
+        pinBox.innerHTML = livePincodes.map(p => `
+          <span class="badge badge-done" style="display:inline-flex;align-items:center;gap:6px;margin:3px;">
+            📍 ${p.pin} (${p.area}) <b style="cursor:pointer;color:#dc2626;" onclick="deleteAdminPincode('${p.firebaseKey}')">✕</b>
+          </span>
+        `).join('');
+      }
+
       const box = document.getElementById('adminTechList');
       if (liveTechs.length === 0) {
-        box.innerHTML = '<p style="font-size:13px;color:#64748b;">હજુ સુધી કોઈ પાર્ટનર રજિસ્ટર નથી થયા.</p>';
+        box.innerHTML = '<p style="font-size:13px;color:#64748b;">No registered partners yet.</p>';
         return;
       }
       box.innerHTML = liveTechs.map(t => `
         <div class="job-item" style="display:flex;justify-content:space-between;align-items:center;">
           <div>
             <strong>👷 ${t.name}</strong> (${t.skill})<br/>
-            <small>📍 ${t.area} | 📞 ${t.mobile}</small>
+            <small>📍 ${t.area} | 📮 Pincode: <strong>${t.pincode || '-'}</strong> | 📞 ${t.mobile}</small>
           </div>
           <a href="tel:${t.mobile}" class="btn btn-success" style="width:auto;padding:6px 12px;text-decoration:none;font-size:12px;">📞 Call</a>
         </div>
