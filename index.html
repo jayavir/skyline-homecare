@@ -81,6 +81,14 @@
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
 
+    /* Lock Banner */
+    .lock-banner {
+      background: #fef2f2; border: 2px solid #dc2626; border-radius: 12px;
+      padding: 18px; text-align: center; margin-bottom: 14px;
+    }
+    .lock-banner h2 { margin: 0 0 6px; color: #991b1b; font-size: 18px; }
+    .lock-banner p { margin: 0 0 12px; font-size: 13px; color: #7f1d1d; line-height: 1.5; }
+
     /* Pincode Banner */
     .pin-box {
       background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: 10px;
@@ -125,6 +133,7 @@
     .btn-success { background: #15803d; color: #fff; }
     .btn-warning { background: #d97706; color: #fff; }
     .btn-wa { background: #16a34a; color: #fff; }
+    .btn-danger { background: #dc2626; color: #fff; }
 
     /* Job & Tech Lists */
     .job-item {
@@ -134,6 +143,7 @@
     .badge-new { background: #fef3c7; color: #92400e; }
     .badge-accepted { background: #dbeafe; color: #1e40af; }
     .badge-done { background: #dcfce7; color: #166534; }
+    .badge-locked { background: #fee2e2; color: #991b1b; }
 
     /* Bottom Navigation */
     .bottom-nav {
@@ -193,7 +203,7 @@
         <span class="r-icon">👷</span>
         <div>
           <strong id="tPartRoleTitle">હું કારીગર / દુકાનદાર છું (Partner)</strong>
-          <small id="tPartRoleSub">₹99 માં 30 દિવસ ટ્રાયલ કરો — કામ મળે પછી ₹3,599/વર્ષ ઓનલાઈન દુકાન</small>
+          <small id="tPartRoleSub">₹99 માં 30 દિવસ ટ્રાયલ કરો — પ્લાન એક્ટિવ થયા પછી લાઈવ ઓર્ડર ખુલશે</small>
         </div>
       </div>
 
@@ -201,7 +211,7 @@
         <span class="r-icon">🔐</span>
         <div>
           <strong id="tAdmRoleTitle">એડમિન પેનલ (Owner Login)</strong>
-          <small id="tAdmRoleSub">કમિશન, કુલ બુકિંગ, પિનકોડ અને પાર્ટનર મેનેજમેન્ટ (PIN જરૂરી)</small>
+          <small id="tAdmRoleSub">પાર્ટનર પ્લાન એક્ટિવેશન, કમિશન, પિનકોડ અને ઓર્ડર મેનેજમેન્ટ</small>
         </div>
       </div>
 
@@ -237,7 +247,6 @@
       <!-- CUSTOMER VIEW: BOOK SERVICE -->
       <div id="secCustBook" class="app-section">
         <div class="card">
-          <!-- PINCODE AVAILABILITY CHECKER -->
           <div class="pin-box">
             <label id="lblPinCheck" style="color:#0f172a;font-size:13px;">📍 તમારા વિસ્તારનો પિનકોડ (Pincode) નાખી સર્વિસ ઉપલબ્ધ છે કે નહીં તે ચેક કરો:</label>
             <div class="pin-row">
@@ -396,13 +405,34 @@
         </div>
       </div>
 
-      <!-- PARTNER VIEW: LIVE JOBS -->
+      <!-- PARTNER VIEW: LIVE JOBS (LOCKED UNTIL ₹99 PLAN IS ACTIVATED) -->
       <div id="secPartnerJobs" class="app-section" style="display:none;">
-        <div class="card">
+        <!-- LOCKED SCREEN FOR UNVERIFIED PARTNERS -->
+        <div id="partnerLockScreen" class="card">
+          <div class="lock-banner">
+            <h2>🔒 લાઈવ ઓર્ડર ટેબ લોક છે (Partner Account Locked)</h2>
+            <p>
+              જ્યાં સુધી તમારો <strong>₹99 (30 Days Trial)</strong> પ્લાન એક્ટિવ નહીં થાય ત્યાં સુધી ગ્રાહકોના લાઈવ ઓર્ડર અને મોબાઈલ નંબર દેખાશે નહીં.<br/>
+              પહેલા નીચે રજિસ્ટ્રેશન કરો અથવા તમારો રજિસ્ટર્ડ મોબાઈલ નંબર નાખી સ્ટેટસ ચેક કરો:
+            </p>
+            <div style="max-width:340px;margin:0 auto 10px;display:flex;gap:8px;">
+              <input type="tel" id="partnerLoginMob" placeholder="રજિસ્ટર્ડ મોબાઈલ નંબર નાખો" style="margin:0;text-align:center;font-weight:700;" />
+              <button class="btn btn-primary" style="width:auto;" onclick="checkPartnerUnlock()">Check</button>
+            </div>
+            <div id="partnerUnlockStatus" style="font-size:12.5px;font-weight:700;color:#991b1b;margin-bottom:10px;"></div>
+            <div class="grid-2" style="max-width:460px;margin:0 auto;">
+              <button class="btn btn-success" onclick="showSection('secPartnerProfile', 'btnNav2')">📝 નવું રજિસ્ટ્રેશન કરો</button>
+              <a href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2099%20Plan" class="btn btn-warning" style="text-decoration:none;display:block;">💳 Pay ₹99 Trial via UPI</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- UNLOCKED LIVE JOBS LIST -->
+        <div id="partnerUnlockedBox" class="card" style="display:none;">
           <h3>
-            <span id="lblLiveJobsTitle">🔔 લાઈવ ગ્રાહક ઓર્ડર (All Over Gujarat)</span>
+            <span id="lblLiveJobsTitle">🔔 લાઈવ ગ્રાહક ઓર્ડર (Unlocked Partner)</span>
             <div style="display:flex;gap:6px;align-items:center;">
-              <span id="partnerJobBadge" style="font-size:12px;color:#d97706;">0 Jobs</span>
+              <span id="partnerJobBadge" style="font-size:12px;color:#15803d;font-weight:700;">0 Jobs</span>
               <button class="btn btn-primary" style="width:auto;padding:4px 9px;font-size:11px;" onclick="syncFromCloud()">🔄 Sync</button>
             </div>
           </h3>
@@ -445,20 +475,22 @@
             </div>
           </div>
 
-          <div class="grid-2">
-            <button id="btnRegTech" class="btn btn-success" onclick="registerTech()">💾 રજિસ્ટર કરો (₹99 - 30 Days Trial)</button>
-            <a href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2030Days%20Trial" class="btn btn-warning" style="text-align:center;text-decoration:none;display:block;">💳 Pay ₹99 Trial via UPI</a>
+          <div class="grid-3">
+            <button id="btnRegTech" class="btn btn-primary" onclick="registerTech()">૧. રજિસ્ટર કરો</button>
+            <a href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2099%20Plan" class="btn btn-warning" style="text-align:center;text-decoration:none;display:block;">૨. Pay ₹99 via UPI</a>
+            <button class="btn btn-wa" onclick="sendPaymentProofWA()">૩. WhatsApp સ્ક્રીનશોટ મોકલો</button>
           </div>
 
           <div style="background:#fffbeb;border:1.5px solid #f59e0b;padding:14px;border-radius:10px;margin-top:14px;font-size:13px;line-height:1.6;">
-            <strong style="color:#b45309;font-size:14.5px;">🏪 કારીગરની પોતાની "ઓનલાઈન દુકાન" પ્લાન:</strong><br />
-            • <strong>સ્ટેપ ૧ (Trial Offer):</strong> માત્ર <strong>₹99</strong> માં <strong>30 દિવસ</strong> એપ પરથી ગ્રાહકોના ઓર્ડર મેળવી કામ કરી જુઓ.<br />
-            • <strong>સ્ટેપ ૨ (Annual Plan):</strong> 30 દિવસ પછી જો કામ મળે, તો માત્ર <strong>₹3,599 / વર્ષ (માત્ર ₹300/મહિનો ભાડું)</strong> ભરીને તમારી ઓનલાઈન દુકાન કાયમી ચાલુ રાખો — <strong>0% કમિશન (100% કમાણી તમારી)!</strong>
+            <strong style="color:#b45309;font-size:14.5px;">🏪 ઓનલાઈન દુકાન અનલોક કરવાની પ્રક્રિયા:</strong><br />
+            • <strong>સ્ટેપ ૧:</strong> ઉપર તમારી વિગત ભરી <strong>રજિસ્ટર કરો</strong> અને <strong>₹99 UPI</strong> પેમેન્ટ કરો.<br />
+            • <strong>સ્ટેપ ૨:</strong> એડમિન દ્વારા વેરિફિકેશન થતાની સાથે જ તમારું <strong>લાઈવ ઓર્ડર ટેબ અનલોક</strong> થઈ જશે (30 દિવસ ટ્રાયલ).<br />
+            • <strong>સ્ટેપ ૩:</strong> 30 દિવસ પછી કામ મળે તો <strong>₹3,599 / વર્ષ (માત્ર ₹300/મહિનો ભાડું)</strong> ભરીને 0% કમિશન પર કાયમી ચાલુ રાખો.
           </div>
         </div>
       </div>
 
-      <!-- ADMIN VIEW: REVENUE, PINCODES & ALL MANAGEMENT -->
+      <!-- ADMIN VIEW: REVENUE, PARTNER UNLOCK & ALL MANAGEMENT -->
       <div id="secAdminDash" class="app-section" style="display:none;">
         <div class="card">
           <h3>
@@ -475,10 +507,13 @@
               <h2 id="statGrossAmt" style="margin:4px 0;color:#15803d;">₹0</h2>
             </div>
             <div style="background:#fffbeb;padding:10px;border-radius:8px;border:1px solid #fcd34d;">
-              <small>રજિસ્ટર્ડ પાર્ટનર્સ (₹3,599/Yr)</small>
+              <small>એક્ટિવ પાર્ટનર્સ</small>
               <h2 id="statCommission" style="margin:4px 0;color:#b45309;">0</h2>
             </div>
           </div>
+
+          <h3>🔐 દુકાનદારો / કારીગરોનું એકાઉન્ટ એક્ટિવ (Unlock / Lock) કરો</h3>
+          <div id="adminTechList" style="margin-bottom:14px;"></div>
 
           <h3>📍 એક્ટિવ સર્વિસ પિનકોડ ઉમેરો (Active Pincodes)</h3>
           <div class="grid-3" style="margin-bottom:10px;">
@@ -486,10 +521,7 @@
             <input type="text" id="adminNewPinArea" placeholder="વિસ્તાર (દા.ત. કામરેજ, સુરત)" style="margin:0;" />
             <button class="btn btn-primary" onclick="addAdminPincode()">➕ પિનકોડ એક્ટિવ કરો</button>
           </div>
-          <div id="adminPincodeList" style="margin-bottom:14px;"></div>
-
-          <h3>🔧 ગુજરાતભરના રજિસ્ટર્ડ દુકાનદારો / કારીગરોની યાદી</h3>
-          <div id="adminTechList"></div>
+          <div id="adminPincodeList"></div>
         </div>
       </div>
     </div>
@@ -524,6 +556,7 @@
     let liveOrders = [];
     let liveTechs = [];
     let livePincodes = [];
+    let savedPartnerMobile = localStorage.getItem('skyline_partner_mob') || '';
 
     const DEFAULT_ACTIVE_PINS = {
       "394180": "કામરેજ, સુરત (Kamrej, Surat)",
@@ -542,9 +575,9 @@
         custTitle: 'હું ગ્રાહક / સોસાયટી છું (Customer)',
         custSub: 'પિનકોડ ચેક કરો, હોમ સર્વિસ બુક કરો, સોસાયટી AMC & PDF બિલ મેળવો',
         partTitle: 'હું કારીગર / દુકાનદાર છું (Partner)',
-        partSub: '₹99 માં 30 દિવસ ટ્રાયલ કરો — કામ મળે પછી ₹3,599/વર્ષ ઓનલાઈન દુકાન',
+        partSub: '₹99 માં 30 દિવસ ટ્રાયલ કરો — પ્લાન એક્ટિવ થયા પછી લાઈવ ઓર્ડર ખુલશે',
         admTitle: 'એડમિન પેનલ (Owner Login)',
-        admSub: 'કુલ બુકિંગ, પિનકોડ અને પાર્ટનર મેનેજમેન્ટ (PIN જરૂરી)',
+        admSub: 'પાર્ટનર પ્લાન એક્ટિવેશન, કમિશન, પિનકોડ અને ઓર્ડર મેનેજમેન્ટ',
         pinLbl: 'એડમિન PIN નાખો:',
         switchBtn: 'રોલ બદલો',
         pinCheckLbl: '📍 તમારા વિસ્તારનો પિનકોડ (Pincode) નાખી સર્વિસ ઉપલબ્ધ છે કે નહીં તે ચેક કરો:',
@@ -568,14 +601,14 @@
         amcTitle: '🏢 હાઉસિંગ સોસાયટી & બંગલો AMC (વાર્ષિક મેન્ટેનન્સ પ્લાન)',
         amcSub: 'સમગ્ર ગુજરાતની હાઉસિંગ સોસાયટીઓના કોમન ગેટ વેલ્ડિંગ, લાઈટિંગ, પાણીની મોટર-પ્લમ્બિંગ અને સિક્યુરિટી કેબિન મેન્ટેનન્સ માટે ખાસ વાર્ષિક કોન્ટ્રાક્ટ:',
         myOrders: '📋 લાઈવ બુકિંગ સ્ટેટસ & PDF બિલ',
-        liveJobs: '🔔 લાઈવ ગ્રાહક ઓર્ડર (All Over Gujarat)',
+        liveJobs: '🔔 લાઈવ ગ્રાહક ઓર્ડર (Unlocked Partner)',
         partReg: '👷 તમારી ઓનલાઈન દુકાન ખોલો — ₹99 Trial Offer',
         tName: 'તમારું / દુકાનનું નામ *',
         tMob: 'મોબાઈલ નંબર *',
         tCat: 'કામની કેટેગરી (Category)',
         tCity: 'તમારું શહેર અને વિસ્તાર',
         tPin: 'તમારો સર્વિસ પિનકોડ *',
-        regTech: '💾 રજિસ્ટર કરો (₹99 - 30 Days Trial)',
+        regTech: '૧. રજિસ્ટર કરો',
         navBook: '🏠 સર્વિસ બુક',
         navAmc: '🏢 સોસાયટી AMC',
         navOrders: '📋 મારા ઓર્ડર',
@@ -587,9 +620,9 @@
         custTitle: 'मैं ग्राहक / सोसाइटी हूँ (Customer)',
         custSub: 'पिनकोड चेक करें, होम सर्विस बुक करें, सोसाइटी AMC & PDF बिल पाएं',
         partTitle: 'मैं कारीगर / दुकानदार हूँ (Partner)',
-        partSub: '₹99 में 30 दिन ट्रायल करें — काम मिले तो ₹3,599/वर्ष ऑनलाइन दुकान',
+        partSub: '₹99 में 30 दिन ट्रायल करें — प्लान एक्टिव होने के बाद लाइव ऑर्डर खुलेंगे',
         admTitle: 'एडमिन पैनल (Owner Login)',
-        admSub: 'कुल बुकिंग, पिनकोड और पार्टनर मैनेजमेंट (PIN आवश्यक)',
+        admSub: 'पार्टनर प्लान एक्टिवेशन, पिनकोड और ऑर्डर मैनेजमेंट',
         pinLbl: 'एडमिन PIN दर्ज करें:',
         switchBtn: 'रोल बदलें',
         pinCheckLbl: '📍 अपने एरिया का पिनकोड (Pincode) डालकर सर्विस उपलब्धता चेक करें:',
@@ -613,14 +646,14 @@
         amcTitle: '🏢 हाउसिंग सोसाइटी & बंगलो AMC (वार्षिक मेंटेनेंस प्लान)',
         amcSub: 'पूरे गुजरात की हाउसिंग सोसाइटी के कॉमन गेट वेल्डिंग, लाइटिंग, पानी मोटर-प्लंबिंग और सिक्योरिटी केबिन मेंटेनेंस के लिए वार्षिक कॉन्ट्रैक्ट:',
         myOrders: '📋 लाइव बुकिंग स्टेटस & PDF बिल',
-        liveJobs: '🔔 लाइव ग्राहक ऑर्डर (All Over Gujarat)',
+        liveJobs: '🔔 लाइव ग्राहक ऑर्डर (Unlocked Partner)',
         partReg: '👷 अपनी ऑनलाइन दुकान खोलें — ₹99 Trial Offer',
         tName: 'आपका / दुकान का नाम *',
         tMob: 'मोबाइल नंबर *',
         tCat: 'काम की कैटेगरी (Category)',
         tCity: 'आपका शहर और एरिया',
         tPin: 'आपका सर्विस पिनकोड *',
-        regTech: '💾 रजिस्टर करें (₹99 - 30 Days Trial)',
+        regTech: '१. रजिस्टर करें',
         navBook: '🏠 सर्विस बुक',
         navAmc: '🏢 सोसाइटी AMC',
         navOrders: '📋 मेरे ऑर्डर',
@@ -632,9 +665,9 @@
         custTitle: 'I am a Customer / Society',
         custSub: 'Check pincode availability, book home services & get PDF bills',
         partTitle: 'I am a Technician / Shop Partner',
-        partSub: '₹99 for 30-Day Trial — Then ₹3,599/Yr (₹300/mo) Online Shop',
+        partSub: '₹99 for 30-Day Trial — Live jobs unlock once plan is activated',
         admTitle: 'Admin Panel (Owner Login)',
-        admSub: 'Total bookings, pincodes & partner management (PIN Required)',
+        admSub: 'Partner plan activation, pincodes & order management',
         pinLbl: 'Enter Admin PIN:',
         switchBtn: 'Switch Role',
         pinCheckLbl: '📍 Enter your 6-digit Pincode to check service availability in your area:',
@@ -658,14 +691,14 @@
         amcTitle: '🏢 Housing Society & Bungalow AMC (Annual Maintenance)',
         amcSub: 'Annual maintenance contracts for housing societies across Gujarat covering main gate welding, common lighting, plumbing & water pumps:',
         myOrders: '📋 Live Booking Status & PDF Bill',
-        liveJobs: '🔔 Live Customer Jobs (All Over Gujarat)',
+        liveJobs: '🔔 Live Customer Jobs (Unlocked Partner)',
         partReg: '👷 Open Your Online Shop — ₹99 Trial Offer',
         tName: 'Your / Shop Name *',
         tMob: 'Mobile Number *',
         tCat: 'Work Category',
         tCity: 'Your City & Area',
         tPin: 'Your Service Pincode *',
-        regTech: '💾 Register Now (₹99 - 30 Days Trial)',
+        regTech: '1. Register Now',
         navBook: '🏠 Book Service',
         navAmc: '🏢 Society AMC',
         navOrders: '📋 My Orders',
@@ -673,6 +706,55 @@
         navProf: '👷 Online Shop'
       }
     };
+
+    function checkPartnerUnlock() {
+      const inputEl = document.getElementById('partnerLoginMob');
+      if (inputEl && inputEl.value.trim()) {
+        savedPartnerMobile = inputEl.value.trim();
+        localStorage.setItem('skyline_partner_mob', savedPartnerMobile);
+      } else if (inputEl && savedPartnerMobile) {
+        inputEl.value = savedPartnerMobile;
+      }
+
+      const lockBox = document.getElementById('partnerLockScreen');
+      const unlockBox = document.getElementById('partnerUnlockedBox');
+      const statusMsg = document.getElementById('partnerUnlockStatus');
+
+      if (!lockBox || !unlockBox) return;
+
+      // Admin viewing partner jobs sees everything unlocked
+      if (activeRole === 'admin') {
+        lockBox.style.display = 'none';
+        unlockBox.style.display = 'block';
+        return;
+      }
+
+      const matchedPartner = liveTechs.find(t =>
+        String(t.mobile || '').replace(/\D/g, '').slice(-10) === String(savedPartnerMobile).replace(/\D/g, '').slice(-10) &&
+        savedPartnerMobile.length >= 10
+      );
+
+      if (matchedPartner && matchedPartner.isActive === true) {
+        lockBox.style.display = 'none';
+        unlockBox.style.display = 'block';
+      } else {
+        lockBox.style.display = 'block';
+        unlockBox.style.display = 'none';
+        if (matchedPartner) {
+          statusMsg.innerText = `⏳ ${matchedPartner.name} (${matchedPartner.mobile}) — તમારું રજિસ્ટ્રેશન મળી ગયું છે, પરંતુ ₹99 પ્લાન પેમેન્ટ વેરિફિકેશન બાકી છે!`;
+        } else if (savedPartnerMobile) {
+          statusMsg.innerText = `❌ આ નંબર (${savedPartnerMobile}) રજિસ્ટર થયેલ નથી. પહેલા રજિસ્ટ્રેશન કરો.`;
+        }
+      }
+    }
+
+    function sendPaymentProofWA() {
+      const name = document.getElementById('techName').value.trim() || 'Partner';
+      const mob = document.getElementById('techMobile').value.trim() || savedPartnerMobile || '-';
+      const pin = document.getElementById('techPincode').value.trim() || '-';
+      let msg = `*SKYLINE HOMECARE - ₹99 TRIAL ACTIVATION*\nનામ: *${name}*\nમોબાઈલ: *${mob}*\nપિનકોડ: *${pin}*\nમેં ₹99 UPI પેમેન્ટ કરી દીધું છે, મારું Partner એકાઉન્ટ અનલોક કરી આપો.`;
+      window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
+    }
 
     function checkPincodeAvailability() {
       const pin = document.getElementById('custPincode').value.trim();
@@ -688,7 +770,7 @@
         return false;
       }
 
-      const matchedTechs = liveTechs.filter(t => String(t.pincode || '').trim() === pin);
+      const matchedTechs = liveTechs.filter(t => String(t.pincode || '').trim() === pin && t.isActive === true);
       const matchedAdminPin = livePincodes.find(p => String(p.pin || '').trim() === pin);
       const defaultArea = DEFAULT_ACTIVE_PINS[pin];
 
@@ -831,6 +913,7 @@
           ? Object.keys(pinData).map(k => ({ firebaseKey: k, ...pinData[k] })).reverse()
           : [];
 
+        checkPartnerUnlock();
         renderCustOrders();
         renderPartnerJobs();
         renderAdminData();
@@ -879,6 +962,7 @@
         badge.innerText = 'Partner Online Dukan • ₹99 Trial / ₹3,599 Yr';
         renderBottomNav();
         showSection('secPartnerJobs', 'btnNav1');
+        checkPartnerUnlock();
       } else if (role === 'admin') {
         badge.innerText = 'Admin Owner Panel • Jayavirbhai Makwana';
         renderBottomNav();
@@ -892,6 +976,7 @@
       document.querySelectorAll('.bottom-nav button').forEach(el => el.classList.remove('active'));
       document.getElementById(secId).style.display = 'block';
       if (document.getElementById(navBtnId)) document.getElementById(navBtnId).classList.add('active');
+      if (secId === 'secPartnerJobs') checkPartnerUnlock();
     }
 
     function selectService(el, name, fee) {
@@ -948,7 +1033,7 @@
       document.getElementById('custProblem').value = '';
 
       await syncFromCloud();
-      alert(`✅ બુકિંગ થઈ ગયું છે! Order ID: ${newOrder.id} (Pincode: ${pincode})\nતમારો ઓર્ડર નજીકના કારીગરના ફોનમાં પહોંચી ગયો છે.`);
+      alert(`✅ બુકિંગ થઈ ગયું છે! Order ID: ${newOrder.id} (Pincode: ${pincode})\nતમારો ઓર્ડર વેરિફાઈડ કારીગરના ફોનમાં પહોંચી ગયો છે.`);
       showSection('secCustOrders', 'btnNav3');
     }
 
@@ -1098,6 +1183,9 @@
         return alert('નામ, મોબાઈલ નંબર અને ૬ અંકનો Pincode લખો / Enter name, mobile & 6-digit Pincode.');
       }
 
+      savedPartnerMobile = mobile;
+      localStorage.setItem('skyline_partner_mob', mobile);
+
       await fetch(`${DB_URL}/techs.json`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1107,17 +1195,26 @@
           skill,
           area,
           pincode,
-          plan: '₹99 Trial (30 Days) -> ₹3,599/Yr',
+          isActive: false,
+          plan: '₹99 Trial (Pending Activation)',
           joinedDate: new Date().toLocaleDateString('en-IN')
         })
       });
 
-      document.getElementById('techName').value = '';
-      document.getElementById('techMobile').value = '';
-      document.getElementById('techPincode').value = '';
       await syncFromCloud();
-      alert(`✅ તમારી ઓનલાઈન દુકાન રજિસ્ટર થઈ ગઈ છે! (Pincode: ${pincode})\nહવે ₹99 Trial પેમેન્ટ કરીને 30 દિવસ સુધી લાઈવ ઓર્ડર સ્વીકારો.`);
+      alert(`✅ રજિસ્ટ્રેશન થઈ ગયું છે!\nહવે ₹99 UPI પેમેન્ટ કરીને WhatsApp પર સ્ક્રીનશોટ મોકલો — એડમિન એક્ટિવ કરશે એટલે તરત જ તમારું Live Orders ટેબ અનલોક થઈ જશે.`);
       showSection('secPartnerJobs', 'btnNav1');
+    }
+
+    async function togglePartnerStatus(firebaseKey, currentStatus) {
+      const newStatus = !currentStatus;
+      const newPlan = newStatus ? '✅ Active (₹99 Trial / ₹3,599 Yr)' : '🔒 Locked (Pending ₹99)';
+      await fetch(`${DB_URL}/techs/${firebaseKey}.json`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isActive: newStatus, plan: newPlan })
+      });
+      syncFromCloud();
     }
 
     async function addAdminPincode() {
@@ -1147,10 +1244,11 @@
       if (!totalEl) return;
       const completed = liveOrders.filter(o => o.status === 'Completed');
       const gross = completed.reduce((sum, o) => sum + (o.finalBill || 0), 0);
+      const activeCount = liveTechs.filter(t => t.isActive === true).length;
 
       totalEl.innerText = liveOrders.length;
       document.getElementById('statGrossAmt').innerText = '₹' + gross.toLocaleString('en-IN');
-      document.getElementById('statCommission').innerText = liveTechs.length + ' Partners';
+      document.getElementById('statCommission').innerText = activeCount + ' / ' + liveTechs.length;
 
       const pinBox = document.getElementById('adminPincodeList');
       if (pinBox) {
@@ -1166,16 +1264,25 @@
         box.innerHTML = '<p style="font-size:13px;color:#64748b;">No registered partners yet.</p>';
         return;
       }
-      box.innerHTML = liveTechs.map(t => `
-        <div class="job-item" style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <strong>👷 ${t.name}</strong> (${t.skill})<br/>
-            <small>📍 ${t.area} | 📮 Pincode: <strong>${t.pincode || '-'}</strong> | 📞 ${t.mobile}</small><br/>
-            <small style="color:#b45309;font-weight:700;">Plan: ${t.plan || '₹99 Trial -> ₹3,599/Yr'}</small>
+      box.innerHTML = liveTechs.map(t => {
+        const isAct = t.isActive === true;
+        return `
+          <div class="job-item" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div>
+              <strong>👷 ${t.name}</strong> (${t.skill})
+              <span class="badge ${isAct ? 'badge-done' : 'badge-locked'}">${isAct ? 'UNLOCKED' : 'LOCKED'}</span><br/>
+              <small>📍 ${t.area} | 📮 Pincode: <strong>${t.pincode || '-'}</strong> | 📞 ${t.mobile}</small><br/>
+              <small style="color:#b45309;font-weight:700;">Status: ${t.plan || '🔒 Locked (Pending ₹99)'}</small>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn ${isAct ? 'btn-danger' : 'btn-success'}" style="width:auto;padding:6px 12px;font-size:12px;" onclick="togglePartnerStatus('${t.firebaseKey}', ${isAct})">
+                ${isAct ? '🔒 Lock કરો' : '✅ Activate ₹99 Plan'}
+              </button>
+              <a href="tel:${t.mobile}" class="btn btn-primary" style="width:auto;padding:6px 10px;text-decoration:none;font-size:12px;">📞</a>
+            </div>
           </div>
-          <a href="tel:${t.mobile}" class="btn btn-success" style="width:auto;padding:6px 12px;text-decoration:none;font-size:12px;">📞 Call</a>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
   </script>
 </body>
