@@ -301,21 +301,21 @@
             <div>
               <label id="lblCustCity">ગુજરાતનું શહેર / જિલ્લો (City / District)</label>
               <select id="custArea">
-                <option value="સુરત - કામરેજ / વરાછા (Surat - Kamrej/Varachha)">સુરત - કામરેજ / વરાછા (Surat)</option>
-                <option value="સુરત - કતારગામ / અડાજણ / વેસુ (Surat)">સુરત - કતારગામ / અડાજણ / વેસુ (Surat)</option>
-                <option value="અમદાવાદ (Ahmedabad)">અમદાવાદ (Ahmedabad)</option>
-                <option value="વડોદરા (Vadodara)">વડોદરા (Vadodara)</option>
-                <option value="રાજકોટ (Rajkot)">રાજકોટ (Rajkot)</option>
-                <option value="ભાવનગર (Bhavnagar)">ભાવનગર (Bhavnagar)</option>
-                <option value="જામનગર (Jamnagar)">જામનગર (Jamnagar)</option>
-                <option value="જૂનાગઢ / ગીર સોમનાથ (Junagadh / Gir)">જૂનાગઢ / ગીર સોમનાથ (Junagadh)</option>
-                <option value="ગાંધીનગર (Gandhinagar)">ગાંધીનગર (Gandhinagar)</option>
-                <option value="મહેસાણા / પાટણ / બનાસકાંઠા (North Gujarat)">મહેસાણા / પાટણ / બનાસકાંઠા (North Gujarat)</option>
-                <option value="આણંદ / નડિયાદ (Anand / Nadiad)">આણંદ / નડિયાદ (Anand / Kheda)</option>
-                <option value="ભરૂચ / અંકલેશ્વર (Bharuch / Ankleshwar)">ભરૂચ / અંકલેશ્વર (Bharuch)</option>
-                <option value="નવસારી / વલસાડ / વાપી (Navsari / Vapi)">નવસારી / વલસાડ / વાપી (South Gujarat)</option>
-                <option value="મોરબી / સુરેન્દ્રનગર (Morbi / Surendranagar)">મોરબી / સુરેન્દ્રનગર (Saurashtra)</option>
-                <option value="કચ્છ - ભુજ / ગાંધીધામ (Kutch)">કચ્છ - ભુજ / ગાંધીધામ (Kutch)</option>
+                <option value="Surat - Kamrej / Varachha">Surat - Kamrej / Varachha (સુરત)</option>
+                <option value="Surat - Katargam / Adajan / Vesu">Surat - Katargam / Adajan / Vesu (સુરત)</option>
+                <option value="Ahmedabad">Ahmedabad (અમદાવાદ)</option>
+                <option value="Vadodara">Vadodara (વડોદરા)</option>
+                <option value="Rajkot">Rajkot (રાજકોટ)</option>
+                <option value="Bhavnagar">Bhavnagar (ભાવનગર)</option>
+                <option value="Jamnagar">Jamnagar (જામનગર)</option>
+                <option value="Junagadh / Gir Somnath">Junagadh / Gir Somnath (જૂનાગઢ / ગીર)</option>
+                <option value="Gandhinagar">Gandhinagar (ગાંધીનગર)</option>
+                <option value="Mehsana / Patan / Banaskantha">Mehsana / Patan / Banaskantha (મહેસાણા)</option>
+                <option value="Anand / Nadiad">Anand / Nadiad (આણંદ / નડિયાદ)</option>
+                <option value="Bharuch / Ankleshwar">Bharuch / Ankleshwar (ભરૂચ)</option>
+                <option value="Navsari / Valsad / Vapi">Navsari / Valsad / Vapi (નવસારી / વાપી)</option>
+                <option value="Morbi / Surendranagar">Morbi / Surendranagar (મોરબી)</option>
+                <option value="Kutch - Bhuj / Gandhidham">Kutch - Bhuj / Gandhidham (કચ્છ)</option>
               </select>
             </div>
             <div>
@@ -351,44 +351,44 @@
             <div class="amc-card">
               <div>
                 <h4>🥉 Silver Society AMC</h4>
-                <div class="amc-price">₹4,999 <small style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
-                <ul>
+                <div class="amc-price">₹4,999 <small class="tPerYear" style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
+                <ul id="amcSilverList">
                   <li>દર ૩ મહિને ૧ રૂટિન ચેકઅપ (4 Visits)</li>
                   <li>કોમન ગેટ વેલ્ડિંગ &amp; ગ્રીસ/ઓઈલિંગ</li>
                   <li>કોમન સ્ટ્રીટ લાઈટ &amp; સ્વીચ રિપેર</li>
                   <li>10% ડિસ્કાઉન્ટ દરેક ઘરના રિપેરિંગ પર</li>
                 </ul>
               </div>
-              <button class="btn btn-primary" onclick="inquireAMC('Silver Society AMC - ₹4,999/Yr')">બુક / પૂછપરછ કરો</button>
+              <button class="btn btn-primary btnAmcInq" onclick="inquireAMC('Silver Society AMC - ₹4,999/Yr')">બુક / પૂછપરછ કરો</button>
             </div>
 
             <div class="amc-card popular">
               <div>
-                <span class="badge badge-new" style="margin-bottom:6px;display:inline-block;">⭐ સૌથી લોકપ્રિય</span>
+                <span id="badgePopular" class="badge badge-new" style="margin-bottom:6px;display:inline-block;">⭐ સૌથી લોકપ્રિય</span>
                 <h4>🥇 Gold Society AMC</h4>
-                <div class="amc-price">₹9,999 <small style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
-                <ul>
+                <div class="amc-price">₹9,999 <small class="tPerYear" style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
+                <ul id="amcGoldList">
                   <li>દર મહિને ૧ રૂટિન વિઝિટ (12 Visits)</li>
                   <li>ફેબ્રિકેશન + ઈલેક્ટ્રિક + પ્લમ્બિંગ કવર</li>
                   <li>ઈમરજન્સી 2-કલાકમાં પ્રાથમિકતા સપોર્ટ</li>
                   <li>15% ડિસ્કાઉન્ટ સોસાયટીના દરેક સભ્યને</li>
                 </ul>
               </div>
-              <button class="btn btn-warning" onclick="inquireAMC('Gold Society AMC - ₹9,999/Yr')">બુક / પૂછપરછ કરો</button>
+              <button class="btn btn-warning btnAmcInq" onclick="inquireAMC('Gold Society AMC - ₹9,999/Yr')">બુક / પૂછપરછ કરો</button>
             </div>
 
             <div class="amc-card">
               <div>
                 <h4>💎 Platinum Township AMC</h4>
-                <div class="amc-price">₹18,999 <small style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
-                <ul>
+                <div class="amc-price">₹18,999 <small class="tPerYear" style="font-size:12px;font-weight:400;">/ વર્ષ</small></div>
+                <ul id="amcPlatList">
                   <li>અનલિમિટેડ ઈમરજન્સી કોલ વિઝિટ</li>
                   <li>મેઈન ગેટ, શેડ, મોટર પંપ &amp; AC કવર</li>
                   <li>ચોમાસા પહેલા ખાસ શેડ-રૂફ ઈન્સ્પેક્શન</li>
                   <li>20% ડિસ્કાઉન્ટ નવા ફેબ્રિકેશન કામ પર</li>
                 </ul>
               </div>
-              <button class="btn btn-success" onclick="inquireAMC('Platinum Township AMC - ₹18,999/Yr')">બુક / પૂછપરછ કરો</button>
+              <button class="btn btn-success btnAmcInq" onclick="inquireAMC('Platinum Township AMC - ₹18,999/Yr')">બુક / પૂછપરછ કરો</button>
             </div>
           </div>
         </div>
@@ -410,19 +410,19 @@
         <!-- LOCKED SCREEN FOR UNVERIFIED PARTNERS -->
         <div id="partnerLockScreen" class="card">
           <div class="lock-banner">
-            <h2>🔒 લાઈવ ઓર્ડર ટેબ લોક છે (Partner Account Locked)</h2>
-            <p>
+            <h2 id="lblLockTitle">🔒 લાઈવ ઓર્ડર ટેબ લોક છે (Partner Account Locked)</h2>
+            <p id="lblLockDesc">
               જ્યાં સુધી તમારો <strong>₹99 (30 Days Trial)</strong> પ્લાન એક્ટિવ નહીં થાય ત્યાં સુધી ગ્રાહકોના લાઈવ ઓર્ડર અને મોબાઈલ નંબર દેખાશે નહીં.<br/>
               પહેલા નીચે રજિસ્ટ્રેશન કરો અથવા તમારો રજિસ્ટર્ડ મોબાઈલ નંબર નાખી સ્ટેટસ ચેક કરો:
             </p>
             <div style="max-width:340px;margin:0 auto 10px;display:flex;gap:8px;">
               <input type="tel" id="partnerLoginMob" placeholder="રજિસ્ટર્ડ મોબાઈલ નંબર નાખો" style="margin:0;text-align:center;font-weight:700;" />
-              <button class="btn btn-primary" style="width:auto;" onclick="checkPartnerUnlock()">Check</button>
+              <button id="btnCheckUnlock" class="btn btn-primary" style="width:auto;" onclick="checkPartnerUnlock()">Check</button>
             </div>
             <div id="partnerUnlockStatus" style="font-size:12.5px;font-weight:700;color:#991b1b;margin-bottom:10px;"></div>
             <div class="grid-2" style="max-width:460px;margin:0 auto;">
-              <button class="btn btn-success" onclick="showSection('secPartnerProfile', 'btnNav2')">📝 નવું રજિસ્ટ્રેશન કરો</button>
-              <a href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2099%20Plan" class="btn btn-warning" style="text-decoration:none;display:block;">💳 Pay ₹99 Trial via UPI</a>
+              <button id="btnNewPartnerReg" class="btn btn-success" onclick="showSection('secPartnerProfile', 'btnNav2')">📝 નવું રજિસ્ટ્રેશન કરો</button>
+              <a id="btnPay99Lock" href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2099%20Plan" class="btn btn-warning" style="text-decoration:none;display:block;">💳 Pay ₹99 Trial via UPI</a>
             </div>
           </div>
         </div>
@@ -477,11 +477,11 @@
 
           <div class="grid-3">
             <button id="btnRegTech" class="btn btn-primary" onclick="registerTech()">૧. રજિસ્ટર કરો</button>
-            <a href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2099%20Plan" class="btn btn-warning" style="text-align:center;text-decoration:none;display:block;">૨. Pay ₹99 via UPI</a>
-            <button class="btn btn-wa" onclick="sendPaymentProofWA()">૩. WhatsApp સ્ક્રીનશોટ મોકલો</button>
+            <a id="btnPay99Prof" href="upi://pay?pa=9106743538@ybl&pn=Skyline%20HomeCare&am=99&cu=INR&tn=Skyline%20Partner%2099%20Plan" class="btn btn-warning" style="text-align:center;text-decoration:none;display:block;">૨. Pay ₹99 via UPI</a>
+            <button id="btnSendProof" class="btn btn-wa" onclick="sendPaymentProofWA()">૩. WhatsApp સ્ક્રીનશોટ મોકલો</button>
           </div>
 
-          <div style="background:#fffbeb;border:1.5px solid #f59e0b;padding:14px;border-radius:10px;margin-top:14px;font-size:13px;line-height:1.6;">
+          <div id="partnerPlanInfoBox" style="background:#fffbeb;border:1.5px solid #f59e0b;padding:14px;border-radius:10px;margin-top:14px;font-size:13px;line-height:1.6;">
             <strong style="color:#b45309;font-size:14.5px;">🏪 ઓનલાઈન દુકાન અનલોક કરવાની પ્રક્રિયા:</strong><br />
             • <strong>સ્ટેપ ૧:</strong> ઉપર તમારી વિગત ભરી <strong>રજિસ્ટર કરો</strong> અને <strong>₹99 UPI</strong> પેમેન્ટ કરો.<br />
             • <strong>સ્ટેપ ૨:</strong> એડમિન દ્વારા વેરિફિકેશન થતાની સાથે જ તમારું <strong>લાઈવ ઓર્ડર ટેબ અનલોક</strong> થઈ જશે (30 દિવસ ટ્રાયલ).<br />
@@ -559,14 +559,14 @@
     let savedPartnerMobile = localStorage.getItem('skyline_partner_mob') || '';
 
     const DEFAULT_ACTIVE_PINS = {
-      "394180": "કામરેજ, સુરત (Kamrej, Surat)",
-      "395006": "વરાછા / સરથાણા, સુરત (Varachha, Surat)",
-      "395004": "કતારગામ, સુરત (Katargam, Surat)",
-      "395009": "અડાજણ / પાલ, સુરત (Adajan, Surat)",
-      "395007": "વેસુ / અલથાણ, સુરત (Vesu, Surat)",
-      "380015": "સેટેલાઈટ / પ્રહલાદનગર, અમદાવાદ (Ahmedabad)",
-      "390007": "અલકાપુરી, વડોદરા (Vadodara)",
-      "360001": "રાજકોટ સિટી (Rajkot)"
+      "394180": "Kamrej, Surat",
+      "395006": "Varachha / Sarthana, Surat",
+      "395004": "Katargam, Surat",
+      "395009": "Adajan / Pal, Surat",
+      "395007": "Vesu / Althan, Surat",
+      "380015": "Satellite / Prahladnagar, Ahmedabad",
+      "390007": "Alkapuri, Vadodara",
+      "360001": "Rajkot City"
     };
 
     const I18N = {
@@ -581,6 +581,7 @@
         pinLbl: 'એડમિન PIN નાખો:',
         switchBtn: 'રોલ બદલો',
         pinCheckLbl: '📍 તમારા વિસ્તારનો પિનકોડ (Pincode) નાખી સર્વિસ ઉપલબ્ધ છે કે નહીં તે ચેક કરો:',
+        pinPh: 'દા.ત. 394180 / 395006 / 380015',
         checkPinBtn: 'ચેક કરો (Check)',
         selSrv: '૧. કઈ સર્વિસ જોઈએ છે? (Select Service)',
         fabDesc: 'શેડ, ગ્રીલ, ગેટ રિપેર (₹199)',
@@ -590,25 +591,47 @@
         acDesc: 'AC, ફ્રીજ, RO, ગીઝર (₹249)',
         custForm: '૨. ગ્રાહક અને શહેર/સોસાયટીની વિગત',
         cName: 'તમારું નામ *',
+        cNamePh: 'દા.ત. રાજેશભાઈ પટેલ',
         cMob: 'મોબાઈલ નંબર *',
+        cMobPh: 'દા.ત. 9876543210',
         cCity: 'ગુજરાતનું શહેર / જિલ્લો (City / District)',
         cSlot: 'સમય (Time Slot)',
+        cSlotVal: 'આજે - 2 કલાકમાં (Urgent)',
         cAddr: 'વિસ્તાર, સોસાયટી / ઘર નંબર અને કામની વિગત',
+        cAddrPh: 'દા.ત. B-104, ગ્રીન સિટી સોસાયટી - મેઈન ગેટ વેલ્ડિંગ અને કડી રિપેર કરવાની છે',
         selSrvTitle: 'પસંદ કરેલ સર્વિસ:',
         selFeeTitle: 'વિઝિટ ચાર્જ:',
         bookNow: '✅ લાઈવ સર્વિસ બુક કરો',
         bookWA: '📲 WhatsApp પર ડાયરેક્ટ બુક',
         amcTitle: '🏢 હાઉસિંગ સોસાયટી & બંગલો AMC (વાર્ષિક મેન્ટેનન્સ પ્લાન)',
         amcSub: 'સમગ્ર ગુજરાતની હાઉસિંગ સોસાયટીઓના કોમન ગેટ વેલ્ડિંગ, લાઈટિંગ, પાણીની મોટર-પ્લમ્બિંગ અને સિક્યુરિટી કેબિન મેન્ટેનન્સ માટે ખાસ વાર્ષિક કોન્ટ્રાક્ટ:',
+        perYear: '/ વર્ષ',
+        popBadge: '⭐ સૌથી લોકપ્રિય',
+        amcInqBtn: 'બુક / પૂછપરછ કરો',
+        amcSilver: '<li>દર ૩ મહિને ૧ રૂટિન ચેકઅપ (4 Visits)</li><li>કોમન ગેટ વેલ્ડિંગ & ગ્રીસ/ઓઈલિંગ</li><li>કોમન સ્ટ્રીટ લાઈટ & સ્વીચ રિપેર</li><li>10% ડિસ્કાઉન્ટ દરેક ઘરના રિપેરિંગ પર</li>',
+        amcGold: '<li>દર મહિને ૧ રૂટિન વિઝિટ (12 Visits)</li><li>ફેબ્રિકેશન + ઈલેક્ટ્રિક + પ્લમ્બિંગ કવર</li><li>ઈમરજન્સી 2-કલાકમાં પ્રાથમિકતા સપોર્ટ</li><li>15% ડિસ્કાઉન્ટ સોસાયટીના દરેક સભ્યને</li>',
+        amcPlat: '<li>અનલિમિટેડ ઈમરજન્સી કોલ વિઝિટ</li><li>મેઈન ગેટ, શેડ, મોટર પંપ & AC કવર</li><li>ચોમાસા પહેલા ખાસ શેડ-રૂફ ઈન્સ્પેક્શન</li><li>20% ડિસ્કાઉન્ટ નવા ફેબ્રિકેશન કામ પર</li>',
         myOrders: '📋 લાઈવ બુકિંગ સ્ટેટસ & PDF બિલ',
+        lockTitle: '🔒 લાઈવ ઓર્ડર ટેબ લોક છે (Partner Account Locked)',
+        lockDesc: 'જ્યાં સુધી તમારો <strong>₹99 (30 Days Trial)</strong> પ્લાન એક્ટિવ નહીં થાય ત્યાં સુધી ગ્રાહકોના લાઈવ ઓર્ડર અને મોબાઈલ નંબર દેખાશે નહીં.<br/>પહેલા નીચે રજિસ્ટ્રેશન કરો અથવા તમારો રજિસ્ટર્ડ મોબાઈલ નંબર નાખી સ્ટેટસ ચેક કરો:',
+        pMobPh: 'રજિસ્ટર્ડ મોબાઈલ નંબર નાખો',
+        newRegBtn: '📝 નવું રજિસ્ટ્રેશન કરો',
+        pay99Btn: '💳 Pay ₹99 Trial via UPI',
         liveJobs: '🔔 લાઈવ ગ્રાહક ઓર્ડર (Unlocked Partner)',
         partReg: '👷 તમારી ઓનલાઈન દુકાન ખોલો — ₹99 Trial Offer',
         tName: 'તમારું / દુકાનનું નામ *',
+        tNamePh: 'દા.ત. સુરેશભાઈ ઈલેક્ટ્રિકલ્સ',
         tMob: 'મોબાઈલ નંબર *',
+        tMobPh: 'દા.ત. 9825012345',
         tCat: 'કામની કેટેગરી (Category)',
         tCity: 'તમારું શહેર અને વિસ્તાર',
+        tCityPh: 'દા.ત. કામરેજ, સુરત / અમદાવાદ',
         tPin: 'તમારો સર્વિસ પિનકોડ *',
+        tPinPh: 'દા.ત. 394180',
         regTech: '૧. રજિસ્ટર કરો',
+        pay99Step2: '૨. Pay ₹99 via UPI',
+        sendProofBtn: '૩. WhatsApp સ્ક્રીનશોટ મોકલો',
+        planInfoHtml: '<strong style="color:#b45309;font-size:14.5px;">🏪 ઓનલાઈન દુકાન અનલોક કરવાની પ્રક્રિયા:</strong><br/>• <strong>સ્ટેપ ૧:</strong> ઉપર તમારી વિગત ભરી <strong>રજિસ્ટર કરો</strong> અને <strong>₹99 UPI</strong> પેમેન્ટ કરો.<br/>• <strong>સ્ટેપ ૨:</strong> એડમિન દ્વારા વેરિફિકેશન થતાની સાથે જ તમારું <strong>લાઈવ ઓર્ડર ટેબ અનલોક</strong> થઈ જશે (30 દિવસ ટ્રાયલ).<br/>• <strong>સ્ટેપ ૩:</strong> 30 દિવસ પછી કામ મળે તો <strong>₹3,599 / વર્ષ (માત્ર ₹300/મહિનો ભાડું)</strong> ભરીને 0% કમિશન પર કાયમી ચાલુ રાખો.',
         navBook: '🏠 સર્વિસ બુક',
         navAmc: '🏢 સોસાયટી AMC',
         navOrders: '📋 મારા ઓર્ડર',
@@ -626,6 +649,7 @@
         pinLbl: 'एडमिन PIN दर्ज करें:',
         switchBtn: 'रोल बदलें',
         pinCheckLbl: '📍 अपने एरिया का पिनकोड (Pincode) डालकर सर्विस उपलब्धता चेक करें:',
+        pinPh: 'जैसे 394180 / 395006 / 380015',
         checkPinBtn: 'चेक करें (Check)',
         selSrv: '१. कौन सी सर्विस चाहिए? (Select Service)',
         fabDesc: 'शेड, ग्रिल, गेट रिपेयर (₹199)',
@@ -635,25 +659,47 @@
         acDesc: 'AC, फ्रिज, RO, गीजर (₹249)',
         custForm: '२. ग्राहक और शहर/सोसाइटी का विवरण',
         cName: 'आपका नाम *',
+        cNamePh: 'जैसे राजेशभाई पटेल',
         cMob: 'मोबाइल नंबर *',
+        cMobPh: 'जैसे 9876543210',
         cCity: 'गुजरात का शहर / जिला (City / District)',
         cSlot: 'समय (Time Slot)',
+        cSlotVal: 'आज - 2 घंटे में (Urgent)',
         cAddr: 'एरिया, सोसाइटी / घर नंबर और काम का विवरण',
+        cAddrPh: 'जैसे B-104, ग्रीन सिटी सोसाइटी - मेन गेट वेल्डिंग रिपेयर करना है',
         selSrvTitle: 'चुनी गई सर्विस:',
         selFeeTitle: 'विजिट चार्ज:',
         bookNow: '✅ लाइव सर्विस बुक करें',
         bookWA: '📲 WhatsApp पर डायरेक्ट बुक',
         amcTitle: '🏢 हाउसिंग सोसाइटी & बंगलो AMC (वार्षिक मेंटेनेंस प्लान)',
         amcSub: 'पूरे गुजरात की हाउसिंग सोसाइटी के कॉमन गेट वेल्डिंग, लाइटिंग, पानी मोटर-प्लंबिंग और सिक्योरिटी केबिन मेंटेनेंस के लिए वार्षिक कॉन्ट्रैक्ट:',
+        perYear: '/ वर्ष',
+        popBadge: '⭐ सबसे लोकप्रिय',
+        amcInqBtn: 'बुक / पूछताछ करें',
+        amcSilver: '<li>हर 3 महीने में 1 रूटीन चेकअप (4 Visits)</li><li>कॉमन गेट वेल्डिंग और ग्रीस/ऑयलिंग</li><li>कॉमन स्ट्रीट लाइट और स्विच रिपेयर</li><li>10% डिस्काउंट हर घर के रिपेयरिंग पर</li>',
+        amcGold: '<li>हर महीने 1 रूटीन विजिट (12 Visits)</li><li>फैब्रिकेशन + इलेक्ट्रिक + प्लंबिंग कवर</li><li>इमरजेंसी 2-घंटे में प्राथमिकता सपोर्ट</li><li>15% डिस्काउंट सोसाइटी के हर सदस्य को</li>',
+        amcPlat: '<li>अनलिमिटेड इमरजेंसी कॉल विजिट</li><li>मेन गेट, शेड, मोटर पंप और AC कवर</li><li>मानसून से पहले खास शेड-रूफ इंस्पेक्शन</li><li>20% डिस्काउंट नए फैब्रिकेशन काम पर</li>',
         myOrders: '📋 लाइव बुकिंग स्टेटस & PDF बिल',
+        lockTitle: '🔒 लाइव ऑर्डर टैब लॉक है (Partner Account Locked)',
+        lockDesc: 'जब तक आपका <strong>₹99 (30 Days Trial)</strong> प्लान एक्टिव नहीं होगा तब तक ग्राहकों के लाइव ऑर्डर और मोबाइल नंबर नहीं दिखेंगे।<br/>पहले नीचे रजिस्ट्रेशन करें या अपना रजिस्टर्ड मोबाइल नंबर डालकर स्टेटस चेक करें:',
+        pMobPh: 'रजिस्टर्ड मोबाइल नंबर दर्ज करें',
+        newRegBtn: '📝 नया रजिस्ट्रेशन करें',
+        pay99Btn: '💳 Pay ₹99 Trial via UPI',
         liveJobs: '🔔 लाइव ग्राहक ऑर्डर (Unlocked Partner)',
         partReg: '👷 अपनी ऑनलाइन दुकान खोलें — ₹99 Trial Offer',
         tName: 'आपका / दुकान का नाम *',
+        tNamePh: 'जैसे सुरेशभाई इलेक्ट्रिकल्स',
         tMob: 'मोबाइल नंबर *',
+        tMobPh: 'जैसे 9825012345',
         tCat: 'काम की कैटेगरी (Category)',
         tCity: 'आपका शहर और एरिया',
+        tCityPh: 'जैसे कामरेज, सूरत / अहमदाबाद',
         tPin: 'आपका सर्विस पिनकोड *',
+        tPinPh: 'जैसे 394180',
         regTech: '१. रजिस्टर करें',
+        pay99Step2: '२. Pay ₹99 via UPI',
+        sendProofBtn: '३. WhatsApp स्क्रीनशॉट भेजें',
+        planInfoHtml: '<strong style="color:#b45309;font-size:14.5px;">🏪 ऑनलाइन दुकान अनलॉक करने की प्रक्रिया:</strong><br/>• <strong>स्टेप १:</strong> ऊपर अपनी जानकारी भरकर <strong>रजिस्टर करें</strong> और <strong>₹99 UPI</strong> पेमेंट करें।<br/>• <strong>स्टेप २:</strong> एडमिन द्वारा वेरिफिकेशन होते ही आपका <strong>लाइव ऑर्डर टैब अनलॉक</strong> हो जाएगा (30 दिन ट्रायल)।<br/>• <strong>स्टेप ३:</strong> 30 दिन बाद काम मिले तो <strong>₹3,599 / वर्ष (मात्र ₹300/महीना किराया)</strong> भरकर 0% कमीशन पर हमेशा चालू रखें।',
         navBook: '🏠 सर्विस बुक',
         navAmc: '🏢 सोसाइटी AMC',
         navOrders: '📋 मेरे ऑर्डर',
@@ -671,6 +717,7 @@
         pinLbl: 'Enter Admin PIN:',
         switchBtn: 'Switch Role',
         pinCheckLbl: '📍 Enter your 6-digit Pincode to check service availability in your area:',
+        pinPh: 'e.g. 394180 / 395006 / 380015',
         checkPinBtn: 'Check Availability',
         selSrv: '1. Choose a Home Service',
         fabDesc: 'Shed, Grill, Gate Repair (₹199)',
@@ -680,25 +727,47 @@
         acDesc: 'AC, Fridge, RO, Geyser (₹249)',
         custForm: '2. Customer & City / Society Details',
         cName: 'Your Name *',
+        cNamePh: 'e.g. Rajeshbhai Patel',
         cMob: 'Mobile Number *',
+        cMobPh: 'e.g. 9876543210',
         cCity: 'Gujarat City / District',
         cSlot: 'Preferred Time Slot',
+        cSlotVal: 'Today - Within 2 Hours (Urgent)',
         cAddr: 'Area, Society / House No. & Work Description',
+        cAddrPh: 'e.g. B-104, Green City Society - Main gate welding & lock repair',
         selSrvTitle: 'Selected Service:',
         selFeeTitle: 'Visit Charge:',
         bookNow: '✅ Book Live Service Now',
         bookWA: '📲 Direct Book via WhatsApp',
         amcTitle: '🏢 Housing Society & Bungalow AMC (Annual Maintenance)',
         amcSub: 'Annual maintenance contracts for housing societies across Gujarat covering main gate welding, common lighting, plumbing & water pumps:',
+        perYear: '/ Year',
+        popBadge: '⭐ Most Popular',
+        amcInqBtn: 'Book / Inquire Now',
+        amcSilver: '<li>1 Routine Checkup every 3 months (4 Visits)</li><li>Common Gate Welding & Grease/Oiling</li><li>Common Street Light & Switch Repair</li><li>10% Discount on all home repairs</li>',
+        amcGold: '<li>1 Routine Visit every month (12 Visits)</li><li>Fabrication + Electrical + Plumbing Covered</li><li>Priority 2-Hour Emergency Support</li><li>15% Discount for all society members</li>',
+        amcPlat: '<li>Unlimited Emergency Call Visits</li><li>Main Gate, Shed, Water Pump & AC Covered</li><li>Pre-Monsoon Roof & Shed Inspection</li><li>20% Discount on new fabrication work</li>',
         myOrders: '📋 Live Booking Status & PDF Bill',
+        lockTitle: '🔒 Live Orders Tab is Locked (Partner Account Locked)',
+        lockDesc: 'Live customer orders and contact numbers remain hidden until your <strong>₹99 (30 Days Trial)</strong> plan is activated.<br/>Register below or enter your registered mobile number to check status:',
+        pMobPh: 'Enter registered mobile number',
+        newRegBtn: '📝 Register New Partner',
+        pay99Btn: '💳 Pay ₹99 Trial via UPI',
         liveJobs: '🔔 Live Customer Jobs (Unlocked Partner)',
         partReg: '👷 Open Your Online Shop — ₹99 Trial Offer',
         tName: 'Your / Shop Name *',
+        tNamePh: 'e.g. Sureshbhai Electricals',
         tMob: 'Mobile Number *',
+        tMobPh: 'e.g. 9825012345',
         tCat: 'Work Category',
         tCity: 'Your City & Area',
+        tCityPh: 'e.g. Kamrej, Surat / Ahmedabad',
         tPin: 'Your Service Pincode *',
+        tPinPh: 'e.g. 394180',
         regTech: '1. Register Now',
+        pay99Step2: '2. Pay ₹99 via UPI',
+        sendProofBtn: '3. Send WhatsApp Screenshot',
+        planInfoHtml: '<strong style="color:#b45309;font-size:14.5px;">🏪 How to Unlock Your Online Shop:</strong><br/>• <strong>Step 1:</strong> Fill in your details above, click <strong>Register Now</strong> & pay <strong>₹99 via UPI</strong>.<br/>• <strong>Step 2:</strong> Once verified by Admin, your <strong>Live Orders tab unlocks</strong> immediately (30-Day Trial).<br/>• <strong>Step 3:</strong> After 30 days, continue permanently at <strong>₹3,599 / Year (only ₹300/month rent)</strong> with 0% commission!',
         navBook: '🏠 Book Service',
         navAmc: '🏢 Society AMC',
         navOrders: '📋 My Orders',
@@ -722,7 +791,6 @@
 
       if (!lockBox || !unlockBox) return;
 
-      // Admin viewing partner jobs sees everything unlocked
       if (activeRole === 'admin') {
         lockBox.style.display = 'none';
         unlockBox.style.display = 'block';
@@ -741,9 +809,17 @@
         lockBox.style.display = 'block';
         unlockBox.style.display = 'none';
         if (matchedPartner) {
-          statusMsg.innerText = `⏳ ${matchedPartner.name} (${matchedPartner.mobile}) — તમારું રજિસ્ટ્રેશન મળી ગયું છે, પરંતુ ₹99 પ્લાન પેમેન્ટ વેરિફિકેશન બાકી છે!`;
+          statusMsg.innerText = currentLang === 'en'
+            ? `⏳ ${matchedPartner.name} (${matchedPartner.mobile}) — Registration found, awaiting ₹99 plan activation!`
+            : (currentLang === 'hi'
+                ? `⏳ ${matchedPartner.name} (${matchedPartner.mobile}) — रजिस्ट्रेशन मिल गया है, ₹99 प्लान वेरिफिकेशन बाकी है!`
+                : `⏳ ${matchedPartner.name} (${matchedPartner.mobile}) — તમારું રજિસ્ટ્રેશન મળી ગયું છે, પરંતુ ₹99 પ્લાન પેમેન્ટ વેરિફિકેશન બાકી છે!`);
         } else if (savedPartnerMobile) {
-          statusMsg.innerText = `❌ આ નંબર (${savedPartnerMobile}) રજિસ્ટર થયેલ નથી. પહેલા રજિસ્ટ્રેશન કરો.`;
+          statusMsg.innerText = currentLang === 'en'
+            ? `❌ Number (${savedPartnerMobile}) is not registered yet. Please register first.`
+            : (currentLang === 'hi'
+                ? `❌ यह नंबर (${savedPartnerMobile}) रजिस्टर्ड नहीं है। पहले रजिस्ट्रेशन करें।`
+                : `❌ આ નંબર (${savedPartnerMobile}) રજિસ્ટર થયેલ નથી. પહેલા રજિસ્ટ્રેશન કરો.`);
         }
       }
     }
@@ -752,7 +828,7 @@
       const name = document.getElementById('techName').value.trim() || 'Partner';
       const mob = document.getElementById('techMobile').value.trim() || savedPartnerMobile || '-';
       const pin = document.getElementById('techPincode').value.trim() || '-';
-      let msg = `*SKYLINE HOMECARE - ₹99 TRIAL ACTIVATION*\nનામ: *${name}*\nમોબાઈલ: *${mob}*\nપિનકોડ: *${pin}*\nમેં ₹99 UPI પેમેન્ટ કરી દીધું છે, મારું Partner એકાઉન્ટ અનલોક કરી આપો.`;
+      let msg = `*SKYLINE HOMECARE - ₹99 TRIAL ACTIVATION*\nName: *${name}*\nMobile: *${mob}*\nPincode: *${pin}*\nI have completed the ₹99 UPI payment. Please unlock my Partner account.`;
       window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
@@ -830,7 +906,9 @@
       document.getElementById('tAdmRoleSub').innerText = t.admSub;
       document.getElementById('tPinLbl').innerText = t.pinLbl;
       document.getElementById('btnSwitchRole').innerText = t.switchBtn;
+
       document.getElementById('lblPinCheck').innerText = t.pinCheckLbl;
+      document.getElementById('custPincode').placeholder = t.pinPh;
       document.getElementById('btnCheckPin').innerText = t.checkPinBtn;
 
       document.getElementById('lblSelectSrv').innerText = t.selSrv;
@@ -842,10 +920,14 @@
 
       document.getElementById('lblCustForm').innerText = t.custForm;
       document.getElementById('lblCustName').innerText = t.cName;
+      document.getElementById('custName').placeholder = t.cNamePh;
       document.getElementById('lblCustMob').innerText = t.cMob;
+      document.getElementById('custMobile').placeholder = t.cMobPh;
       document.getElementById('lblCustCity').innerText = t.cCity;
       document.getElementById('lblCustSlot').innerText = t.cSlot;
+      document.getElementById('custSlot').value = t.cSlotVal;
       document.getElementById('lblCustAddr').innerText = t.cAddr;
+      document.getElementById('custProblem').placeholder = t.cAddrPh;
       document.getElementById('lblSelSrvTitle').innerText = t.selSrvTitle;
       document.getElementById('lblSelFeeTitle').innerText = t.selFeeTitle;
       document.getElementById('btnBookNow').innerText = t.bookNow;
@@ -853,17 +935,40 @@
 
       document.getElementById('lblAmcTitle').innerText = t.amcTitle;
       document.getElementById('lblAmcSub').innerText = t.amcSub;
+      document.querySelectorAll('.tPerYear').forEach(el => el.innerText = t.perYear);
+      document.getElementById('badgePopular').innerText = t.popBadge;
+      document.querySelectorAll('.btnAmcInq').forEach(el => el.innerText = t.amcInqBtn);
+      document.getElementById('amcSilverList').innerHTML = t.amcSilver;
+      document.getElementById('amcGoldList').innerHTML = t.amcGold;
+      document.getElementById('amcPlatList').innerHTML = t.amcPlat;
+
       document.getElementById('lblMyOrdersTitle').innerText = t.myOrders;
+
+      // Partner Lock & Profile Full Translation
+      document.getElementById('lblLockTitle').innerText = t.lockTitle;
+      document.getElementById('lblLockDesc').innerHTML = t.lockDesc;
+      document.getElementById('partnerLoginMob').placeholder = t.pMobPh;
+      document.getElementById('btnNewPartnerReg').innerText = t.newRegBtn;
+      document.getElementById('btnPay99Lock').innerText = t.pay99Btn;
+
       document.getElementById('lblLiveJobsTitle').innerText = t.liveJobs;
       document.getElementById('lblPartnerRegTitle').innerText = t.partReg;
       document.getElementById('lblTechName').innerText = t.tName;
+      document.getElementById('techName').placeholder = t.tNamePh;
       document.getElementById('lblTechMob').innerText = t.tMob;
+      document.getElementById('techMobile').placeholder = t.tMobPh;
       document.getElementById('lblTechCat').innerText = t.tCat;
       document.getElementById('lblTechCity').innerText = t.tCity;
+      document.getElementById('techArea').placeholder = t.tCityPh;
       document.getElementById('lblTechPin').innerText = t.tPin;
+      document.getElementById('techPincode').placeholder = t.tPinPh;
       document.getElementById('btnRegTech').innerText = t.regTech;
+      document.getElementById('btnPay99Prof').innerText = t.pay99Step2;
+      document.getElementById('btnSendProof').innerText = t.sendProofBtn;
+      document.getElementById('partnerPlanInfoBox').innerHTML = t.planInfoHtml;
 
       renderBottomNav();
+      checkPartnerUnlock();
       if (document.getElementById('custPincode').value.trim().length === 6) {
         checkPincodeAvailability();
       }
@@ -1033,7 +1138,7 @@
       document.getElementById('custProblem').value = '';
 
       await syncFromCloud();
-      alert(`✅ બુકિંગ થઈ ગયું છે! Order ID: ${newOrder.id} (Pincode: ${pincode})\nતમારો ઓર્ડર વેરિફાઈડ કારીગરના ફોનમાં પહોંચી ગયો છે.`);
+      alert(`✅ Booking Confirmed! Order ID: ${newOrder.id} (Pincode: ${pincode})`);
       showSection('secCustOrders', 'btnNav3');
     }
 
@@ -1049,7 +1154,7 @@
     }
 
     function inquireAMC(planName) {
-      const soc = prompt('તમારી સોસાયટી / શહેર અને પિનકોડ લખો (Society, City & Pincode):', 'ગ્રીન સિટી સોસાયટી, સુરત - 394180');
+      const soc = prompt('Enter Society, City & Pincode / સોસાયટી, શહેર અને પિનકોડ લખો:', 'Green City Society, Surat - 394180');
       if (soc) {
         let msg = `*SKYLINE HOMECARE - SOCIETY AMC INQUIRY*\nPlan: *${planName}*\nSociety & Pincode: *${soc}*\nPlease contact us for Society AMC details.`;
         window.open(`https://wa.me/919106743538?text=${encodeURIComponent(msg)}`, '_blank');
@@ -1116,7 +1221,7 @@
 
     async function acceptJob(idx) {
       const order = liveOrders[idx];
-      const tech = prompt('તમારું / દુકાનનું નામ લખો (Partner / Shop Name):', 'Skyline Partner');
+      const tech = prompt('Enter Partner / Shop Name:', 'Skyline Partner');
       if (tech && order.firebaseKey) {
         await fetch(`${DB_URL}/orders/${order.firebaseKey}.json`, {
           method: 'PATCH',
@@ -1129,7 +1234,7 @@
 
     async function completeJob(idx) {
       const order = liveOrders[idx];
-      const bill = parseFloat(prompt('કુલ બિલ રકમ (₹) લખો (Total Bill Amount):', order.fee));
+      const bill = parseFloat(prompt('Enter Total Bill Amount (₹):', order.fee));
       if (!isNaN(bill) && bill > 0 && order.firebaseKey) {
         await fetch(`${DB_URL}/orders/${order.firebaseKey}.json`, {
           method: 'PATCH',
@@ -1180,7 +1285,7 @@
       const pincode = document.getElementById('techPincode').value.trim();
 
       if (!name || !mobile || !/^\d{6}$/.test(pincode)) {
-        return alert('નામ, મોબાઈલ નંબર અને ૬ અંકનો Pincode લખો / Enter name, mobile & 6-digit Pincode.');
+        return alert('Enter name, mobile & 6-digit Pincode / નામ, મોબાઈલ નંબર અને ૬ અંકનો Pincode લખો.');
       }
 
       savedPartnerMobile = mobile;
@@ -1202,7 +1307,7 @@
       });
 
       await syncFromCloud();
-      alert(`✅ રજિસ્ટ્રેશન થઈ ગયું છે!\nહવે ₹99 UPI પેમેન્ટ કરીને WhatsApp પર સ્ક્રીનશોટ મોકલો — એડમિન એક્ટિવ કરશે એટલે તરત જ તમારું Live Orders ટેબ અનલોક થઈ જશે.`);
+      alert(`✅ Registration Submitted!\nPlease complete ₹99 UPI payment & send screenshot on WhatsApp to unlock Live Orders.`);
       showSection('secPartnerJobs', 'btnNav1');
     }
 
@@ -1220,7 +1325,7 @@
     async function addAdminPincode() {
       const pin = document.getElementById('adminNewPin').value.trim();
       const area = document.getElementById('adminNewPinArea').value.trim() || 'Gujarat Active Zone';
-      if (!/^\d{6}$/.test(pin)) return alert('6 અંકનો સાચો Pincode લખો.');
+      if (!/^\d{6}$/.test(pin)) return alert('Enter valid 6-digit Pincode.');
 
       await fetch(`${DB_URL}/pincodes.json`, {
         method: 'POST',
@@ -1233,7 +1338,7 @@
     }
 
     async function deleteAdminPincode(key) {
-      if (confirm('આ પિનકોડ દૂર કરવો છે?')) {
+      if (confirm('Remove this pincode?')) {
         await fetch(`${DB_URL}/pincodes/${key}.json`, { method: 'DELETE' });
         syncFromCloud();
       }
